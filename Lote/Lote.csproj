@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>Lote</AssemblyName>
+    <RootNamespace>Lote</RootNamespace>
+    <Version>1.0.0.0</Version>
+    <Configurations>Debug;Release</Configurations>
+    <Copyright>Copyright © HBL 2021</Copyright>
+    <FileVersion>1.0.0.0</FileVersion>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;Core</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>TRACE;Core</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="CalcBinding" Version="2.5.2" />
+    <PackageReference Include="HandyControls" Version="3.3.9" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.39" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
+    <PackageReference Include="Stylet" Version="1.3.6" />
+    <PackageReference Include="XExten.Advance" Version="1.1.0.15-beta" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Anime.SDK">
+      <HintPath>..\Lib\Anime.SDK.dll</HintPath>
+    </Reference>
+    <Reference Include="LightNovel.SDK">
+      <HintPath>..\Lib\LightNovel.SDK.dll</HintPath>
+    </Reference>
+    <Reference Include="Music.SDK">
+      <HintPath>..\Lib\Music.SDK.dll</HintPath>
+    </Reference>
+    <Reference Include="Novel.SDK">
+      <HintPath>..\Lib\Novel.SDK.dll</HintPath>
+    </Reference>
+    <Reference Include="Wallpaper.SDK">
+      <HintPath>..\Lib\Wallpaper.SDK.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>
