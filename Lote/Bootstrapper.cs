@@ -1,4 +1,5 @@
-﻿using Lote.NotifyUtil;
+﻿using Lote.Core;
+using Lote.NotifyUtil;
 using Lote.ViewModels;
 using Stylet;
 using StyletIoC;
@@ -15,6 +16,7 @@ namespace Lote
         /// </summary>
         protected override void OnStart()
         {
+            //校验版本
             base.OnStart();
         }
 
@@ -28,6 +30,7 @@ namespace Lote
         /// </summary>
         protected override void Configure()
         {
+            new Lite().InitDataBase();
             base.Configure();
         }
 
