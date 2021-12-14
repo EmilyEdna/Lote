@@ -34,6 +34,11 @@ namespace Lote.Views.Option
 
             base.OnViewLoaded();
         }
+
+        public void Submit()
+        {
+            Root = container.Get<IOptionService>().AddOrUpdate(Root);
+        }
         #endregion
     }
 }

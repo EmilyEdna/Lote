@@ -6,6 +6,7 @@
              xmlns:C="clr-namespace:CalcBinding;assembly=CalcBinding"
              xmlns:local="clr-namespace:Lote.Views.Option"
              xmlns:Views="clr-namespace:Lote.Views" 
+             xmlns:S="https://github.com/canton7/Stylet"
              xmlns:hc="https://handyorg.github.io/handycontrol" x:Class="Lote.Views.Option.OptionView" 
              mc:Ignorable="d" 
              d:DesignHeight="{C:Binding (Width*0.027), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}" 
@@ -16,7 +17,12 @@
             <Setter Property="BorderThickness" Value="0,0,0,1"/>
             <Setter Property="Width" Value="{C:Binding ((Width-160)*0.19), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}"/>
         </Style>
-        
+
+        <Style x:Key="ProxyPwdBox" TargetType="PasswordBox">
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="Width" Value="{C:Binding ((Width-160)*0.19), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}"/>
+        </Style>
+
         <Style x:Key="ProxyWrap" TargetType="WrapPanel">
             <Setter Property="HorizontalAlignment" Value="Left"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
@@ -42,40 +48,43 @@
             <StackPanel Grid.Row="1" HorizontalAlignment="Left">
                 <WrapPanel Style="{StaticResource ProxyWrap}">
                     <TextBlock Text="地址：" Style="{StaticResource TextBlockDefaultPrimary}" Foreground="Black"/>
-                    <TextBox Style="{StaticResource ProxyBox}" />
+                    <TextBox Style="{StaticResource ProxyBox}" Text="{C:Binding ProxyId}"/>
                 </WrapPanel>
                 <WrapPanel Style="{StaticResource ProxyWrap}">
                     <TextBlock Text="端口：" Style="{StaticResource TextBlockDefaultPrimary}" Foreground="Black"/>
-                    <TextBox Style="{StaticResource ProxyBox}" />
+                    <TextBox Style="{StaticResource ProxyBox}" Text="{C:Binding ProxyPort}"/>
                 </WrapPanel>
                 <WrapPanel Style="{StaticResource ProxyWrap}">
                     <TextBlock Text="账户：" Style="{StaticResource TextBlockDefaultPrimary}" Foreground="Black"/>
-                    <TextBox Style="{StaticResource ProxyBox}" />
+                    <TextBox Style="{StaticResource ProxyBox}" Text="{C:Binding ProxyAccount}"/>
                 </WrapPanel>
                 <WrapPanel Style="{StaticResource ProxyWrap}">
                     <TextBlock Text="密码：" Style="{StaticResource TextBlockDefaultPrimary}" Foreground="Black"/>
-                    <TextBox Style="{StaticResource ProxyBox}" />
+                    <PasswordBox  Style="{StaticResource ProxyPwdBox}" Password="{C:Binding ProxyPwd}"/>
                 </WrapPanel>
             </StackPanel>
             <hc:Divider  Grid.Row="2"  Content="缓存配置" Style="{StaticResource ProxyDivider}"/>
             <WrapPanel Style="{StaticResource ProxyWrap}" Grid.Row="3">
                 <TextBlock Text="缓存时间："  Style="{StaticResource TextBlockDefaultPrimary}" Foreground="Black"/>
-                <TextBox Style="{StaticResource ProxyBox}" />
+                <TextBox Style="{StaticResource ProxyBox}" Text="{C:Binding CacheSpan}"/>
             </WrapPanel>
             <hc:Divider  Grid.Row="4"  Content="文库配置" Style="{StaticResource ProxyDivider}"/>
             <StackPanel Grid.Row="5" HorizontalAlignment="Left">
                 <WrapPanel Style="{StaticResource ProxyWrap}">
                     <TextBlock Text="账户：" Style="{StaticResource TextBlockDefaultPrimary}" Foreground="Black"/>
-                    <TextBox Style="{StaticResource ProxyBox}" />
+                    <TextBox Style="{StaticResource ProxyBox}" Text="{C:Binding WkAccount}"/>
                 </WrapPanel>
                 <WrapPanel Style="{StaticResource ProxyWrap}">
                     <TextBlock Text="密码：" Style="{StaticResource TextBlockDefaultPrimary}" Foreground="Black"/>
-                    <TextBox Style="{StaticResource ProxyBox}" />
+                    <PasswordBox  Style="{StaticResource ProxyPwdBox}" Password="{C:Binding WkPwd}"/>
                 </WrapPanel>
             </StackPanel>
         </SelectiveScrollingGrid>
         <WrapPanel HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="1">
-            <Button Style="{StaticResource ButtonWarning}" Content="确定" Margin="0,0,5,0"/>
+            <Button Style="{StaticResource ButtonWarning}" 
+                    Content="确定" 
+                    Margin="0,0,5,0"
+                    Command="{S:Action Submit}"/>
         </WrapPanel>
     </Grid>
 </UserControl>
