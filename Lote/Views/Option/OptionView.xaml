@@ -1,12 +1,72 @@
-﻿<UserControl x:Class="Lote.Views.Option.OptionView"
+﻿<UserControl
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:C="clr-namespace:CalcBinding;assembly=CalcBinding"
              xmlns:local="clr-namespace:Lote.Views.Option"
+             xmlns:Views="clr-namespace:Lote.Views" 
+             xmlns:hc="https://handyorg.github.io/handycontrol" x:Class="Lote.Views.Option.OptionView" 
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
-    </Grid>
+             d:DesignHeight="{C:Binding (Width*0.027), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}" 
+            d:DesignWidth="{C:Binding (Width*0.799), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}">
+    <SelectiveScrollingGrid SelectiveScrollingOrientation="Vertical" Background="White">
+        <SelectiveScrollingGrid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+        </SelectiveScrollingGrid.RowDefinitions>
+        <hc:Divider  Content="代理配置" Style="{StaticResource ProxyDivider}"/>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Text="地址：" Style="{StaticResource TextBlockDefaultPrimary}" Foreground="Black"/>
+            </WrapPanel>
+            <WrapPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBox Style="{StaticResource ProxyBox}" 
+                         Width="{C:Binding ((Width-160)*0.19), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}"/>
+            </WrapPanel>
+            <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2">
+                <TextBlock Text="端口：" Style="{StaticResource TextBlockDefaultPrimary}" Foreground="Black"/>
+            </WrapPanel>
+            <WrapPanel Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBox Style="{StaticResource ProxyBox}" 
+                         Width="{C:Binding ((Width-160)*0.19), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}"/>
+            </WrapPanel>
+            <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="4" >
+                <TextBlock Text="账户：" Style="{StaticResource TextBlockDefaultPrimary}" Foreground="Black"/>
+            </WrapPanel>
+            <WrapPanel Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBox Style="{StaticResource ProxyBox}" 
+                         Width="{C:Binding ((Width-160)*0.19), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}"/>
+            </WrapPanel>
+            <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="6">
+                <TextBlock Text="密码：" Style="{StaticResource TextBlockDefaultPrimary}" Foreground="Black"/>
+            </WrapPanel>
+            <WrapPanel Grid.Column="7" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBox Style="{StaticResource ProxyBox}" 
+                         Width="{C:Binding ((Width-160)*0.19), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}"/>
+            </WrapPanel>
+        </Grid>
+        <hc:Divider  Grid.Row="2"  Content="缓存配置" Style="{StaticResource ProxyDivider}"/>
+        <WrapPanel HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="3">
+            <TextBlock Text="缓存时间："  Style="{StaticResource TextBlockDefaultPrimary}" Foreground="Black"/>
+            <TextBox Style="{StaticResource ProxyBox}" 
+                         Width="{C:Binding ((Width-160)*0.19), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}"/>
+        </WrapPanel>
+    </SelectiveScrollingGrid>
 </UserControl>

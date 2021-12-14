@@ -3,6 +3,7 @@ using Lote.Views.AnimeView;
 using Lote.Views.LightNovelView;
 using Lote.Views.Music;
 using Lote.Views.NovelView;
+using Lote.Views.Option;
 using Lote.Views.Wallpaper;
 using Stylet;
 using StyletIoC;
@@ -38,7 +39,7 @@ namespace Lote.ViewModels
             if (type == 5)
                 NavigateTo(container.Get<MusicViewModel>());
             if (type == 6)
-                NavigateTo(container.Get<LightNovelViewModel>());
+                NavigateTo(container.Get<OptionViewModel>());
         }
     }
 }

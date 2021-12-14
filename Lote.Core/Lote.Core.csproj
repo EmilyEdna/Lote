@@ -8,6 +8,6 @@
 
 	<ItemGroup>
 		<PackageReference Include="SqlSugarCore" Version="5.0.4.7" />
-		<PackageReference Include="XExten.Advance" Version="1.1.0.15-beta" />
+		<PackageReference Include="XExten.Advance" Version="1.1.1-beta" />
 	</ItemGroup>
 </Project>
