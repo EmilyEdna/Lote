@@ -48,35 +48,35 @@
             <StackPanel Grid.Row="1" HorizontalAlignment="Left">
                 <WrapPanel Style="{StaticResource ProxyWrap}">
                     <TextBlock Text="地址：" Style="{StaticResource TextBlockDefaultPrimary}" Foreground="Black"/>
-                    <TextBox Style="{StaticResource ProxyBox}" Text="{C:Binding ProxyId}"/>
+                    <TextBox Style="{StaticResource ProxyBox}" Text="{C:Binding Root.ProxyId}"/>
                 </WrapPanel>
                 <WrapPanel Style="{StaticResource ProxyWrap}">
                     <TextBlock Text="端口：" Style="{StaticResource TextBlockDefaultPrimary}" Foreground="Black"/>
-                    <TextBox Style="{StaticResource ProxyBox}" Text="{C:Binding ProxyPort}"/>
+                    <TextBox Style="{StaticResource ProxyBox}" Text="{C:Binding Root.ProxyPort}"/>
                 </WrapPanel>
                 <WrapPanel Style="{StaticResource ProxyWrap}">
                     <TextBlock Text="账户：" Style="{StaticResource TextBlockDefaultPrimary}" Foreground="Black"/>
-                    <TextBox Style="{StaticResource ProxyBox}" Text="{C:Binding ProxyAccount}"/>
+                    <TextBox Style="{StaticResource ProxyBox}" Text="{C:Binding Root.ProxyAccount}"/>
                 </WrapPanel>
                 <WrapPanel Style="{StaticResource ProxyWrap}">
                     <TextBlock Text="密码：" Style="{StaticResource TextBlockDefaultPrimary}" Foreground="Black"/>
-                    <PasswordBox  Style="{StaticResource ProxyPwdBox}" Password="{C:Binding ProxyPwd}"/>
+                    <PasswordBox  Style="{StaticResource ProxyPwdBox}" PasswordChanged="ProxyPwd"/>
                 </WrapPanel>
             </StackPanel>
             <hc:Divider  Grid.Row="2"  Content="缓存配置" Style="{StaticResource ProxyDivider}"/>
             <WrapPanel Style="{StaticResource ProxyWrap}" Grid.Row="3">
                 <TextBlock Text="缓存时间："  Style="{StaticResource TextBlockDefaultPrimary}" Foreground="Black"/>
-                <TextBox Style="{StaticResource ProxyBox}" Text="{C:Binding CacheSpan}"/>
+                <TextBox Style="{StaticResource ProxyBox}" Text="{C:Binding Root.CacheSpan}"/>
             </WrapPanel>
             <hc:Divider  Grid.Row="4"  Content="文库配置" Style="{StaticResource ProxyDivider}"/>
             <StackPanel Grid.Row="5" HorizontalAlignment="Left">
                 <WrapPanel Style="{StaticResource ProxyWrap}">
                     <TextBlock Text="账户：" Style="{StaticResource TextBlockDefaultPrimary}" Foreground="Black"/>
-                    <TextBox Style="{StaticResource ProxyBox}" Text="{C:Binding WkAccount}"/>
+                    <TextBox Style="{StaticResource ProxyBox}" Text="{C:Binding Root.WkAccount}"/>
                 </WrapPanel>
                 <WrapPanel Style="{StaticResource ProxyWrap}">
                     <TextBlock Text="密码：" Style="{StaticResource TextBlockDefaultPrimary}" Foreground="Black"/>
-                    <PasswordBox  Style="{StaticResource ProxyPwdBox}" Password="{C:Binding WkPwd}"/>
+                    <PasswordBox  Style="{StaticResource ProxyPwdBox}" PasswordChanged="WkPwd"/>
                 </WrapPanel>
             </StackPanel>
         </SelectiveScrollingGrid>

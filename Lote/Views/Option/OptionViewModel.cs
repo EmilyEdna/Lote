@@ -25,12 +25,25 @@ namespace Lote.Views.Option
             get { return _Root; }
             set { SetAndNotify(ref _Root, value); }
         }
+
+        private string _WkPwd;
+        public string WkPwd
+        {
+            get { return _WkPwd; }
+            set { SetAndNotify(ref _WkPwd, value); }
+        }
+        private string _ProxyPwd;
+        public string ProxyPwd
+        {
+            get { return _ProxyPwd; }
+            set { SetAndNotify(ref _ProxyPwd, value); }
+        }
         #endregion
 
         #region Method
         protected override void OnViewLoaded()
         {
-            Root = container.Get<IOptionService>().Get();
+            Root = container.Get<IOptionService>().Get() ?? new OptionRootDTO();
 
             base.OnViewLoaded();
         }
