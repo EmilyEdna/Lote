@@ -1,4 +1,5 @@
 ﻿using Lote.Core;
+using Lote.Core.Service;
 using Lote.NotifyUtil;
 using Lote.ViewModels;
 using Stylet;
@@ -22,6 +23,8 @@ namespace Lote
 
         protected override void ConfigureIoC(IStyletIoCBuilder builder)
         {
+            builder.Bind<IOptionService>().To<OptionService>();
+
             builder.Bind<NavigationController>().And<INavigationController>().To<NavigationController>().InSingletonScope();
         }
 

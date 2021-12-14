@@ -12,7 +12,7 @@ namespace Lote.Core
 {
     public class Lite
     {
-        public SqlSugarScope LiteDb()
+        public SqlSugarScope LiteBase()
         {
             SqlSugarScope db = new SqlSugarScope(new ConnectionConfig
             {
@@ -26,7 +26,7 @@ namespace Lote.Core
         public void InitDataBase() 
         {
            var Table = SyncStatic.Assembly("Lote.Core").SelectMany(t => t.ExportedTypes.Where(x => x.BaseType == typeof(BasicEntity))).ToArray();
-            LiteDb().CodeFirst.InitTables(Table);
+            LiteBase().CodeFirst.InitTables(Table);
         }
     }
 }

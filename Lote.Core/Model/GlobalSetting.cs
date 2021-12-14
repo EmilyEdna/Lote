@@ -11,14 +11,18 @@ namespace Lote.Core.Model
     public class GlobalSetting : BasicEntity
     {
         [SugarColumn(ColumnDataType ="varchar(80)", IsNullable = true)]
-        public string? IP { get; set; }
+        public string ProxyIP { get; set; }
         [SugarColumn(ColumnDataType = "int",IsNullable =true)]
-        public int? Port { get; set; }
+        public int? ProxyPort { get; set; }
         [SugarColumn(ColumnDataType = "varchar(80)", IsNullable = true)]
-        public string? UserName { get; set; }
+        public string ProxyAccount { get; set; }
         [SugarColumn(ColumnDataType = "varchar(80)", IsNullable = true)]
-        public string? PassWord { get; set; }
+        public string ProxyPwd { get; set; }
         [SugarColumn(ColumnDataType = "int", IsNullable = true)]
         public int? CacheSpan { get; set; }
+        [SugarColumn(ColumnDataType = "varchar(80)", IsNullable = true)]
+        public string WkAccount { get; set; }
+        [SugarColumn(ColumnDataType = "varchar(80)", IsNullable = true)]
+        public string WkPwd { get; set; }
     }
 }
