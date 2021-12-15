@@ -4,9 +4,96 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Lote.Views.LightNovelView"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
+             xmlns:C="clr-namespace:CalcBinding;assembly=CalcBinding"
+             xmlns:S="https://github.com/canton7/Stylet"
+             xmlns:Views="clr-namespace:Lote.Views" 
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+             d:DesignHeight="{C:Binding (Width*0.027), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}" 
+             d:DesignWidth="{C:Binding (Width*0.799), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}">
+    <Grid Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.16*"/>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="0.2*"/>
+        </Grid.RowDefinitions>
+        <WrapPanel>
+            <hc:SearchBar TextWrapping="Wrap" 
+                          BorderThickness="1" 
+                          Style="{StaticResource Search}"
+                          Width="{C:Binding (Width*0.799), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}"
+                          Height="{C:Binding (Width*0.027), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}"
+                          ShowClearButton="True"
+                          Command="{S:Action SearchBook}"
+                          CommandParameter="{Binding Text, RelativeSource={RelativeSource Self}}" />
+        </WrapPanel>
+        <hc:ButtonGroup Grid.Row="1" ItemsSource="{C:Binding LightNovelCategory}">
+            <hc:ButtonGroup.ItemTemplate>
+                <DataTemplate>
+                    <Button Content="{C:Binding CategoryName}" 
+                            Style="{StaticResource ButtonSuccess}"
+                            Command="{S:Action Redirect}"
+                            CommandParameter="{C:Binding CollectAddress}"/>
+                </DataTemplate>
+            </hc:ButtonGroup.ItemTemplate>
+        </hc:ButtonGroup>
+        <ListBox  Grid.Row="2" 
+                  ItemsSource="{C:Binding LightNovelSingleCategory}" 
+                  BorderThickness="0"
+                  BorderBrush="White" 
+                  Background="White"
+                  SelectionChanged="ListBox_SelectionChanged"
+                  d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,5,0,0">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Border Grid.RowSpan="3" Width="100" Height="100">
+                            <Image Source="{C:Binding Cover}" Stretch="Uniform"/>
+                        </Border>
+                        <WrapPanel Grid.Column="1" VerticalAlignment="Center"  Margin="0,0,30,0">
+                            <TextBlock Text="{C:Binding BookName,StringFormat=书名：{0}}" />
+                        </WrapPanel>
+                        <WrapPanel Grid.Column="2" VerticalAlignment="Center" Margin="0,0,30,0">
+                            <TextBlock Text="{C:Binding Author,StringFormat=作者：{0}}" />
+                        </WrapPanel>
+                        <WrapPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Margin="0,0,30,0">
+                            <TextBlock Text="{C:Binding Stutas,StringFormat=状态：{0}}" />
+                        </WrapPanel>
+                        <WrapPanel Grid.Column="2" Grid.Row="1" VerticalAlignment="Center" Margin="0,0,30,0">
+                            <TextBlock Text="{C:Binding Category,StringFormat=发行：{0}}"/>
+                        </WrapPanel>
+                        <WrapPanel Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" VerticalAlignment="Center" Margin="0,0,30,0">
+                            <TextBlock Text="{C:Binding Description,StringFormat=描述：{0}}" />
+                        </WrapPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <hc:Pagination Grid.Row="3"  Grid.ColumnSpan="2"
+                       Margin="0,5,0,0"
+                       HorizontalAlignment="Center"
+                       MaxPageCount="{C:Binding Total}" 
+                       PageIndex="{C:Binding PageIndex}" 
+                       IsJumpEnabled="True">
+            <hc:Interaction.Triggers>
+                <hc:EventTrigger EventName="PageUpdated">
+                    <hc:EventToCommand Command="{S:Action PageUpdated}" PassEventArgsToCommand="True" />
+                </hc:EventTrigger>
+            </hc:Interaction.Triggers>
+        </hc:Pagination>
     </Grid>
 </UserControl>

@@ -24,5 +24,19 @@ namespace Lote.Views.LightNovelView
         {
             InitializeComponent();
         }
+
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var vm = (LightNovelViewModel)this.DataContext;
+            try
+            {
+                vm.GetBook((e.AddedItems[0] as dynamic).DetailAddress);
+            }
+            catch
+            {
+                return;
+            }
+
+        }
     }
 }
