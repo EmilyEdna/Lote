@@ -1,4 +1,7 @@
-﻿using Lote.Common;
+﻿using HandyControl.Tools.Extension;
+using Lote.Common;
+using Lote.Core.Service;
+using Lote.Core.Service.DTO;
 using Novel.SDK;
 using Novel.SDK.ViewModel;
 using Novel.SDK.ViewModel.Enums;
@@ -19,10 +22,20 @@ namespace Lote.CommonWindow.ViewMdeol
     public class NovelContentWindowsViewModel : Screen
     {
         private readonly IContainer container;
+        private readonly OptionRootDTO root;
+        private readonly NovelProxy Proxy;
         public NovelContentWindowsViewModel(IContainer container)
         {
             this.container = container;
             this.FontSize = 22;
+            this.root = container.Get<IOptionService>().Get() ?? new OptionRootDTO();
+            this.Proxy = new NovelProxy
+            {
+                IP = root == null ? String.Empty : root.ProxyIP,
+                PassWord = root == null ? String.Empty : root.ProxyPwd,
+                Port = root == null ? -1 : Convert.ToInt32(root.ProxyPort),
+                UserName = root == null ? String.Empty : root.ProxyAccount
+            };
         }
         #region Property
         private NovelContentResult _NovelContent;
@@ -53,8 +66,9 @@ namespace Lote.CommonWindow.ViewMdeol
             {
                 opt.RequestParam = new NovelRequestInput
                 {
+                    CacheSpan = root.CacheSpan.IsNullOrEmpty() ? 60 : Convert.ToInt32(root.CacheSpan),
                     NovelType = NovelEnum.Watch,
-                    Proxy = new NovelProxy(),
+                    Proxy = this.Proxy,
                     View = new NovelView
                     {
                         NovelViewAddress = args
