@@ -24,17 +24,5 @@ namespace Lote.Views.Option
         {
             InitializeComponent();
         }
-
-        private void WkPwd(object sender, RoutedEventArgs e)
-        {
-            var dc = (this.DataContext as OptionViewModel).Root;
-            dc.WkPwd = (sender as PasswordBox).Password;
-        }
-
-        private void ProxyPwd(object sender, RoutedEventArgs e)
-        {
-            var dc = (this.DataContext as OptionViewModel).Root;
-            dc.ProxyPwd = (sender as PasswordBox).Password;
-        }
     }
 }

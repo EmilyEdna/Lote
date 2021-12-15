@@ -12,14 +12,14 @@ namespace Lote.Core.Model
     {
         [SugarColumn(ColumnDataType ="varchar(80)", IsNullable = true)]
         public string ProxyIP { get; set; }
-        [SugarColumn(ColumnDataType = "int",IsNullable =true)]
-        public int? ProxyPort { get; set; }
+        [SugarColumn(ColumnDataType = "varchar(80)", IsNullable =true)]
+        public string ProxyPort { get; set; }
         [SugarColumn(ColumnDataType = "varchar(80)", IsNullable = true)]
         public string ProxyAccount { get; set; }
         [SugarColumn(ColumnDataType = "varchar(80)", IsNullable = true)]
         public string ProxyPwd { get; set; }
-        [SugarColumn(ColumnDataType = "int", IsNullable = true)]
-        public int? CacheSpan { get; set; }
+        [SugarColumn(ColumnDataType = "varchar(80)", IsNullable = true)]
+        public string CacheSpan { get; set; }
         [SugarColumn(ColumnDataType = "varchar(80)", IsNullable = true)]
         public string WkAccount { get; set; }
         [SugarColumn(ColumnDataType = "varchar(80)", IsNullable = true)]

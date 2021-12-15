@@ -11,10 +11,10 @@ namespace Lote.Core.Service.DTO
         #region Proxy
         public Guid? Id { get; set; }
         public string ProxyIP { get; set; }
-        public int? ProxyPort { get; set; }
+        public string ProxyPort { get; set; }
         public string ProxyAccount { get; set; }
         public string ProxyPwd { get; set; }
-        public int? CacheSpan { get; set; }
+        public string CacheSpan { get; set; }
         #endregion
 
         #region Wk

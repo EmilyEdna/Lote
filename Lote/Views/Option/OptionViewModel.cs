@@ -1,4 +1,5 @@
-﻿using Lote.Core.Service;
+﻿using HandyControl.Controls;
+using Lote.Core.Service;
 using Lote.Core.Service.DTO;
 using Stylet;
 using StyletIoC;
@@ -13,9 +14,11 @@ namespace Lote.Views.Option
     public class OptionViewModel : Screen
     {
         private readonly IContainer container;
-        public OptionViewModel(IContainer container)
+        private readonly IWindowManager windowManager;
+        public OptionViewModel(IContainer container, IWindowManager windowManager)
         {
             this.container = container;
+            this.windowManager = windowManager;
         }
 
         #region Property
@@ -24,19 +27,6 @@ namespace Lote.Views.Option
         {
             get { return _Root; }
             set { SetAndNotify(ref _Root, value); }
-        }
-
-        private string _WkPwd;
-        public string WkPwd
-        {
-            get { return _WkPwd; }
-            set { SetAndNotify(ref _WkPwd, value); }
-        }
-        private string _ProxyPwd;
-        public string ProxyPwd
-        {
-            get { return _ProxyPwd; }
-            set { SetAndNotify(ref _ProxyPwd, value); }
         }
         #endregion
 
@@ -51,6 +41,7 @@ namespace Lote.Views.Option
         public void Submit()
         {
             Root = container.Get<IOptionService>().AddOrUpdate(Root);
+            MessageBox.Info("操作成功", "提示");
         }
         #endregion
     }
