@@ -33,7 +33,7 @@ namespace Lote.CommonWindow.ViewMdeol
             {
                 IP = root == null ? String.Empty : root.ProxyIP,
                 PassWord = root == null ? String.Empty : root.ProxyPwd,
-                Port = root == null ? -1 : Convert.ToInt32(root.ProxyPort),
+                Port = root == null ? -1 : Convert.ToInt32(root.ProxyPort.IsNullOrEmpty() ? "-1" : root.ProxyPort),
                 UserName = root == null ? String.Empty : root.ProxyAccount
             };
         }

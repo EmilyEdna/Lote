@@ -18,6 +18,7 @@ using Lote.Core.Service;
 using Lote.Core.Service.DTO;
 using XExten.Advance.LinqFramework;
 
+
 namespace Lote.Views.NovelView
 {
     public class NovelContentViewModel : Screen
@@ -31,11 +32,11 @@ namespace Lote.Views.NovelView
             this.container = container;
             this.data = new Dictionary<string, NovelContentWindows>();
             this.root = container.Get<IOptionService>().Get() ?? new OptionRootDTO();
-            Proxy = new NovelProxy
+            this.Proxy = new NovelProxy
             {
                 IP = root == null ? String.Empty:root.ProxyIP,
                 PassWord = root == null ? String.Empty : root.ProxyPwd,
-                Port = root == null ? -1 : Convert.ToInt32(root.ProxyPort),
+                Port = root == null ? -1 : Convert.ToInt32(root.ProxyPort.IsNullOrEmpty() ? "-1" : root.ProxyPort),
                 UserName = root == null ? String.Empty : root.ProxyAccount
             };
         }
@@ -116,7 +117,6 @@ namespace Lote.Views.NovelView
                 win.DataContext = vm;
                 win.Show();
             }
-
         }
         #endregion
     }
