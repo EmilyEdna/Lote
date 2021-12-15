@@ -47,7 +47,9 @@
                 </WrapPanel>
                 <WrapPanel Style="{StaticResource ProxyWrap}">
                     <TextBlock Text="端口：" Style="{StaticResource TextBlockDefaultPrimary}" Foreground="Black"/>
-                    <TextBox Style="{StaticResource ProxyBox}" Text="{C:Binding Root.ProxyPort,Mode=TwoWay}"/>
+                    <TextBox Style="{StaticResource ProxyBox}" Text="{C:Binding Root.ProxyPort,Mode=TwoWay}"
+                             InputMethod.IsInputMethodEnabled="False"
+                             PreviewTextInput="TextBox_PreviewTextInput"/>
                 </WrapPanel>
                 <WrapPanel Style="{StaticResource ProxyWrap}">
                     <TextBlock Text="账户：" Style="{StaticResource TextBlockDefaultPrimary}" Foreground="Black"/>
@@ -61,7 +63,9 @@
             <hc:Divider  Grid.Row="2"  Content="缓存配置" Style="{StaticResource ProxyDivider}"/>
             <WrapPanel Style="{StaticResource ProxyWrap}" Grid.Row="3">
                 <TextBlock Text="缓存时间："  Style="{StaticResource TextBlockDefaultPrimary}" Foreground="Black"/>
-                <TextBox Style="{StaticResource ProxyBox}" Text="{Binding Root.CacheSpan,Mode=TwoWay}"/>
+                <TextBox Style="{StaticResource ProxyBox}" Text="{Binding Root.CacheSpan,Mode=TwoWay}"
+                         InputMethod.IsInputMethodEnabled="False"
+                         PreviewTextInput="TextBox_PreviewTextInput"/>
             </WrapPanel>
             <hc:Divider  Grid.Row="4"  Content="文库配置" Style="{StaticResource ProxyDivider}"/>
             <StackPanel Grid.Row="5" HorizontalAlignment="Left">

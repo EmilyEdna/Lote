@@ -14,6 +14,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Lote.CommonWindow.ViewMdeol;
 using Lote.CommonWindow;
+using Lote.Core.Service;
+using Lote.Core.Service.DTO;
+using XExten.Advance.LinqFramework;
 
 namespace Lote.Views.NovelView
 {
@@ -21,10 +24,20 @@ namespace Lote.Views.NovelView
     {
         private readonly IContainer container;
         private readonly IDictionary<string, NovelContentWindows> data;
+        private readonly OptionRootDTO root;
+        private readonly NovelProxy Proxy;
         public NovelContentViewModel(IContainer container)
         {
             this.container = container;
-            this.data = new Dictionary<string, NovelContentWindows>(); 
+            this.data = new Dictionary<string, NovelContentWindows>();
+            this.root = container.Get<IOptionService>().Get() ?? new OptionRootDTO();
+            Proxy = new NovelProxy
+            {
+                IP = root == null ? String.Empty:root.ProxyIP,
+                PassWord = root == null ? String.Empty : root.ProxyPwd,
+                Port = root == null ? -1 : Convert.ToInt32(root.ProxyPort),
+                UserName = root == null ? String.Empty : root.ProxyAccount
+            };
         }
 
         #region Property
@@ -58,8 +71,9 @@ namespace Lote.Views.NovelView
             {
                 opt.RequestParam = new NovelRequestInput
                 {
+                    CacheSpan = root.CacheSpan.IsNullOrEmpty() ? 60 : Convert.ToInt32(root.CacheSpan),
                     NovelType = NovelEnum.Detail,
-                    Proxy = new NovelProxy(),
+                    Proxy = this.Proxy,
                     Detail = new NovelDetail
                     {
                         Page = PageIndex,
@@ -78,8 +92,9 @@ namespace Lote.Views.NovelView
             {
                 opt.RequestParam = new NovelRequestInput
                 {
+                    CacheSpan= root.CacheSpan.IsNullOrEmpty()?60:Convert.ToInt32(root.CacheSpan),
                     NovelType = NovelEnum.Watch,
-                    Proxy = new NovelProxy(),
+                    Proxy = this.Proxy,
                     View = new SDKRequest.NovelView
                     {
                         NovelViewAddress = args
@@ -101,7 +116,7 @@ namespace Lote.Views.NovelView
                 win.DataContext = vm;
                 win.Show();
             }
-           
+
         }
         #endregion
     }
