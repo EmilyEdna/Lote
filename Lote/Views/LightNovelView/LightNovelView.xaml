@@ -14,7 +14,8 @@
              d:DesignWidth="{C:Binding (Width*0.799), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}">
     <Grid Background="White">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="0.7*"/>
+            <ColumnDefinition Width="0.3*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="0.16*"/>
@@ -22,7 +23,7 @@
             <RowDefinition Height="2*"/>
             <RowDefinition Height="0.2*"/>
         </Grid.RowDefinitions>
-        <WrapPanel >
+        <WrapPanel Grid.ColumnSpan="2">
             <ComboBox x:Name="comboBox"  Width="{C:Binding (Width*0.08), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}"
                           Height="{C:Binding (Width*0.027), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}">
                 <ComboBoxItem Content="书名" Tag="0" Selector.IsSelected="True"/>
@@ -42,7 +43,7 @@
                           Command="{S:Action SearchBook}"
                           CommandParameter="{Binding Text, RelativeSource={RelativeSource Self}}" />
         </WrapPanel>
-        <hc:ButtonGroup Grid.Row="1" ItemsSource="{C:Binding LightNovelCategory}">
+        <hc:ButtonGroup Grid.Row="1" ItemsSource="{C:Binding LightNovelCategory}" Grid.ColumnSpan="2">
             <hc:ButtonGroup.ItemTemplate>
                 <DataTemplate>
                     <Button Content="{C:Binding CategoryName}" 
@@ -52,7 +53,7 @@
                 </DataTemplate>
             </hc:ButtonGroup.ItemTemplate>
         </hc:ButtonGroup>
-        <ListBox  Grid.Row="2" 
+        <ListBox  Grid.Row="2"  Grid.Column="0"
                   x:Name="listBox"
                   ItemsSource="{C:Binding LightNovelSingleCategory}" 
                   BorderThickness="0"
@@ -75,15 +76,30 @@
                             <Image Source="{C:Binding Cover}" Stretch="Uniform"/>
                         </Border>
                         <StackPanel Grid.Column="1" VerticalAlignment="Center"  Margin="0,0,30,0">
-                            <TextBlock Text="{C:Binding BookName,StringFormat=书名：{0}}" Margin="0,2,0,2"/>
-                            <TextBlock Text="{C:Binding Author,StringFormat=作者：{0}}" Margin="0,2,0,2"/>
-                            <TextBlock Text="{C:Binding Press,StringFormat=出版：{0}}"  Margin="0,2,0,2"/>
-                            <TextBlock Text="{C:Binding Date,StringFormat=更新日期：{0}}"  Margin="0,2,0,2"/>
-                            <TextBlock Text="{C:Binding Status,StringFormat=状态：{0}}"  Margin="0,2,0,2"/>
-                            <TextBlock Text="{C:Binding Category,StringFormat=分类：{0}}" Margin="0,2,0,2"/>
-                            <TextBlock Text="{C:Binding Description,StringFormat=描述：{0}}"  Margin="0,2,0,2"/>
+                            <TextBlock Text="{C:Binding BookName,StringFormat=书名：{0}}" Margin="0,2,0,2" FontSize="11"/>
+                            <TextBlock Text="{C:Binding Author,StringFormat=作者：{0}}" Margin="0,2,0,2" FontSize="11"/>
+                            <TextBlock Text="{C:Binding Press,StringFormat=出版：{0}}"  Margin="0,2,0,2" FontSize="11"/>
+                            <TextBlock Text="{C:Binding Date,StringFormat=更新日期：{0}}"  Margin="0,2,0,2" FontSize="11"/>
+                            <TextBlock Text="{C:Binding Status,StringFormat=状态：{0}}"  Margin="0,2,0,2" FontSize="11"/>
+                            <TextBlock Text="{C:Binding Category,StringFormat=分类：{0}}" Margin="0,2,0,2" FontSize="11"/>
+                            <TextBlock Text="{C:Binding Description,StringFormat=描述：{0}}"  Margin="0,2,0,2" TextWrapping="WrapWithOverflow" FontSize="11"/>
                         </StackPanel>
                     </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <ListBox Grid.Row="2"  Grid.Column="1" 
+                 ItemsSource="{C:Binding LightNovelViews}"
+                 BorderThickness="0"
+                 BorderBrush="White" 
+                 Background="White"
+                 d:ItemsSource="{d:SampleData ItemCount=5}" 
+                 Margin="0,5,0,0">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <WrapPanel HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,2,0,0">
+                        <TextBlock Text="{C:Binding ChapterName}" TextWrapping="WrapWithOverflow" FontSize="11"/>
+                    </WrapPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
