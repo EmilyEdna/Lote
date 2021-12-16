@@ -6,14 +6,22 @@
              xmlns:C="clr-namespace:CalcBinding;assembly=CalcBinding"
              xmlns:local="clr-namespace:Lote.Views.Option"
              xmlns:Views="clr-namespace:Lote.Views" 
+             xmlns:Behavior="clr-namespace:Lote.Common"
              xmlns:S="https://github.com/canton7/Stylet"
              xmlns:hc="https://handyorg.github.io/handycontrol" x:Class="Lote.Views.Option.OptionView" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:l="clr-namespace:Lote.Override"
              mc:Ignorable="d" 
              d:DesignHeight="{C:Binding (Width*0.027), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}" 
              d:DesignWidth="{C:Binding (Width*0.799), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}">
     <UserControl.Resources>
 
         <Style x:Key="ProxyBox" TargetType="TextBox">
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="Width" Value="{C:Binding ((Width-160)*0.19), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}"/>
+        </Style>
+
+        <Style x:Key="ProxyPwdBox" TargetType="PasswordBox">
             <Setter Property="BorderThickness" Value="0,0,0,1"/>
             <Setter Property="Width" Value="{C:Binding ((Width-160)*0.19), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}"/>
         </Style>
@@ -37,7 +45,7 @@
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="30"/>
-                <RowDefinition Height="60"/>
+                <RowDefinition Height="75"/>
             </SelectiveScrollingGrid.RowDefinitions>
             <hc:Divider  Content="代理配置" Style="{StaticResource ProxyDivider}"/>
             <StackPanel Grid.Row="1" HorizontalAlignment="Left">
@@ -57,7 +65,11 @@
                 </WrapPanel>
                 <WrapPanel Style="{StaticResource ProxyWrap}">
                     <TextBlock Text="密码：" Style="{StaticResource TextBlockDefaultPrimary}" Foreground="Black"/>
-                    <TextBox  Style="{StaticResource ProxyBox}" Text="{Binding Root.ProxyPwd,Mode=TwoWay}"/>
+                    <PasswordBox Style="{StaticResource ProxyPwdBox}"  l:LotePassword.Password="{Binding Root.ProxyPwd,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                        <i:Interaction.Behaviors>
+                            <Behavior:PasswordBoxBehavior/>
+                        </i:Interaction.Behaviors>
+                    </PasswordBox>
                 </WrapPanel>
             </StackPanel>
             <hc:Divider  Grid.Row="2"  Content="缓存配置" Style="{StaticResource ProxyDivider}"/>
@@ -75,7 +87,15 @@
                 </WrapPanel>
                 <WrapPanel Style="{StaticResource ProxyWrap}">
                     <TextBlock Text="密码：" Style="{StaticResource TextBlockDefaultPrimary}" Foreground="Black"/>
-                    <TextBox  Style="{StaticResource ProxyBox}" Text="{Binding Root.WkPwd,Mode=TwoWay}"/>
+                    <PasswordBox Style="{StaticResource ProxyPwdBox}"  l:LotePassword.Password="{Binding Root.WkPwd,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                        <i:Interaction.Behaviors>
+                            <Behavior:PasswordBoxBehavior/>
+                        </i:Interaction.Behaviors>
+                    </PasswordBox>
+                </WrapPanel>
+                <WrapPanel Style="{StaticResource ProxyWrap}">
+                    <TextBlock Text="使用默认账号：" Style="{StaticResource TextBlockDefaultPrimary}" Foreground="Black"/>
+                    <CheckBox IsChecked="{C:Binding Root.UseAuthorWKInfo}"/>
                 </WrapPanel>
             </StackPanel>
         </SelectiveScrollingGrid>

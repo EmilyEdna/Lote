@@ -31,10 +31,10 @@ namespace Lote.CommonWindow.ViewMdeol
             this.root = container.Get<IOptionService>().Get() ?? new OptionRootDTO();
             this.Proxy = new NovelProxy
             {
-                IP = root == null ? String.Empty : root.ProxyIP,
-                PassWord = root == null ? String.Empty : root.ProxyPwd,
-                Port = root == null ? -1 : Convert.ToInt32(root.ProxyPort.IsNullOrEmpty() ? "-1" : root.ProxyPort),
-                UserName = root == null ? String.Empty : root.ProxyAccount
+                IP = root.ProxyIP.IsNullOrEmpty() ? String.Empty : root.ProxyIP,
+                PassWord = root.ProxyPwd.IsNullOrEmpty() ? String.Empty : root.ProxyPwd,
+                Port = Convert.ToInt32(root.ProxyPort.IsNullOrEmpty() ? "-1" : root.ProxyPort),
+                UserName = root.ProxyAccount.IsNullOrEmpty() ? String.Empty : root.ProxyAccount
             };
         }
         #region Property
@@ -53,6 +53,12 @@ namespace Lote.CommonWindow.ViewMdeol
         #endregion
 
         #region Method
+
+        protected int CacheTime()
+        {
+            return root.CacheSpan.IsNullOrEmpty() ? 60 : Convert.ToInt32(root.CacheSpan);
+        }
+
         public ICommand SliderChange => new Commands<double>(args =>
         {
             FontSize = (int)args;
@@ -66,7 +72,7 @@ namespace Lote.CommonWindow.ViewMdeol
             {
                 opt.RequestParam = new NovelRequestInput
                 {
-                    CacheSpan = root.CacheSpan.IsNullOrEmpty() ? 60 : Convert.ToInt32(root.CacheSpan),
+                    CacheSpan = CacheTime(),
                     NovelType = NovelEnum.Watch,
                     Proxy = this.Proxy,
                     View = new NovelView

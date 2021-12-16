@@ -20,6 +20,7 @@ namespace Lote.Core.Service.DTO
         #region Wk
         public string WkAccount { get; set; }
         public string WkPwd { get; set; }
+        public bool UseAuthorWKInfo { get; set; }
         #endregion
     }
 }

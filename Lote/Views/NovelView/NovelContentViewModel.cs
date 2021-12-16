@@ -34,10 +34,10 @@ namespace Lote.Views.NovelView
             this.root = container.Get<IOptionService>().Get() ?? new OptionRootDTO();
             this.Proxy = new NovelProxy
             {
-                IP = root == null ? String.Empty:root.ProxyIP,
-                PassWord = root == null ? String.Empty : root.ProxyPwd,
-                Port = root == null ? -1 : Convert.ToInt32(root.ProxyPort.IsNullOrEmpty() ? "-1" : root.ProxyPort),
-                UserName = root == null ? String.Empty : root.ProxyAccount
+                IP = root.ProxyIP.IsNullOrEmpty() ? String.Empty : root.ProxyIP,
+                PassWord = root.ProxyPwd.IsNullOrEmpty() ? String.Empty : root.ProxyPwd,
+                Port = Convert.ToInt32(root.ProxyPort.IsNullOrEmpty() ? "-1" : root.ProxyPort),
+                UserName = root.ProxyAccount.IsNullOrEmpty() ? String.Empty : root.ProxyAccount
             };
         }
 
@@ -65,6 +65,11 @@ namespace Lote.Views.NovelView
         #endregion
 
         #region Method
+        protected int CacheTime()
+        {
+            return root.CacheSpan.IsNullOrEmpty() ? 60 : Convert.ToInt32(root.CacheSpan);
+        }
+
         public void PageUpdated(FunctionEventArgs<int> args)
         {
             PageIndex = args.Info;
@@ -72,7 +77,7 @@ namespace Lote.Views.NovelView
             {
                 opt.RequestParam = new NovelRequestInput
                 {
-                    CacheSpan = root.CacheSpan.IsNullOrEmpty() ? 60 : Convert.ToInt32(root.CacheSpan),
+                    CacheSpan = CacheTime(),
                     NovelType = NovelEnum.Detail,
                     Proxy = this.Proxy,
                     Detail = new NovelDetail
@@ -93,7 +98,7 @@ namespace Lote.Views.NovelView
             {
                 opt.RequestParam = new NovelRequestInput
                 {
-                    CacheSpan= root.CacheSpan.IsNullOrEmpty()?60:Convert.ToInt32(root.CacheSpan),
+                    CacheSpan= CacheTime(),
                     NovelType = NovelEnum.Watch,
                     Proxy = this.Proxy,
                     View = new SDKRequest.NovelView

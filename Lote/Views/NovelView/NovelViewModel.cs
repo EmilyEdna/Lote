@@ -30,10 +30,10 @@ namespace Lote.Views.NovelView
             this.root = container.Get<IOptionService>().Get() ?? new OptionRootDTO();
             this.Proxy = new NovelProxy
             {
-                IP = root == null ? String.Empty : root.ProxyIP,
-                PassWord = root == null ? String.Empty : root.ProxyPwd,
-                Port = root == null ? -1 : Convert.ToInt32(root.ProxyPort.IsNullOrEmpty()?"-1": root.ProxyPort),
-                UserName = root == null ? String.Empty : root.ProxyAccount
+                IP = root.ProxyIP.IsNullOrEmpty() ? String.Empty : root.ProxyIP,
+                PassWord = root.ProxyPwd.IsNullOrEmpty() ? String.Empty : root.ProxyPwd,
+                Port = Convert.ToInt32(root.ProxyPort.IsNullOrEmpty() ? "-1" : root.ProxyPort),
+                UserName = root.ProxyAccount.IsNullOrEmpty() ? String.Empty : root.ProxyAccount
             };
         }
 
@@ -80,13 +80,18 @@ namespace Lote.Views.NovelView
         #endregion
 
         #region Method
+        protected int CacheTime()
+        {
+            return root.CacheSpan.IsNullOrEmpty() ? 60 : Convert.ToInt32(root.CacheSpan);
+        }
+
         protected override void OnViewLoaded()
         {
             var NovelInit = NovelFactory.Novel(opt =>
             {
                 opt.RequestParam = new NovelRequestInput
                 {
-                    CacheSpan = root.CacheSpan.IsNullOrEmpty() ? 60 : Convert.ToInt32(root.CacheSpan),
+                    CacheSpan = CacheTime(),
                     NovelType = NovelEnum.Init,
                     Proxy = this.Proxy
                 };
@@ -104,7 +109,7 @@ namespace Lote.Views.NovelView
              {
                  opt.RequestParam = new NovelRequestInput
                  {
-                     CacheSpan = root.CacheSpan.IsNullOrEmpty() ? 60 : Convert.ToInt32(root.CacheSpan),
+                     CacheSpan = CacheTime(),
                      NovelType = NovelEnum.Search,
                      Proxy = this.Proxy,
                      Search = new NovelSearch
@@ -126,7 +131,7 @@ namespace Lote.Views.NovelView
              {
                  opt.RequestParam = new NovelRequestInput
                  {
-                     CacheSpan = root.CacheSpan.IsNullOrEmpty() ? 60 : Convert.ToInt32(root.CacheSpan),
+                     CacheSpan = CacheTime(),
                      NovelType = NovelEnum.Category,
                      Proxy = this.Proxy,
                      Category = new NovelCategory
@@ -153,7 +158,7 @@ namespace Lote.Views.NovelView
             {
                 opt.RequestParam = new NovelRequestInput
                 {
-                    CacheSpan = root.CacheSpan.IsNullOrEmpty() ? 60 : Convert.ToInt32(root.CacheSpan),
+                    CacheSpan = CacheTime(),
                     NovelType = NovelEnum.Detail,
                     Proxy = this.Proxy,
                     Detail = new NovelDetail

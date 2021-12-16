@@ -29,10 +29,10 @@ namespace Lote.Views.LightNovelView
             this.root = container.Get<IOptionService>().Get() ?? new OptionRootDTO();
             this.Proxy = new LightNovelProxy
             {
-                IP = root == null ? String.Empty : root.ProxyIP,
-                PassWord = root == null ? String.Empty : root.ProxyPwd,
-                Port = root == null ? -1 : Convert.ToInt32(root.ProxyPort.IsNullOrEmpty() ? "-1" : root.ProxyPort),
-                UserName = root == null ? String.Empty : root.ProxyAccount
+                IP = root.ProxyIP.IsNullOrEmpty() ? String.Empty : root.ProxyIP,
+                PassWord = root.ProxyPwd.IsNullOrEmpty() ? String.Empty : root.ProxyPwd,
+                Port = Convert.ToInt32(root.ProxyPort.IsNullOrEmpty() ? "-1" : root.ProxyPort),
+                UserName = root.ProxyAccount.IsNullOrEmpty() ? String.Empty : root.ProxyAccount
             };
         }
 
@@ -67,6 +67,18 @@ namespace Lote.Views.LightNovelView
         #endregion
 
         #region Method
+
+        protected int CacheTime()
+        {
+            return root.CacheSpan.IsNullOrEmpty() ? 60 : Convert.ToInt32(root.CacheSpan);
+        }
+        protected Dictionary<string, string> WkInfo()
+        {
+            if (root.UseAuthorWKInfo)
+                return new Dictionary<string, string> { { root.WkAccount.IsNullOrEmpty() ? "-" : root.WkAccount, root.WkPwd.IsNullOrEmpty() ? "-" : root.WkPwd } };
+            else
+                return new Dictionary<string, string> { { "kilydoll365", "sion8550" } };
+        }
         protected override void OnViewLoaded()
         {
             //初始化
@@ -74,7 +86,7 @@ namespace Lote.Views.LightNovelView
             {
                 opt.RequestParam = new LightNovelRequestInput
                 {
-                    CacheSpan = root.CacheSpan.IsNullOrEmpty() ? 60 : Convert.ToInt32(root.CacheSpan),
+                    CacheSpan = CacheTime(),
                     LightNovelType = LightNovelEnum.Init,
                     Proxy = this.Proxy
                 };
@@ -82,8 +94,8 @@ namespace Lote.Views.LightNovelView
             {
                 Light.RefreshCookie(new LightNovelRefresh
                 {
-                    UserName = this.root == null || this.root.WkAccount.IsNullOrEmpty() ? "kilydoll365" : this.root.WkAccount,
-                    PassWord = this.root == null || this.root.WkPwd.IsNullOrEmpty() ? "sion8550" : this.root.WkPwd
+                    UserName = WkInfo().Keys.FirstOrDefault(),
+                    PassWord = WkInfo().Values.FirstOrDefault()
                 }, this.Proxy);
             });
             LightNovelCategory = new ObservableCollection<LightNovelCategoryResult>(LightNovelInit.CategoryResults);
@@ -93,7 +105,7 @@ namespace Lote.Views.LightNovelView
                 opt.RequestParam = new LightNovelRequestInput
                 {
                     LightNovelType = LightNovelEnum.Category,
-                    CacheSpan = root.CacheSpan.IsNullOrEmpty() ? 60 : Convert.ToInt32(root.CacheSpan),
+                    CacheSpan = CacheTime(),
                     Proxy = this.Proxy,
                     Category = new LightNovelCategory
                     {
@@ -104,8 +116,8 @@ namespace Lote.Views.LightNovelView
             {
                 Light.RefreshCookie(new LightNovelRefresh
                 {
-                    UserName = this.root == null || this.root.WkAccount.IsNullOrEmpty() ? "kilydoll365" : this.root.WkAccount,
-                    PassWord = this.root == null || this.root.WkPwd.IsNullOrEmpty() ? "sion8550" : this.root.WkPwd
+                    UserName = WkInfo().Keys.FirstOrDefault(),
+                    PassWord = WkInfo().Values.FirstOrDefault()
                 }, new LightNovelProxy());
             });
             LightNovelSingleCategory = new ObservableCollection<LightNovelSingleCategoryResults>(LightNovelCate.SingleCategoryResult.Result);
@@ -121,7 +133,7 @@ namespace Lote.Views.LightNovelView
                 opt.RequestParam = new LightNovelRequestInput
                 {
                     LightNovelType = LightNovelEnum.Search,
-                    CacheSpan = root.CacheSpan.IsNullOrEmpty() ? 60 : Convert.ToInt32(root.CacheSpan),
+                    CacheSpan = CacheTime(),
                     Proxy = this.Proxy,
                     Search = new LightNovelSearch
                     {
@@ -133,8 +145,8 @@ namespace Lote.Views.LightNovelView
             {
                 Light.RefreshCookie(new LightNovelRefresh
                 {
-                    UserName = this.root == null || this.root.WkAccount.IsNullOrEmpty() ? "kilydoll365" : this.root.WkAccount,
-                    PassWord = this.root == null || this.root.WkPwd.IsNullOrEmpty() ? "sion8550" : this.root.WkPwd
+                    UserName = WkInfo().Keys.FirstOrDefault(),
+                    PassWord = WkInfo().Values.FirstOrDefault()
                 }, new LightNovelProxy());
             });
 
@@ -148,7 +160,7 @@ namespace Lote.Views.LightNovelView
                 opt.RequestParam = new LightNovelRequestInput
                 {
                     LightNovelType = LightNovelEnum.Category,
-                    CacheSpan = root.CacheSpan.IsNullOrEmpty() ? 60 : Convert.ToInt32(root.CacheSpan),
+                    CacheSpan = CacheTime(),
                     Proxy = this.Proxy,
                     Category = new LightNovelCategory
                     {
@@ -159,8 +171,8 @@ namespace Lote.Views.LightNovelView
             {
                 Light.RefreshCookie(new LightNovelRefresh
                 {
-                    UserName = this.root == null || this.root.WkAccount.IsNullOrEmpty() ? "kilydoll365" : this.root.WkAccount,
-                    PassWord = this.root == null || this.root.WkPwd.IsNullOrEmpty() ? "sion8550" : this.root.WkPwd
+                    UserName = WkInfo().Keys.FirstOrDefault(),
+                    PassWord = WkInfo().Values.FirstOrDefault()
                 }, new LightNovelProxy());
             });
             LightNovelSingleCategory = new ObservableCollection<LightNovelSingleCategoryResults>(LightNovelCate.SingleCategoryResult.Result);
@@ -173,9 +185,9 @@ namespace Lote.Views.LightNovelView
 
         }
 
-        public void GetBook(string args) 
-        { 
-        
+        public void GetBook(string args)
+        {
+
         }
         #endregion
     }
