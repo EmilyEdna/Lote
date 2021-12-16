@@ -37,7 +37,7 @@
                     <Button Content="{C:Binding CategoryName}" 
                             Style="{StaticResource ButtonDashedDanger}"
                             Command="{S:Action Redirect}"
-                            CommandParameter="{C:Binding CollectAddress}"/>
+                            CommandParameter="{C:Binding CategoryAddress}"/>
                 </DataTemplate>
             </hc:ButtonGroup.ItemTemplate>
         </hc:ButtonGroup>
@@ -50,35 +50,23 @@
                   d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,5,0,0">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
+                    <Grid Margin="0,3,0,3">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="100"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="140"/>
+                            <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-                        <Border Grid.RowSpan="3" Width="100" Height="100">
+                        <Border Height="140" Width="140">
                             <Image Source="{C:Binding Cover}" Stretch="Uniform"/>
                         </Border>
-                        <WrapPanel Grid.Column="1" VerticalAlignment="Center"  Margin="0,0,30,0">
-                            <TextBlock Text="{C:Binding BookName,StringFormat=书名：{0}}" />
-                        </WrapPanel>
-                        <WrapPanel Grid.Column="2" VerticalAlignment="Center" Margin="0,0,30,0">
-                            <TextBlock Text="{C:Binding Author,StringFormat=作者：{0}}" />
-                        </WrapPanel>
-                        <WrapPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Margin="0,0,30,0">
-                            <TextBlock Text="{C:Binding Stutas,StringFormat=状态：{0}}" />
-                        </WrapPanel>
-                        <WrapPanel Grid.Column="2" Grid.Row="1" VerticalAlignment="Center" Margin="0,0,30,0">
-                            <TextBlock Text="{C:Binding Category,StringFormat=发行：{0}}"/>
-                        </WrapPanel>
-                        <WrapPanel Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" VerticalAlignment="Center" Margin="0,0,30,0">
-                            <TextBlock Text="{C:Binding Description,StringFormat=描述：{0}}" />
-                        </WrapPanel>
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center"  Margin="0,0,30,0">
+                            <TextBlock Text="{C:Binding BookName,StringFormat=书名：{0}}" Margin="0,2,0,2"/>
+                            <TextBlock Text="{C:Binding Author,StringFormat=作者：{0}}" Margin="0,2,0,2"/>
+                            <TextBlock Text="{C:Binding Press,StringFormat=出版：{0}}"  Margin="0,2,0,2"/>
+                            <TextBlock Text="{C:Binding Date,StringFormat=更新日期：{0}}"  Margin="0,2,0,2"/>
+                            <TextBlock Text="{C:Binding Status,StringFormat=状态：{0}}"  Margin="0,2,0,2"/>
+                            <TextBlock Text="{C:Binding Category,StringFormat=分类：{0}}" Margin="0,2,0,2"/>
+                            <TextBlock Text="{C:Binding Description,StringFormat=描述：{0}}"  Margin="0,2,0,2"/>
+                        </StackPanel>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>

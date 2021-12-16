@@ -128,7 +128,17 @@ namespace Lote.Views.LightNovelView
                 Total = LightNovelCate.SingleCategoryResult.TotalPage;
                 PageIndex = 1;
 
-            }, ex => MessageBox.Error("服务异常", "错误"));
+            }, ex =>
+            {
+                LightNovelFactory.LightNovel(opt =>
+                {
+                    opt.RequestParam = new LightNovelRequestInput
+                    {
+                        LightNovelType = LightNovelEnum.Refresh
+                    };
+                }).Runs();
+                MessageBox.Error("服务异常，请稍后重试", "错误");
+            });
         }
 
         public void SearchBook(string args)
@@ -159,7 +169,17 @@ namespace Lote.Views.LightNovelView
                  });
 
                 Total = LightNovelSearch.SearchResults.TotalPage;
-            },ex=> MessageBox.Error("服务异常", "错误"));
+            }, ex =>
+            {
+                LightNovelFactory.LightNovel(opt =>
+                {
+                    opt.RequestParam = new LightNovelRequestInput
+                    {
+                        LightNovelType = LightNovelEnum.Refresh
+                    };
+                }).Runs();
+                MessageBox.Error("服务异常，请稍后重试", "错误");
+            });
         }
 
         public void Redirect(string args)
@@ -189,7 +209,17 @@ namespace Lote.Views.LightNovelView
                 LightNovelSingleCategory = new ObservableCollection<LightNovelSingleCategoryResults>(LightNovelCate.SingleCategoryResult.Result);
                 Total = LightNovelCate.SingleCategoryResult.TotalPage;
                 PageIndex = 1;
-            },ex=> MessageBox.Error("服务异常", "错误"));
+            }, ex =>
+            {
+                LightNovelFactory.LightNovel(opt =>
+                {
+                    opt.RequestParam = new LightNovelRequestInput
+                    {
+                        LightNovelType = LightNovelEnum.Refresh
+                    };
+                }).Runs();
+                MessageBox.Error("服务异常，请稍后重试", "错误");
+            });
         }
 
         public void PageUpdated(FunctionEventArgs<int> args)
