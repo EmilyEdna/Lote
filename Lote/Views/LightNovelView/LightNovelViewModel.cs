@@ -325,8 +325,9 @@ namespace Lote.Views.LightNovelView
             }
         }
 
-        public void GetBook(string args)
+        public void GetBook(LightNovelSingleCategoryResults entity)
         {
+            
 
         }
 

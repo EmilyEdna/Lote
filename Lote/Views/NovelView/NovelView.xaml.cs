@@ -26,18 +26,5 @@ namespace Lote.Views.NovelView
         {
             InitializeComponent();
         }
-
-        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var vm = (NovelViewModel)this.DataContext;
-            try
-            {
-                vm.GetBook((e.AddedItems[0] as dynamic).DetailAddress);
-            }
-            catch
-            {
-                return;
-            }
-        }
     }
 }

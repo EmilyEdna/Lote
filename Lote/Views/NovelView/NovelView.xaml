@@ -7,6 +7,7 @@
              xmlns:S="https://github.com/canton7/Stylet"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Lote.Views.NovelView"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:Views="clr-namespace:Lote.Views" 
              mc:Ignorable="d" 
              d:DesignHeight="{C:Binding (Width*0.027), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}" 
@@ -43,14 +44,19 @@
             </hc:ButtonGroup.ItemTemplate>
         </hc:ButtonGroup>
         <ListView Grid.Column="0" 
+                  x:Name="listView_left"
                   Grid.Row="2" 
                   ItemsSource="{C:Binding NovelRecommend}" 
                   BorderThickness="0"
                   BorderBrush="White" 
-                  SelectionChanged="ListView_SelectionChanged"
                   Background="White"
                   d:ItemsSource="{d:SampleData ItemCount=5}" 
                   SelectionMode="Single">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{S:Action GetBook}" CommandParameter="{Binding SelectedItem, ElementName=listView_left}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="书名" DisplayMemberBinding="{C:Binding BookName}"/>
@@ -60,13 +66,18 @@
             </ListView.View>
         </ListView>
         <ListView Grid.Column="1" Grid.Row="2"
+                  x:Name="listView_right"
                   ItemsSource="{C:Binding NovelSearch}" 
                   BorderThickness="0"
                   BorderBrush="White" 
-                  SelectionChanged="ListView_SelectionChanged"
                   Background="White"
                   d:ItemsSource="{d:SampleData ItemCount=5}" 
                   SelectionMode="Single">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{S:Action GetBook}" CommandParameter="{Binding SelectedItem, ElementName=listView_right}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="书名" DisplayMemberBinding="{C:Binding BookName}" Width="120"/>

@@ -152,7 +152,7 @@ namespace Lote.Views.NovelView
             Redirect(this.DetailAddress);
         }
 
-        public void GetBook(string args)
+        public void GetBook(dynamic entity)
         {
             var NovelDetail = NovelFactory.Novel(opt =>
             {
@@ -163,14 +163,14 @@ namespace Lote.Views.NovelView
                     Proxy = this.Proxy,
                     Detail = new NovelDetail
                     {
-                        NovelDetailAddress = args
+                        NovelDetailAddress = entity.DetailAddress
                     }
                 };
             }).Runs();
             var vm = container.Get<NovelContentViewModel>();
             vm.NovelDetail = NovelDetail.Details;
             vm.PageIndex = 1;
-            vm.Addr = args;
+            vm.Addr = entity.DetailAddress;
             container.Get<INavigationController>().Delegate.NavigateTo(vm);
         }
         #endregion
