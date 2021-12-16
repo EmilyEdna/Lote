@@ -15,6 +15,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using XExten.Advance.LinqFramework;
 using XExten.Advance.StaticFramework;
 
@@ -68,6 +69,13 @@ namespace Lote.Views.LightNovelView
         }
         #endregion
 
+        #region Field
+        private bool IsSearch = false;
+        private string SearchWord;
+        private string CategoryAddress;
+        private LightNovelSearchEnum SearchType;
+        #endregion
+
         #region Method
 
         protected int CacheTime()
@@ -103,6 +111,7 @@ namespace Lote.Views.LightNovelView
                     }, this.Proxy);
                 });
                 LightNovelCategory = new ObservableCollection<LightNovelCategoryResult>(LightNovelInit.CategoryResults);
+                CategoryAddress = LightNovelInit.CategoryResults.FirstOrDefault().CategoryAddress;
                 //分类
                 var LightNovelCate = LightNovelFactory.LightNovel(opt =>
                 {
@@ -113,7 +122,7 @@ namespace Lote.Views.LightNovelView
                         Proxy = this.Proxy,
                         Category = new LightNovelCategory
                         {
-                            CategoryAddress = LightNovelInit.CategoryResults.FirstOrDefault().CategoryAddress
+                            CategoryAddress = CategoryAddress
                         }
                     };
                 }).Runs(Light =>
@@ -127,7 +136,7 @@ namespace Lote.Views.LightNovelView
                 LightNovelSingleCategory = new ObservableCollection<LightNovelSingleCategoryResults>(LightNovelCate.SingleCategoryResult.Result);
                 Total = LightNovelCate.SingleCategoryResult.TotalPage;
                 PageIndex = 1;
-
+                IsSearch = false;
             }, ex =>
             {
                 LightNovelFactory.LightNovel(opt =>
@@ -143,6 +152,7 @@ namespace Lote.Views.LightNovelView
 
         public void SearchBook(string args)
         {
+            SearchWord = args;
             SyncStatic.TryCatch(() =>
             {
                 //搜索
@@ -156,7 +166,7 @@ namespace Lote.Views.LightNovelView
                          Search = new LightNovelSearch
                          {
                              KeyWord = args,
-                             SearchType = LightNovelSearchEnum.ArticleName
+                             SearchType = SearchType
                          }
                      };
                  }).Runs(Light =>
@@ -168,7 +178,10 @@ namespace Lote.Views.LightNovelView
                      }, new LightNovelProxy());
                  });
 
+                LightNovelSingleCategory = new ObservableCollection<LightNovelSingleCategoryResults>(LightNovelSearch.SearchResults.Result.ToMapest<List<LightNovelSingleCategoryResults>>());
                 Total = LightNovelSearch.SearchResults.TotalPage;
+                PageIndex = 1;
+                IsSearch = true;
             }, ex =>
             {
                 LightNovelFactory.LightNovel(opt =>
@@ -184,6 +197,7 @@ namespace Lote.Views.LightNovelView
 
         public void Redirect(string args)
         {
+            CategoryAddress = args;
             SyncStatic.TryCatch(() =>
             {
                 var LightNovelCate = LightNovelFactory.LightNovel(opt =>
@@ -209,6 +223,7 @@ namespace Lote.Views.LightNovelView
                 LightNovelSingleCategory = new ObservableCollection<LightNovelSingleCategoryResults>(LightNovelCate.SingleCategoryResult.Result);
                 Total = LightNovelCate.SingleCategoryResult.TotalPage;
                 PageIndex = 1;
+                IsSearch = false;
             }, ex =>
             {
                 LightNovelFactory.LightNovel(opt =>
@@ -224,12 +239,100 @@ namespace Lote.Views.LightNovelView
 
         public void PageUpdated(FunctionEventArgs<int> args)
         {
+            if (IsSearch)
+            {
+                SyncStatic.TryCatch(() =>
+                {
+                    PageIndex = args.Info;
+                    //搜索
+                    var LightNovelSearch = LightNovelFactory.LightNovel(opt =>
+                    {
+                        opt.RequestParam = new LightNovelRequestInput
+                        {
+                            LightNovelType = LightNovelEnum.Search,
+                            CacheSpan = CacheTime(),
+                            Proxy = this.Proxy,
+                            Search = new LightNovelSearch
+                            {
+                                Page = args.Info,
+                                KeyWord = SearchWord,
+                                SearchType = SearchType
+                            }
+                        };
+                    }).Runs(Light =>
+                    {
+                        Light.RefreshCookie(new LightNovelRefresh
+                        {
+                            UserName = WkInfo().Keys.FirstOrDefault(),
+                            PassWord = WkInfo().Values.FirstOrDefault()
+                        }, new LightNovelProxy());
+                    });
 
+                    LightNovelSingleCategory = new ObservableCollection<LightNovelSingleCategoryResults>(LightNovelSearch.SearchResults.Result.ToMapest<List<LightNovelSingleCategoryResults>>());
+                    Total = LightNovelSearch.SearchResults.TotalPage;
+
+                }, ex =>
+                {
+                    LightNovelFactory.LightNovel(opt =>
+                    {
+                        opt.RequestParam = new LightNovelRequestInput
+                        {
+                            LightNovelType = LightNovelEnum.Refresh
+                        };
+                    }).Runs();
+                    MessageBox.Error("服务异常，请稍后重试", "错误");
+                });
+            }
+            else {
+                PageIndex = args.Info;
+                SyncStatic.TryCatch(() =>
+                {
+                    var LightNovelCate = LightNovelFactory.LightNovel(opt =>
+                    {
+                        opt.RequestParam = new LightNovelRequestInput
+                        {
+                            LightNovelType = LightNovelEnum.Category,
+                            CacheSpan = CacheTime(),
+                            Proxy = this.Proxy,
+                            Category = new LightNovelCategory
+                            {
+                                Page = args.Info,
+                                CategoryAddress = CategoryAddress
+                            }
+                        };
+                    }).Runs(Light =>
+                    {
+                        Light.RefreshCookie(new LightNovelRefresh
+                        {
+                            UserName = WkInfo().Keys.FirstOrDefault(),
+                            PassWord = WkInfo().Values.FirstOrDefault()
+                        }, new LightNovelProxy());
+                    });
+                    LightNovelSingleCategory = new ObservableCollection<LightNovelSingleCategoryResults>(LightNovelCate.SingleCategoryResult.Result);
+                    Total = LightNovelCate.SingleCategoryResult.TotalPage;
+                    IsSearch = false;
+                }, ex =>
+                {
+                    LightNovelFactory.LightNovel(opt =>
+                    {
+                        opt.RequestParam = new LightNovelRequestInput
+                        {
+                            LightNovelType = LightNovelEnum.Refresh
+                        };
+                    }).Runs();
+                    MessageBox.Error("服务异常，请稍后重试", "错误");
+                });
+            }
         }
 
         public void GetBook(string args)
         {
 
+        }
+
+        public void SetSearchType(ComboBoxItem control) 
+        {
+            SearchType = (LightNovelSearchEnum)control.Tag.ToString().AsInt();
         }
         #endregion
     }

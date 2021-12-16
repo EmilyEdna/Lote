@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Lote.Views.LightNovelView"
              xmlns:hc="https://handyorg.github.io/handycontrol"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:C="clr-namespace:CalcBinding;assembly=CalcBinding"
              xmlns:S="https://github.com/canton7/Stylet"
              xmlns:Views="clr-namespace:Lote.Views" 
@@ -21,11 +22,21 @@
             <RowDefinition Height="2*"/>
             <RowDefinition Height="0.2*"/>
         </Grid.RowDefinitions>
-        <WrapPanel>
+        <WrapPanel >
+            <ComboBox x:Name="comboBox"  Width="{C:Binding (Width*0.08), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}"
+                          Height="{C:Binding (Width*0.027), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}">
+                <ComboBoxItem Content="书名" Tag="0" Selector.IsSelected="True"/>
+                <ComboBoxItem Content="作者" Tag="1"/>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{S:Action SetSearchType}" CommandParameter="{Binding SelectedItem, ElementName=comboBox}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ComboBox>
             <hc:SearchBar TextWrapping="Wrap" 
                           BorderThickness="1" 
                           Style="{StaticResource Search}"
-                          Width="{C:Binding (Width*0.799), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}"
+                          Width="{C:Binding (Width*0.719), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}"
                           Height="{C:Binding (Width*0.027), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}"
                           ShowClearButton="True"
                           Command="{S:Action SearchBook}"
