@@ -36,7 +36,7 @@
             <hc:ButtonGroup.ItemTemplate>
                 <DataTemplate>
                     <Button Content="{C:Binding CategoryName}" 
-                            Style="{StaticResource ButtonSuccess}"
+                            Style="{StaticResource ButtonDashedDanger}"
                             Command="{S:Action Redirect}"
                             CommandParameter="{C:Binding CollectAddress}"/>
                 </DataTemplate>

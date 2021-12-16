@@ -79,7 +79,7 @@ namespace Lote
         /// <param name="e"></param>
         protected override void OnUnhandledException(DispatcherUnhandledExceptionEventArgs e)
         {
-            base.OnUnhandledException(e);
+            HandyControl.Controls.MessageBox.Error("服务异常", "错误");
         }
     }
 }

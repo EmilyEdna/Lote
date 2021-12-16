@@ -25,18 +25,7 @@
             <RowDefinition Height="18"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <hc:DashedBorder Width="{Binding Width, ElementName=window}">
-            <hc:DashedBorder.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#4CE2A214" Offset="0"/>
-                    <GradientStop Color="#4CE2A214" Offset="1"/>
-                    <GradientStop Color="#4C02FFEE" Offset="0.25"/>
-                    <GradientStop Color="#4CE0ACDC" Offset="0.5"/>
-                    <GradientStop Color="#4C02FFEE" Offset="0.75"/>
-                    <GradientStop Color="#4C74CECC" Offset="0.373"/>
-                    <GradientStop Color="#4C74CECC" Offset="0.63"/>
-                </LinearGradientBrush>
-            </hc:DashedBorder.Background>
+        <hc:DashedBorder Width="{Binding Width, ElementName=window}" Background="Black">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.25*"/>

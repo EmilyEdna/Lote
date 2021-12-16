@@ -5,37 +5,22 @@
 
     <!--#region 最大最小关闭-->
     <Style x:Key="BtnClos" TargetType="Button">
-        <Setter Property="Background" Value="#4CFFADF8"/>
+        <Setter Property="Background" Value="White"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border Width="18" Height="18" CornerRadius="30" Background="{TemplateBinding Background}" BorderThickness="1" BorderBrush="#FFF9F46F" x:Name="BorderClose">
+                    <Border Width="18" Height="18" CornerRadius="30" Background="{TemplateBinding Background}" BorderThickness="0" x:Name="BorderClose">
                         <Path Data="{StaticResource CloseGeometryIcon}" Stretch="Fill" Width="10" Height="10" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Path.Fill>
-                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                    <GradientStop Color="Gray"/>
-                                    <GradientStop Color="#FFF9A207" Offset="0.2"/>
-                                    <GradientStop Color="#FF15BEEA" Offset="0.4"/>
-                                    <GradientStop Color="#FF00FF4A" Offset="0.5"/>
-                                    <GradientStop Color="#FF15BEEA" Offset="0.6"/>
-                                    <GradientStop Color="#FFF9A207" Offset="0.8"/>
-                                    <GradientStop Color="Gray" Offset="1"/>
-                                </LinearGradientBrush>
+                                #FFFF8000
                             </Path.Fill>
                         </Path>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="BorderClose">
-                                <Setter.Value>
-                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                        <GradientStop Color="#7FEF15B5" Offset="0"/>
-                                        <GradientStop Color="#7FF1B91E" Offset="1"/>
-                                    </LinearGradientBrush>
-                                </Setter.Value>
-                            </Setter>
+                            <Setter Property="Background" TargetName="BorderClose" Value="DeepSkyBlue"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -43,37 +28,22 @@
         </Setter>
     </Style>
     <Style x:Key="BtnMin" TargetType="Button">
-        <Setter Property="Background" Value="#4CFFADF8"/>
+        <Setter Property="Background" Value="White"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border Width="18" Height="18" CornerRadius="30" Background="{TemplateBinding Background}" BorderThickness="1" BorderBrush="#FFF9F46F" x:Name="BorderMin">
+                    <Border Width="18" Height="18" CornerRadius="30" Background="{TemplateBinding Background}" BorderThickness="0" x:Name="BorderMin">
                         <Path Data="{StaticResource MinGeometryIcon}" Stretch="Fill" Width="10" Height="1" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Path.Fill>
-                                <RadialGradientBrush>
-                                    <GradientStop Color="Gray"/>
-                                    <GradientStop Color="#FFF9A207" Offset="0.2"/>
-                                    <GradientStop Color="#FF15BEEA" Offset="0.4"/>
-                                    <GradientStop Color="#FF00FF4A" Offset="0.5"/>
-                                    <GradientStop Color="#FF15BEEA" Offset="0.6"/>
-                                    <GradientStop Color="#FFF9A207" Offset="0.8"/>
-                                    <GradientStop Color="Gray" Offset="1"/>
-                                </RadialGradientBrush>
+                                #FFFF8000
                             </Path.Fill>
                         </Path>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="BorderMin">
-                                <Setter.Value>
-                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                        <GradientStop Color="#7FEF15B5" Offset="0"/>
-                                        <GradientStop Color="#7FF1B91E" Offset="1"/>
-                                    </LinearGradientBrush>
-                                </Setter.Value>
-                            </Setter>
+                            <Setter Property="Background" TargetName="BorderMin" Value="DeepSkyBlue"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -81,37 +51,22 @@
         </Setter>
     </Style>
     <Style x:Key="BtnMax" TargetType="Button">
-        <Setter Property="Background" Value="#4CFFADF8"/>
+        <Setter Property="Background" Value="White"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border Width="18" Height="18" CornerRadius="30" Background="{TemplateBinding Background}" BorderThickness="1" BorderBrush="#FFF9F46F" x:Name="BorderMax">
+                    <Border Width="18" Height="18" CornerRadius="30" Background="{TemplateBinding Background}" BorderThickness="0" x:Name="BorderMax">
                         <Path Data="{StaticResource MaxGeometryIcon}" Stretch="Fill" Width="10" Height="10" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Path.Fill>
-                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                    <GradientStop Color="Gray"/>
-                                    <GradientStop Color="#FFF9A207" Offset="0.2"/>
-                                    <GradientStop Color="#FF15BEEA" Offset="0.4"/>
-                                    <GradientStop Color="#FF00FF4A" Offset="0.5"/>
-                                    <GradientStop Color="#FF15BEEA" Offset="0.6"/>
-                                    <GradientStop Color="#FFF9A207" Offset="0.8"/>
-                                    <GradientStop Color="Gray" Offset="1"/>
-                                </LinearGradientBrush>
+                                #FFFF8000
                             </Path.Fill>
                         </Path>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="BorderMax">
-                                <Setter.Value>
-                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                        <GradientStop Color="#7FEF15B5" Offset="0"/>
-                                        <GradientStop Color="#7FF1B91E" Offset="1"/>
-                                    </LinearGradientBrush>
-                                </Setter.Value>
-                            </Setter>
+                            <Setter Property="Background" TargetName="BorderMax" Value="DeepSkyBlue"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -131,28 +86,16 @@
                     <Grid Height="50" x:Name="XGrid">
                         <Grid.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="#7FEFE8C9"/>
-                                <GradientStop Color="#7FBCE4DF" Offset="1"/>
+                                <GradientStop Color="DimGray"/>
+                                <GradientStop Color="LightCoral" Offset="1"/>
                             </LinearGradientBrush>
                         </Grid.Background>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.5*"/>
                             <ColumnDefinition Width="5*"/>
                         </Grid.ColumnDefinitions>
-                        <Border  Background="Transparent" BorderThickness="0,0,1,0" BorderBrush="#FFFF0080" Grid.Column="0">
-                            <Path Data="{TemplateBinding Svg}" Stretch="Fill" Width="40" Height="40" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <Path.Stroke>
-                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                        <GradientStop Color="#FFFF03D3"/>
-                                        <GradientStop Color="#FFF9A207" Offset="0.2"/>
-                                        <GradientStop Color="#FF15BEEA" Offset="0.4"/>
-                                        <GradientStop Color="#FF51EA7D" Offset="0.5"/>
-                                        <GradientStop Color="#FF15BEEA" Offset="0.6"/>
-                                        <GradientStop Color="#FFF9A207" Offset="0.8"/>
-                                        <GradientStop Color="#FFFF03D3" Offset="1"/>
-                                    </LinearGradientBrush>
-                                </Path.Stroke>
-                            </Path>
+                        <Border  Background="Transparent" BorderThickness="0,0,1,0" BorderBrush="White" Grid.Column="0">
+                            <Path Data="{TemplateBinding Svg}" Stretch="Fill" Width="40" Height="40" HorizontalAlignment="Center" VerticalAlignment="Center" Stroke="Black"/>
                         </Border>
                         <StackPanel Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center">
                             <TextBlock Margin="10,0,0,0" Text="{TemplateBinding Content}"/>
@@ -160,14 +103,8 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="XGrid">
-                                <Setter.Value>
-                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                        <GradientStop Color="#7FEF15B5" Offset="0"/>
-                                        <GradientStop Color="#7FF1B91E" Offset="1"/>
-                                    </LinearGradientBrush>
-                                </Setter.Value>
-                            </Setter>
+                            <Setter Property="Background" TargetName="XGrid" Value="#7FF1B91E"/>
+
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

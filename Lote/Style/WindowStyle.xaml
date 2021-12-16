@@ -20,18 +20,7 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <WrapPanel Background="Transparent" Width="{TemplateBinding Width}"/>
-                        <Border BorderThickness="1" Grid.Row="1" SnapsToDevicePixels="True"  Background="{TemplateBinding Background}">
-                            <Border.BorderBrush>
-                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                    <GradientStop Color="#FFFF03D3"/>
-                                    <GradientStop Color="#FFF9A207" Offset="0.2"/>
-                                    <GradientStop Color="#FF15BEEA" Offset="0.4"/>
-                                    <GradientStop Color="#FF00FF4A" Offset="0.5"/>
-                                    <GradientStop Color="#FF15BEEA" Offset="0.6"/>
-                                    <GradientStop Color="#FFF9A207" Offset="0.8"/>
-                                    <GradientStop Color="#FFFF03D3" Offset="1"/>
-                                </LinearGradientBrush>
-                            </Border.BorderBrush>
+                        <Border BorderThickness="1" Grid.Row="1" SnapsToDevicePixels="True"  Background="{TemplateBinding Background}" BorderBrush="Black">
                             <ContentPresenter />
                         </Border>
                     </Grid>
