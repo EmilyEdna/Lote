@@ -54,7 +54,7 @@
             </hc:ButtonGroup.ItemTemplate>
         </hc:ButtonGroup>
         <ListBox  Grid.Row="2"  Grid.Column="0"
-                  x:Name="listBox"
+                  x:Name="listBox_left"
                   ItemsSource="{C:Binding LightNovelSingleCategory}" 
                   BorderThickness="0"
                   BorderBrush="White" 
@@ -62,7 +62,7 @@
                   d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,5,0,0">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">
-                    <i:InvokeCommandAction Command="{S:Action GetBook}" CommandParameter="{Binding SelectedItem, ElementName=listBox}"/>
+                    <i:InvokeCommandAction Command="{S:Action GetBook}" CommandParameter="{Binding SelectedItem, ElementName=listBox_left}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
             <ListBox.ItemTemplate>
@@ -89,12 +89,18 @@
             </ListBox.ItemTemplate>
         </ListBox>
         <ListBox Grid.Row="2"  Grid.Column="1" 
+                 x:Name="listBox_right"
                  ItemsSource="{C:Binding LightNovelViews}"
                  BorderThickness="0"
                  BorderBrush="White" 
                  Background="White"
                  d:ItemsSource="{d:SampleData ItemCount=5}" 
                  Margin="0,5,0,0">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{S:Action GetContent}" CommandParameter="{Binding SelectedItem, ElementName=listBox_right}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <WrapPanel HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,2,0,0">

@@ -1,0 +1,44 @@
+﻿<hc:Window x:Class="Lote.CommonWindow.LightNovelContentWindows"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Lote.CommonWindow"
+         xmlns:C="clr-namespace:CalcBinding;assembly=CalcBinding"
+        xmlns:S="https://github.com/canton7/Stylet"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:Behavior="clr-namespace:Lote.Common"
+        mc:Ignorable="d"
+        xmlns:viewModels="clr-namespace:Lote.CommonWindow.ViewMdeol"
+        d:DataContext="{d:DesignInstance Type=viewModels:LightNovelContentWindowsViewModel}"
+        xmlns:hc="https://handyorg.github.io/handycontrol"
+        WindowStartupLocation="CenterScreen"
+        Height="800" 
+        Width="1200" 
+        Style="{StaticResource Master}">
+    <Grid HorizontalAlignment="Center" Width="{Binding Width, ElementName=window}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="18"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <hc:DashedBorder Width="{Binding Width, ElementName=window}" Background="Black">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.25*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="0.1*"/>
+                </Grid.ColumnDefinitions>
+                <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2">
+                    <Button Style="{StaticResource BtnMin}"/>
+                    <Button Style="{StaticResource BtnMax}"/>
+                    <Button Style="{StaticResource BtnClos}" Click="Close"/>
+                </WrapPanel>
+            </Grid>
+        </hc:DashedBorder>
+        <Grid Grid.Row="1">
+
+
+
+        </Grid>
+    </Grid>
+</hc:Window>

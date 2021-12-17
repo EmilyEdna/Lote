@@ -5,6 +5,9 @@ using LightNovel.SDK.ViewModel;
 using LightNovel.SDK.ViewModel.Enums;
 using LightNovel.SDK.ViewModel.Request;
 using LightNovel.SDK.ViewModel.Response;
+using Lote.CommonWindow;
+using Lote.CommonWindow.ViewMdeol;
+using Lote.Core.Common;
 using Lote.Core.Service;
 using Lote.Core.Service.DTO;
 using Stylet;
@@ -12,8 +15,10 @@ using StyletIoC;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using XExten.Advance.LinqFramework;
@@ -26,6 +31,7 @@ namespace Lote.Views.LightNovelView
         private readonly IContainer container;
         private readonly OptionRootDTO root;
         private readonly LightNovelProxy Proxy;
+        private readonly IDictionary<string, LightNovelContentWindows> data;
         public LightNovelViewModel(IContainer container)
         {
             this.container = container;
@@ -37,6 +43,7 @@ namespace Lote.Views.LightNovelView
                 Port = Convert.ToInt32(root.ProxyPort.IsNullOrEmpty() ? "-1" : root.ProxyPort),
                 UserName = root.ProxyAccount.IsNullOrEmpty() ? String.Empty : root.ProxyAccount
             };
+            this.data = new Dictionary<string, LightNovelContentWindows>();
         }
 
         #region Property
@@ -82,6 +89,7 @@ namespace Lote.Views.LightNovelView
         private string CategoryAddress;
         private LightNovelSearchEnum SearchType;
         private int Page;
+        private string BookName;
         #endregion
 
         #region Method
@@ -263,6 +271,8 @@ namespace Lote.Views.LightNovelView
 
         public void GetBook(LightNovelSingleCategoryResults entity)
         {
+            BookName = entity.BookName;
+
             SyncStatic.TryCatch(() =>
             {
                 var LightNovelDetail = LightNovelFactory.LightNovel(opt =>
@@ -326,6 +336,83 @@ namespace Lote.Views.LightNovelView
         public void SetSearchType(ComboBoxItem control)
         {
             SearchType = (LightNovelSearchEnum)control.Tag.ToString().AsInt();
+        }
+
+        public void GetContent(LightNovelViewResult entity)
+        {
+            SyncStatic.TryCatch(() =>
+            {
+                //内容
+                var LightNovelContent = LightNovelFactory.LightNovel(opt =>
+                {
+                    opt.RequestParam = new LightNovelRequestInput
+                    {
+                        CacheSpan = CacheTime(),
+                        LightNovelType = LightNovelEnum.Content,
+                        Proxy = this.Proxy,
+                        Content = new LightNovelContent
+                        {
+                            ChapterURL = entity.ChapterURL,
+                        }
+                    };
+                }).Runs();
+
+                if (DownNovel(entity.ChapterURL, LightNovelContent.ContentResult.Content) == false)
+                    return;
+
+                var vm = container.Get<LightNovelContentWindowsViewModel>();
+                vm.LightNovelContent = LightNovelContent.ContentResult;
+                LightNovelContentWindows win = null;
+                if (data.ContainsKey(nameof(LightNovelContentWindows)))
+                {
+                    win = data[nameof(LightNovelContentWindows)];
+                    win.DataContext = vm;
+                }
+                else
+                {
+                    win = new LightNovelContentWindows();
+                    data[nameof(NovelContentWindows)] = win;
+                    win.DataContext = vm;
+                    win.Show();
+                }
+
+            }, ex => MessageBox.Error("服务异常，请稍后重试", "错误"));
+
+        }
+
+        private bool DownNovel(string Url, string Check)
+        {
+            if (Check.Equals("因版权问题，文库不再提供该小说的阅读！"))
+            {
+                var result = MessageBox.Show("因版权问题，文库不再提供该小说的阅读！是否下载阅读？", "提示",
+                      System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Information);
+
+                var UId = Regex.Matches(Url, "[0-9]+/").LastOrDefault().Value.Split("/").FirstOrDefault().AsInt();
+
+                if (result == System.Windows.MessageBoxResult.Yes)
+                {
+                    var LightNovelDown = LightNovelFactory.LightNovel(opt =>
+                    {
+                        opt.RequestParam = new LightNovelRequestInput
+                        {
+                            LightNovelType = LightNovelEnum.Down,
+                            Proxy = this.Proxy,
+                            Down = new LightNovelDown
+                            {
+                                UId = UId,
+                                BookName = BookName
+                            }
+                        };
+                    }).Runs();
+
+                    var dir = FileUtily.Instance.DownFile(LightNovelDown.DownResult.Down, $"{BookName}.txt");
+                    MessageBox.Info("下载完成", "提示");
+                    Process.Start("explorer.exe", dir);
+                    return false;
+                }
+                return false;
+            }
+            return true;
         }
         #endregion
     }

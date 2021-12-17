@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace Lote.Core.Common
         /// </summary>
         /// <param name="FileRoute"></param>
         /// <returns></returns>
-        internal  string  CreateFile(string FileRoute, string FileName)
+        public  string  CreateFile(string FileRoute, string FileName)
         {
             FileRoute = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, FileRoute);
             if (Directory.Exists(FileRoute) == false) Directory.CreateDirectory(FileRoute);
@@ -22,6 +23,25 @@ namespace Lote.Core.Common
             if (File.Exists(FileName) == false)
                 File.Create(FileName).Dispose();
             return FileName;
+        }
+
+        /// <summary>
+        /// 写入文件流
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <param name="FileName"></param>
+        public string DownFile(byte[] bytes,string FileName)
+        {
+            FileName = CreateFile($"Download{Path.DirectorySeparatorChar}LightNovel", FileName);
+            Stream stream = new MemoryStream(bytes);
+            FileStream fs = new FileStream(FileName, FileMode.Create);
+            BinaryWriter writer = new BinaryWriter(fs);
+            writer.Write(bytes);
+            writer.Close();
+            fs.Close();
+            stream.Close();
+            stream.Dispose();
+            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"Download{Path.DirectorySeparatorChar}LightNovel");
         }
     }
 }
