@@ -25,6 +25,18 @@ namespace Lote.Common
         }
     }
 
+    public class LightTextBlockConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value.AsString().IsNullOrEmpty() ? null : $"\t{value.AsString().Replace("\r\n", "\n\t")}";
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
     public class VisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

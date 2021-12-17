@@ -1,4 +1,4 @@
-﻿<hc:Window x:Class="Lote.CommonWindow.LightNovelContentWindows"
+﻿<hc:Window x:Name="window" x:Class="Lote.CommonWindow.LightNovelContentWindows"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -16,10 +16,14 @@
         Height="800" 
         Width="1200" 
         Style="{StaticResource Master}">
+    <hc:Window.Resources>
+        <Behavior:LightTextBlockConverter x:Key="ContentConverter"/>
+    </hc:Window.Resources>
     <Grid HorizontalAlignment="Center" Width="{Binding Width, ElementName=window}">
         <Grid.RowDefinitions>
             <RowDefinition Height="18"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
         <hc:DashedBorder Width="{Binding Width, ElementName=window}" Background="Black">
             <Grid>
@@ -36,9 +40,54 @@
             </Grid>
         </hc:DashedBorder>
         <Grid Grid.Row="1">
-
-
-
+            <WrapPanel Grid.Row="1" Visibility="{C:Binding Show,FalseToVisibility=Hidden}">
+                <hc:ScrollViewer   VerticalScrollBarVisibility="Auto">
+                    <TextBlock Text="{Binding LightNovelContent.Content,Converter={StaticResource ContentConverter}}" 
+                           Style="{StaticResource TextBlockDefaultWarning}" FontSize="{C:Binding FontSize}"
+                           TextWrapping="Wrap"
+                           Width="{Binding Width, ElementName=window}"
+                           Foreground="Black"/>
+                </hc:ScrollViewer>
+            </WrapPanel>
+            <WrapPanel Grid.Row="1" HorizontalAlignment="Center" Visibility="{C:Binding (!Show),FalseToVisibility=Hidden}">
+                <ListBox  ItemsSource="{Binding LightNovelContent.Image}"
+                          BorderThickness="0"
+                         d:ItemsSource="{d:SampleData ItemCount=5}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderThickness="0">
+                                <Image Source="{Binding .}" Stretch="Uniform" Width="750" Height="750"/>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </WrapPanel>
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Text="字体大小：" Style="{StaticResource TextBlockDefaultPrimary}"/>
+                <hc:PreviewSlider Width="200" Background="#FF00A1F5"
+                                      Maximum="30"
+                                      Value="22"
+                                      IsSnapToTickEnabled="True"
+                                      Minimum="12">
+                    <i:Interaction.Behaviors>
+                        <Behavior:SliderValueChangedBehavior Command="{Binding SliderChange}"/>
+                    </i:Interaction.Behaviors>
+                </hc:PreviewSlider>
+            </WrapPanel>
+            <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1">
+                <TextBlock Text="切换背景：" Style="{StaticResource TextBlockDefaultPrimary}"/>
+                <Button Style="{StaticResource Colorful}" Background="#FFF3E2E2" Click="WindowColor"/>
+                <Button Style="{StaticResource Colorful}" Background="#FFDBCBA0" Click="WindowColor"/>
+                <Button Style="{StaticResource Colorful}" Background="#FFCCDADE" Click="WindowColor"/>
+                <Button Style="{StaticResource Colorful}" Background="#FFCEE0CE" Click="WindowColor"/>
+                <Button Style="{StaticResource Colorful}" Background="#FFCDCDCD" Click="WindowColor"/>
+            </WrapPanel>
         </Grid>
     </Grid>
 </hc:Window>

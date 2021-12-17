@@ -362,6 +362,7 @@ namespace Lote.Views.LightNovelView
 
                 var vm = container.Get<LightNovelContentWindowsViewModel>();
                 vm.LightNovelContent = LightNovelContent.ContentResult;
+                vm.Show = LightNovelContent.ContentResult.Image == null;
                 LightNovelContentWindows win = null;
                 if (data.ContainsKey(nameof(LightNovelContentWindows)))
                 {

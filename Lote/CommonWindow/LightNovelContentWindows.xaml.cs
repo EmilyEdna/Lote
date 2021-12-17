@@ -28,5 +28,10 @@ namespace Lote.CommonWindow
         {
             this.Close();
         }
+
+        private void WindowColor(object sender, RoutedEventArgs e)
+        {
+            this.window.Background = (sender as Button).Background;
+        }
     }
 }
