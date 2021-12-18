@@ -9,9 +9,7 @@
              xmlns:local="clr-namespace:Lote.Views.NovelView"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:Views="clr-namespace:Lote.Views" 
-             mc:Ignorable="d" 
-             d:DesignHeight="{C:Binding (Width*0.027), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}" 
-             d:DesignWidth="{C:Binding (Width*0.799), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}">
+             mc:Ignorable="d">
     <Grid Background="White">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -28,7 +26,7 @@
                           BorderThickness="1" 
                           Style="{StaticResource Search}"
                           Width="{C:Binding (Width*0.799), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}"
-                          Height="{C:Binding (Width*0.027), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}"
+                          Height="{C:Binding (Height*0.0393), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}"
                           ShowClearButton="True"
                           Command="{S:Action SearchBook}"
                           CommandParameter="{Binding Text, RelativeSource={RelativeSource Self}}" />

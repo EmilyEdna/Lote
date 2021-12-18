@@ -9,9 +9,7 @@
              xmlns:C="clr-namespace:CalcBinding;assembly=CalcBinding"
              xmlns:S="https://github.com/canton7/Stylet"
              xmlns:Views="clr-namespace:Lote.Views" 
-             mc:Ignorable="d" 
-             d:DesignHeight="{C:Binding (Width*0.027), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}" 
-             d:DesignWidth="{C:Binding (Width*0.799), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}">
+             mc:Ignorable="d">
     <Grid Background="White">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.7*"/>
@@ -25,7 +23,7 @@
         </Grid.RowDefinitions>
         <WrapPanel Grid.ColumnSpan="2">
             <ComboBox x:Name="comboBox"  Width="{C:Binding (Width*0.08), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}"
-                          Height="{C:Binding (Width*0.027), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}">
+                          Height="{C:Binding (Height*0.0393), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}">
                 <ComboBoxItem Content="书名" Tag="0" Selector.IsSelected="True"/>
                 <ComboBoxItem Content="作者" Tag="1"/>
                 <i:Interaction.Triggers>
@@ -38,7 +36,7 @@
                           BorderThickness="1" 
                           Style="{StaticResource Search}"
                           Width="{C:Binding (Width*0.719), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}"
-                          Height="{C:Binding (Width*0.027), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}"
+                          Height="{C:Binding (Height*0.0393), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}"
                           ShowClearButton="True"
                           Command="{S:Action SearchBook}"
                           CommandParameter="{Binding Text, RelativeSource={RelativeSource Self}}" />
