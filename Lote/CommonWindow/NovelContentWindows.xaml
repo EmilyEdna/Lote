@@ -17,8 +17,8 @@
         Width="1200" 
         Style="{StaticResource Master}">
     <hc:Window.Resources>
-        <Behavior:TextBlockConverter x:Key="ContentConverter"/>
-        <Behavior:VisibilityConverter x:Key="VisibleConverter"/>
+        <Behavior:NovelTextBlockConverter x:Key="ContentConverter"/>
+        <Behavior:NovelVisibilityConverter x:Key="VisibleConverter"/>
     </hc:Window.Resources>
     <Grid HorizontalAlignment="Center" Width="{Binding Width, ElementName=window}">
         <Grid.RowDefinitions>

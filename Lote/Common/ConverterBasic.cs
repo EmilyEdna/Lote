@@ -12,7 +12,7 @@ using XExten.Advance.StaticFramework;
 
 namespace Lote.Common
 {
-    public class TextBlockConverter : IValueConverter
+    public class NovelTextBlockConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -24,8 +24,7 @@ namespace Lote.Common
             throw new NotImplementedException();
         }
     }
-
-    public class LightTextBlockConverter : IValueConverter
+    public class LightNovelTextBlockConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -37,7 +36,23 @@ namespace Lote.Common
             throw new NotImplementedException();
         }
     }
-    public class VisibilityConverter : IValueConverter
+    public class AnimeButtonContent : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var Value = value.AsString().AsSpan();
+            if (Value.Length > 12)
+                return Value[..12].ToString() + "...";
+            else
+                return value;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    public class NovelVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

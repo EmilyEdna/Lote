@@ -1,27 +1,31 @@
-﻿<UserControl
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Lote.Views.AnimeView"
              xmlns:hc="https://handyorg.github.io/handycontrol"
              xmlns:S="https://github.com/canton7/Stylet"
+             xmlns:Behavior ="clr-namespace:Lote.Common"
              xmlns:C="clr-namespace:CalcBinding;assembly=CalcBinding"
              xmlns:Views="clr-namespace:Lote.Views" x:Class="Lote.Views.AnimeView.AnimeView"
              Width="958.8"
              Height="761.6"
              mc:Ignorable="d">
+    <UserControl.Resources>
+        <Behavior:AnimeButtonContent x:Key="ContentConverter"/>
+    </UserControl.Resources>
     <Grid Background="White">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.1*"/>
             <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="0.22*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.095*"/>
-            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.135*"/>
+            <RowDefinition Height="0.135*"/>
+            <RowDefinition Height="0.42*"/>
             <RowDefinition Height="2*"/>
-            <RowDefinition Height="0.2*"/>
+            <RowDefinition Height="0.15*"/>
         </Grid.RowDefinitions>
         <WrapPanel Grid.ColumnSpan="3">
             <hc:SearchBar TextWrapping="Wrap" 
@@ -38,7 +42,7 @@
                 <DataTemplate>
                     <Button Content="{C:Binding Key}" 
                             Style="{StaticResource ButtonDashedDanger}"
-                            Command="{S:Action Redirect}"
+                            Command="{S:Action Category}"
                             CommandParameter="{C:Binding Value}"/>
                 </DataTemplate>
             </hc:ButtonGroup.ItemTemplate>
@@ -46,7 +50,9 @@
         <ListBox ItemsSource="{C:Binding LetterCate}" 
                  BorderThickness="0"
                  Grid.Column="0" 
-                 Grid.RowSpan="2" 
+                 Grid.RowSpan="3" 
+                  BorderBrush="White" 
+                 Background="White"
                  Grid.Row="2" 
                  Style="{StaticResource StackPanelVerticalListBox}">
             <ListBox.ItemTemplate>
@@ -62,5 +68,107 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <hc:ScrollViewer Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2">
+            <hc:ScrollViewer.Content>
+                <ItemsControl ItemsSource="{C:Binding WeekDay}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.05*"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding DayName}" Grid.Column="0" Margin="0,0,0,1"/>
+                                <ListBox 
+                                        ItemsSource="{C:Binding DayRecommends}" 
+                                        Grid.Column="1" 
+                                        Margin="0,0,0,1"  
+                                        Style="{StaticResource StackPanelVerticalListBox}" 
+                                        BorderThickness="0">
+                                    <ListBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel/>
+                                        </ItemsPanelTemplate>
+                                    </ListBox.ItemsPanel>
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <WrapPanel Orientation="Horizontal">
+                                                <Button Content="{C:Binding AnimeName}"  
+                                                        CommandParameter="{C:Binding AnimeURL}" 
+                                                        BorderThickness="0"
+                                                        Margin="1"
+                                                        Command="{S:Action Redirect}"
+                                                        Style="{StaticResource ButtonDashedPrimary.Small}"/>
+                                            </WrapPanel>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </hc:ScrollViewer.Content>
+        </hc:ScrollViewer>
+        <ListBox Grid.Row="3" 
+                 Grid.Column="1" 
+                 ItemsSource="{C:Binding Result}" 
+                 BorderThickness="0" 
+                 Style="{StaticResource WrapPanelHorizontalListBox}"
+                 BorderBrush="White" 
+                 Background="White">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <WrapPanel Orientation="Horizontal" Margin="8">
+                        <StackPanel>
+                            <Border BorderThickness="1" BorderBrush="DeepPink">
+                                <Image Source="{C:Binding AnimeCover}"   hc:Poptip.Content="{Binding AnimeName}"
+                                    hc:Poptip.Placement="Bottom"  Stretch="UniformToFill" Width="160"/>
+                            </Border>
+                            <Button Content="{Binding AnimeName,Converter={StaticResource ContentConverter}}" 
+                                    Style="{StaticResource ButtonDashedInfo.Small}"
+                                    BorderThickness="0"
+                                    Command="{S:Action Redirect}"
+                                    CommandParameter="{C:Binding DetailAddress}" 
+                                    Margin="3"/>
+                        </StackPanel>
+                    </WrapPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <ListBox Grid.Row="3" 
+                 Grid.Column="2"  
+                 BorderThickness="0" 
+                 Style="{StaticResource WrapPanelHorizontalListBox}"
+                 ItemsSource="{C:Binding Detail}"
+                 BorderBrush="White" 
+                 Background="White">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Button Content="{C:Binding CollectName}" 
+                            Margin="5"
+                            Style="{StaticResource ButtonDanger}"
+                            CommandParameter="{C:Binding WatchAddress}"
+                            Visibility="{C:Binding (!IsDownURL),FalseToVisibility=Hidden}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <hc:Pagination Grid.Row="4"  Grid.ColumnSpan="2"
+                        Grid.Column="1"
+                       Margin="0,5,0,0"
+                       HorizontalAlignment="Center"
+                       MaxPageCount="{C:Binding Total}" 
+                       PageIndex="{C:Binding PageIndex}" 
+                       IsJumpEnabled="True">
+            <hc:Interaction.Triggers>
+                <hc:EventTrigger EventName="PageUpdated">
+                    <hc:EventToCommand Command="{S:Action PageUpdated}" PassEventArgsToCommand="True" />
+                </hc:EventTrigger>
+            </hc:Interaction.Triggers>
+        </hc:Pagination>
     </Grid>
 </UserControl>
