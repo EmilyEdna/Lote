@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lote.Core.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,14 +25,39 @@ namespace Lote.CommonWindow
             InitializeComponent();
         }
 
-        private void Close(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
         private void WindowColor(object sender, RoutedEventArgs e)
         {
             this.window.Background = (sender as Button).Background;
+        }
+
+        private void SysClick(object sender, RoutedEventArgs e)
+        {
+            var btn = (sender as Button);
+            var SysFunc = Enum.Parse<SysFuncEnum>(btn.CommandParameter.ToString());
+            switch (SysFunc)
+            {
+                case SysFuncEnum.Min:
+                    Min();
+                    break;
+                case SysFuncEnum.Max:
+                    Max();
+                    break;
+                case SysFuncEnum.Close:
+                    this.Close();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void Max()
+        {
+            this.window.WindowState = this.window.WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
+        }
+
+        private void Min()
+        {
+            this.window.WindowState = WindowState.Minimized;
         }
     }
 }

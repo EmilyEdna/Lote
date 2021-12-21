@@ -152,6 +152,7 @@
                     <Button Content="{C:Binding CollectName}" 
                             Margin="5"
                             Style="{StaticResource ButtonDanger}"
+                            Command="{S:Action Play}"
                             CommandParameter="{C:Binding WatchAddress}"
                             Visibility="{C:Binding (!IsDownURL),FalseToVisibility=Hidden}"/>
                 </DataTemplate>

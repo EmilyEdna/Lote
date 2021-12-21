@@ -33,9 +33,9 @@
                     <ColumnDefinition Width="0.1*"/>
                 </Grid.ColumnDefinitions>
                 <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2">
-                    <Button Style="{StaticResource BtnMin}"/>
-                    <Button Style="{StaticResource BtnMax}"/>
-                    <Button Style="{StaticResource BtnClos}" Click="Close"/>
+                    <Button Style="{StaticResource BtnMin}" Click="SysClick" CommandParameter="0"/>
+                    <Button Style="{StaticResource BtnMax}" Click="SysClick" CommandParameter="1"/>
+                    <Button Style="{StaticResource BtnClos}" Click="SysClick" CommandParameter="2"/>
                 </WrapPanel>
             </Grid>
         </hc:DashedBorder>
@@ -71,6 +71,8 @@
                     <hc:PreviewSlider Width="200" Background="#FF00A1F5"
                                       Maximum="30"
                                       Value="22"
+                                      hc:TipElement.Visibility="Visible" 
+                                      hc:TipElement.Placement="Top"
                                       IsSnapToTickEnabled="True"
                                       Minimum="12">
                         <i:Interaction.Behaviors>

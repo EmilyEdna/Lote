@@ -1,0 +1,72 @@
+﻿<hc:Window x:Class="Lote.CommonWindow.AnimePlayWindows" x:Name="window"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Lote.CommonWindow"
+        xmlns:hc="https://handyorg.github.io/handycontrol"
+        xmlns:vlc="clr-namespace:LibVLCSharp.WPF;assembly=LibVLCSharp.WPF"
+        xmlns:C="clr-namespace:CalcBinding;assembly=CalcBinding"
+        mc:Ignorable="d"
+        xmlns:viewModels="clr-namespace:Lote.CommonWindow.ViewMdeol"
+        xmlns:L="clr-namespace:Lote.Override"
+        d:DataContext="{d:DesignInstance Type=viewModels:AnimePlayWindowsViewModel}"
+        xmlns:S="https://github.com/canton7/Stylet"
+        Title="AnimePlayWindows" 
+        Style="{StaticResource Master}"
+        Height="800" 
+        Width="1200"
+        WindowStartupLocation="CenterScreen"
+        Loaded="Window_Loaded">
+    <Grid HorizontalAlignment="Center" Width="{Binding Width, ElementName=window}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="18"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <hc:DashedBorder Width="{Binding Width, ElementName=window}" Background="Black">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.25*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="0.1*"/>
+                </Grid.ColumnDefinitions>
+                <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2">
+                    <Button Style="{StaticResource BtnMin}" Click="SysClick" CommandParameter="0"/>
+                    <Button Style="{StaticResource BtnMax}" Click="SysClick" CommandParameter="1"/>
+                    <Button Style="{StaticResource BtnClos}" Click="SysClick" CommandParameter="2"/>
+                </WrapPanel>
+            </Grid>
+        </hc:DashedBorder>
+        <vlc:VideoView x:Name="videos" Width="{Binding Width,ElementName=window}" Height="{C:Binding (Height*0.955),ElementName=window}" 
+                       Grid.Row="1" 
+                       Panel.ZIndex="1"
+                       HorizontalAlignment="Center" 
+                       VerticalAlignment="Center" >
+            <Grid VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="0,0,0,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <WrapPanel  Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Text="音量：" Style="{StaticResource TextBlockDefaultWarning}"/>
+                    <Slider Width="250" IsSnapToTickEnabled="True" Value="5" 
+                             ValueChanged="VoiceChange" hc:TipElement.Visibility="Visible"  hc:TipElement.Placement="Top"/>
+                </WrapPanel>
+                <WrapPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Slider Width="300" IsSnapToTickEnabled="True" x:Name="Rate" Thumb.DragCompleted="RateDragCompleted"/>
+                    <TextBlock x:Name="RatePlay" Style="{StaticResource TextBlockDefaultPrimary}"/>
+                    <TextBlock x:Name="RateTotal" Style="{StaticResource TextBlockDefaultPrimary}"/>
+                </WrapPanel>
+                <WrapPanel Orientation="Horizontal" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <L:LoteButton  Svg="{StaticResource Pause}" Style="{StaticResource VLCBtn}" CommandParameter="1" Click="BtnClick"/>
+                    <L:LoteButton Svg="{StaticResource Play}" Style="{StaticResource VLCBtn}" CommandParameter="2" Click="BtnClick"/>
+                    <L:LoteButton Svg="{StaticResource Stop}" Style="{StaticResource VLCBtn}" CommandParameter="3" Click="BtnClick"/>
+                    <hc:Divider LineStrokeThickness="2" LineStroke="{StaticResource DarkPrimaryBrush}" Orientation="Vertical" MaxHeight="28"/>
+                    <L:LoteButton Svg="{StaticResource FullScreen}" Style="{StaticResource VLCBtn}" CommandParameter="4" Click="BtnClick"/>
+                    <L:LoteButton Svg="{StaticResource FullScreenExit}" Style="{StaticResource VLCBtn}" CommandParameter="5" Click="BtnClick"/>
+                </WrapPanel>
+            </Grid>
+        </vlc:VideoView>
+    </Grid>
+</hc:Window>

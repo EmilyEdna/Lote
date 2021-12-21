@@ -4,6 +4,8 @@ using Anime.SDK.ViewModel.Enums;
 using Anime.SDK.ViewModel.Request;
 using Anime.SDK.ViewModel.Response;
 using HandyControl.Data;
+using Lote.CommonWindow;
+using Lote.CommonWindow.ViewMdeol;
 using Lote.Core.Service;
 using Lote.Core.Service.DTO;
 using Stylet;
@@ -23,6 +25,7 @@ namespace Lote.Views.AnimeView
         private readonly IContainer container;
         private readonly OptionRootDTO root;
         private readonly AnimeProxy Proxy;
+        private readonly IDictionary<string, AnimePlayWindows> data;
         public AnimeViewModel(IContainer container)
         {
             this.container = container;
@@ -35,12 +38,12 @@ namespace Lote.Views.AnimeView
                 UserName = root.ProxyAccount.IsNullOrEmpty() ? String.Empty : root.ProxyAccount
             };
             LetterCate = "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z".Split(",").ToList();
+            data= new Dictionary<string, AnimePlayWindows>();
             PageIndex = 1;
         }
 
         #region Property
         private List<string> _LetterCate;
-
         public List<string> LetterCate
         {
             get { return _LetterCate; }
@@ -48,7 +51,6 @@ namespace Lote.Views.AnimeView
         }
 
         private Dictionary<string, string> _RecommendCategory;
-
         public Dictionary<string, string> RecommendCategory
         {
             get { return _RecommendCategory; }
@@ -61,6 +63,7 @@ namespace Lote.Views.AnimeView
             get { return _WeekDay; }
             set { SetAndNotify(ref _WeekDay, value); }
         }
+
         private int _Total;
         public int Total
         {
@@ -88,6 +91,7 @@ namespace Lote.Views.AnimeView
             get { return _Detail; }
             set { SetAndNotify(ref _Detail, value); }
         }
+
         #endregion
 
         #region Field
@@ -208,6 +212,43 @@ namespace Lote.Views.AnimeView
                 SearchAnime(SearchKey);
             else
                 Category(CategoryKey);
+        }
+
+        public void Play(string args)
+        {
+            var AnimeWath = AnimeFactory.Anime(opt =>
+            {
+                opt.RequestParam = new AnimeRequestInput
+                {
+                    AnimeType = AnimeEnum.Watch,
+                    Proxy = new AnimeProxy(),
+                    WatchPlay = new AnimeWatchPlay
+                    {
+                        DetailResult = Detail.Where(t => t.WatchAddress.Equals(args)).FirstOrDefault()
+                    }
+                };
+            }).Runs();
+
+            var vm = container.Get<AnimePlayWindowsViewModel>();
+            vm.WatchRoute = AnimeWath.PlayURL;
+            AnimePlayWindows win = null;
+            if (data.ContainsKey(nameof(AnimePlayWindows)))
+            {
+                win = data[nameof(AnimePlayWindows)];
+                win.CloseBase();
+                data.Clear();
+                win = new AnimePlayWindows();
+                data[nameof(AnimePlayWindows)] = win;
+                win.DataContext = vm;
+                win.Show();
+            }
+            else
+            {
+                win = new AnimePlayWindows();
+                data[nameof(AnimePlayWindows)] = win;
+                win.DataContext = vm;
+                win.Show();
+            }
         }
         #endregion
     }
