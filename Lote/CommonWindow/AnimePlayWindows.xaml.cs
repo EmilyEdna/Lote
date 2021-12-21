@@ -97,7 +97,7 @@ namespace Lote.CommonWindow
         {
             Dispatcher.Invoke(() =>
             {
-                var play = (sender as LibVLCSharp.Shared.MediaPlayer);
+                var play = this.videos.MediaPlayer;
                 Rate.Value = play.Time / 1000;
                 RatePlay.Text = TimeSpan.FromSeconds(play.Time / 1000).ToString();
                 if (Rate.Value % 60 == 0)
@@ -111,7 +111,7 @@ namespace Lote.CommonWindow
         {
             Dispatcher.Invoke(() =>
             {
-                var play = (sender as LibVLCSharp.Shared.MediaPlayer);
+                var play = this.videos.MediaPlayer;
                 Rate.Maximum = play.Length / 1000;
                 RateTotal.Text = "/" + TimeSpan.FromSeconds(play.Length / 1000).ToString();
             });
