@@ -19,6 +19,11 @@
     <DefineConstants>TRACE;Core</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Resource\Assets\站酷快乐体2016修订版.ttf" />
+    <None Remove="Resource\Assets\默认背景.jpg" />
+    <None Remove="Style\默认背景.jpg" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="favicon.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -26,6 +31,7 @@
     <PackageReference Include="HandyControls" Version="3.3.9" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.39" />
     <PackageReference Include="LibVLCSharp.WPF" Version="3.6.4" />
+    <PackageReference Include="MaterialDesignThemes" Version="4.3.0" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
     <PackageReference Include="Stylet" Version="1.3.6" />
   </ItemGroup>
@@ -48,5 +54,9 @@
     <Reference Include="Wallpaper.SDK">
       <HintPath>..\Lib\Wallpaper.SDK.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resource\Assets\站酷快乐体2016修订版.ttf" />
+    <Resource Include="Resource\Assets\默认背景.jpg" />
   </ItemGroup>
 </Project>

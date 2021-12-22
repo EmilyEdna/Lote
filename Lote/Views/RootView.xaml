@@ -9,12 +9,65 @@
            xmlns:viewModels="clr-namespace:Lote.ViewModels"
            xmlns:hc="https://handyorg.github.io/handycontrol"
            mc:Ignorable="d"
+           xmlns:Design="http://materialdesigninxaml.net/winfx/xaml/themes"
            d:DataContext="{d:DesignInstance Type=viewModels:RootViewModel}"
            WindowStartupLocation="CenterScreen"
            Height="800" 
            Width="1200" 
            Style="{StaticResource Master}">
-    <Grid HorizontalAlignment="Center" Width="{Binding Width, ElementName=window}">
+    <Design:ColorZone x:Name="Zone" Background="#FFFF9999" 
+                      Mode="PrimaryMid"
+                      Padding="16" 
+                      MouseMove="ColorZoneMouseMove" 
+                      Style="{DynamicResource ColorZoneStyle2}" 
+                      Width="{Binding Width,ElementName=window}">
+        <Grid Width="{C:Binding (Width-100),ElementName=window}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.2*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <ComboBox SelectedIndex="1" 
+                      Margin="8 0 0 0"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      BorderThickness="0"
+                      Design:ColorZoneAssist.Mode="Standard"
+                      Design:TextFieldAssist.UnderlineBrush="{DynamicResource MaterialDesignPaper}"
+                      BorderBrush="{DynamicResource MaterialDesignPaper}"  
+                      FontFamily="{Binding FontFamily,ElementName=window}"
+                      Background="Transparent" SelectionChanged="ThemeSelect">
+                <L:LoteComboBoxItem Content="宝石绿" SeleteType="0"/>
+                <L:LoteComboBoxItem Content="桃花粉" SeleteType="1"/>
+                <L:LoteComboBoxItem Content="旬子蓝" SeleteType="2"/>
+                <L:LoteComboBoxItem Content="山茶红" SeleteType="3"/>
+            </ComboBox>
+            <StackPanel Orientation="Horizontal" Grid.Column="3" HorizontalAlignment="Right">
+                <Button  Style="{DynamicResource MaterialDesignFloatingActionMiniButton}"
+                         Design:ShadowAssist.ShadowDepth="Depth2" 
+                         FontSize="20" 
+                         Click="SysClick"
+                         CommandParameter="0"
+                         Background="{Binding Background, ElementName=Zone}" 
+                         BorderBrush="{x:Null}">
+                    <Design:PackIcon Kind="ArrowCollapse"  Width="30" Height="40"/>
+                </Button>
+                <Button  Style="{DynamicResource MaterialDesignFloatingActionMiniButton}"
+                         Design:ShadowAssist.ShadowDepth="Depth2" 
+                         FontSize="22" 
+                         Margin="10,0,0,0" 
+                         Click="SysClick"
+                         CommandParameter="2"
+                         Background="{Binding Background, ElementName=Zone}" 
+                         BorderBrush="{x:Null}" >
+                    <Design:PackIcon Kind="PowerStandby" Height="30" Width="30"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+
+    </Design:ColorZone>
+
+    <!--<Grid HorizontalAlignment="Center" Width="{Binding Width, ElementName=window}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.5*"/>
             <ColumnDefinition Width="2*"/>
@@ -23,7 +76,7 @@
             <RowDefinition Height="18"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <hc:DashedBorder Grid.ColumnSpan="3" Width="{Binding Width, ElementName=window}" Background="Black">
+        <hc:DashedBorder Grid.ColumnSpan="2" Width="{Binding Width, ElementName=window}" Background="Black">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.25*"/>
@@ -83,5 +136,5 @@
                     Width="{C:Binding (Width*0.799), ElementName=window}"
                     Height="{C:Binding (Height*0.952),ElementName=window}"/>
         </WrapPanel>
-    </Grid>
+    </Grid>-->
 </hc:Window>
