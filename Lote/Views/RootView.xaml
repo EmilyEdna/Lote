@@ -1,4 +1,4 @@
-﻿<hc:Window x:Name="window" x:Class="Lote.Views.RootView"
+﻿<L:LoteWindow x:Name="window" x:Class="Lote.Views.RootView"
            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -15,44 +15,68 @@
            Height="800" 
            Width="1200" 
            Style="{StaticResource Master}">
-    <Design:ColorZone x:Name="Zone" Background="#FFFF9999" 
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="72"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Design:ColorZone x:Name="Zone" Background="#FFFF9999" 
                       Mode="PrimaryMid"
                       Padding="16" 
                       MouseMove="ColorZoneMouseMove" 
                       Style="{DynamicResource ColorZoneStyle2}" 
                       Width="{Binding Width,ElementName=window}">
-        <Grid Width="{C:Binding (Width-100),ElementName=window}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.2*"/>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <ComboBox SelectedIndex="1" 
-                      Margin="8 0 0 0"
-                      HorizontalAlignment="Center"
-                      VerticalAlignment="Center"
-                      BorderThickness="0"
-                      Design:ColorZoneAssist.Mode="Standard"
-                      Design:TextFieldAssist.UnderlineBrush="{DynamicResource MaterialDesignPaper}"
-                      BorderBrush="{DynamicResource MaterialDesignPaper}"  
-                      FontFamily="{Binding FontFamily,ElementName=window}"
-                      Background="Transparent" SelectionChanged="ThemeSelect">
-                <L:LoteComboBoxItem Content="宝石绿" SeleteType="0"/>
-                <L:LoteComboBoxItem Content="桃花粉" SeleteType="1"/>
-                <L:LoteComboBoxItem Content="旬子蓝" SeleteType="2"/>
-                <L:LoteComboBoxItem Content="山茶红" SeleteType="3"/>
-            </ComboBox>
-            <StackPanel Orientation="Horizontal" Grid.Column="3" HorizontalAlignment="Right">
-                <Button  Style="{DynamicResource MaterialDesignFloatingActionMiniButton}"
+            <Grid Width="{C:Binding (Width-100),ElementName=window}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.2*"/>
+                    <ColumnDefinition Width="1.8*"/>
+                    <ColumnDefinition Width="0.2*"/>
+                    <ColumnDefinition Width="0.2*"/>
+                </Grid.ColumnDefinitions>
+                <ComboBox SelectedIndex="1" 
+                          Margin="8 0 0 0"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          BorderThickness="0"
+                          Design:ColorZoneAssist.Mode="Standard"
+                          Design:TextFieldAssist.UnderlineBrush="{DynamicResource MaterialDesignPaper}"
+                          BorderBrush="{DynamicResource MaterialDesignPaper}"  
+                          FontFamily="{Binding FontFamily,ElementName=window}"
+                          Background="Transparent" 
+                          SelectionChanged="ThemeSelect">
+                    <L:LoteComboBoxItem Content="宝石绿" SeleteType="0"/>
+                    <L:LoteComboBoxItem Content="桃花粉" SeleteType="1"/>
+                    <L:LoteComboBoxItem Content="旬子蓝" SeleteType="2"/>
+                    <L:LoteComboBoxItem Content="山茶红" SeleteType="3"/>
+                </ComboBox>
+                <ComboBox SelectedIndex="0" 
+                          Margin="8 0 0 0"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          BorderThickness="0"
+                          Grid.Column="2"
+                          Design:ColorZoneAssist.Mode="Standard"
+                          Design:TextFieldAssist.UnderlineBrush="{DynamicResource MaterialDesignPaper}"
+                          BorderBrush="{DynamicResource MaterialDesignPaper}"  
+                          FontFamily="{Binding FontFamily,ElementName=window}"
+                          Background="Transparent" 
+                          SelectionChanged="BackgroudSelect">
+                    <L:LoteComboBoxItem Content="背景1" SeleteType="0"/>
+                    <L:LoteComboBoxItem Content="背景2" SeleteType="1"/>
+                    <L:LoteComboBoxItem Content="背景3" SeleteType="2"/>
+                    <L:LoteComboBoxItem Content="背景4" SeleteType="3"/>
+                </ComboBox>
+                <StackPanel Orientation="Horizontal" Grid.Column="3" HorizontalAlignment="Right">
+                    <Button  Style="{DynamicResource MaterialDesignFloatingActionMiniButton}"
                          Design:ShadowAssist.ShadowDepth="Depth2" 
                          FontSize="20" 
                          Click="SysClick"
                          CommandParameter="0"
                          Background="{Binding Background, ElementName=Zone}" 
                          BorderBrush="{x:Null}">
-                    <Design:PackIcon Kind="ArrowCollapse"  Width="30" Height="40"/>
-                </Button>
-                <Button  Style="{DynamicResource MaterialDesignFloatingActionMiniButton}"
+                        <Design:PackIcon Kind="ArrowCollapse"  Width="30" Height="40"/>
+                    </Button>
+                    <Button  Style="{DynamicResource MaterialDesignFloatingActionMiniButton}"
                          Design:ShadowAssist.ShadowDepth="Depth2" 
                          FontSize="22" 
                          Margin="10,0,0,0" 
@@ -60,81 +84,64 @@
                          CommandParameter="2"
                          Background="{Binding Background, ElementName=Zone}" 
                          BorderBrush="{x:Null}" >
-                    <Design:PackIcon Kind="PowerStandby" Height="30" Width="30"/>
-                </Button>
-            </StackPanel>
-        </Grid>
-
-    </Design:ColorZone>
-
-    <!--<Grid HorizontalAlignment="Center" Width="{Binding Width, ElementName=window}">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.5*"/>
-            <ColumnDefinition Width="2*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="18"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <hc:DashedBorder Grid.ColumnSpan="2" Width="{Binding Width, ElementName=window}" Background="Black">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.25*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="0.1*"/>
-                </Grid.ColumnDefinitions>
-                <WrapPanel HorizontalAlignment="Left" VerticalAlignment="Center" Margin="25,0,0,0">
-                    <TextBlock Text="Skyrim" Foreground="White" FontWeight="DemiBold"/>
-                </WrapPanel>
-                <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2">
-                    <Button Style="{StaticResource BtnMin}" Click="SysClick" CommandParameter="0"/>
-                    <Button Style="{StaticResource BtnMax}" Click="SysClick" CommandParameter="1"/>
-                    <Button Style="{StaticResource BtnClos}" Click="SysClick" CommandParameter="2"/>
-                </WrapPanel>
+                        <Design:PackIcon Kind="PowerStandby" Height="30" Width="30"/>
+                    </Button>
+                </StackPanel>
             </Grid>
-        </hc:DashedBorder>
-        <StackPanel Grid.Row="1">
-            <L:LoteButton Style="{StaticResource BtnNav}" 
-                          Command="{S:Action Redirect}"
-                          CommandParameter="1"
-                          Width="{C:Binding Width/2, ElementName=window}" 
-                          Content="小说" 
-                          Svg="{StaticResource NovIcon}"/>
-            <L:LoteButton Style="{StaticResource BtnNav}" 
-                          Command="{S:Action Redirect}"
-                          CommandParameter="2"
-                          Width="{C:Binding Width/2, ElementName=window}" 
-                          Content="二创" 
-                          Svg="{StaticResource LNovIcon}"/>
-            <L:LoteButton Style="{StaticResource BtnNav}" 
-                          Command="{S:Action Redirect}"
-                          CommandParameter="3"
-                          Width="{C:Binding Width/2, ElementName=window}" 
-                          Content="动漫" 
-                          Svg="{StaticResource AnimeIcon}"/>
-            <L:LoteButton Style="{StaticResource BtnNav}" 
-                          Command="{S:Action Redirect}"
-                          CommandParameter="4"
-                          Width="{C:Binding Width/2, ElementName=window}" 
-                          Content="壁纸" 
-                          Svg="{StaticResource PicIcon}"/>
-            <L:LoteButton Style="{StaticResource BtnNav}" 
-                          Command="{S:Action Redirect}"
-                          CommandParameter="5"
-                          Width="{C:Binding Width/2, ElementName=window}" 
-                          Content="音乐" 
-                          Svg="{StaticResource MusicIcon}"/>
-            <L:LoteButton Style="{StaticResource BtnNav}" 
-                          Command="{S:Action Redirect}"
-                          CommandParameter="6"
-                          Width="{C:Binding Width/2, ElementName=window}" 
-                          Content="设置" 
-                          Svg="{StaticResource OptIcon}"/>
-        </StackPanel>
-        <WrapPanel Grid.Column="1" Grid.Row="1">
-            <ContentControl  S:View.Model="{Binding ActiveItem}"
-                    Width="{C:Binding (Width*0.799), ElementName=window}"
-                    Height="{C:Binding (Height*0.952),ElementName=window}"/>
-        </WrapPanel>
-    </Grid>-->
-</hc:Window>
+        </Design:ColorZone>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.25*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <WrapPanel Orientation="Vertical">
+                <L:LoteButton Content="小说" 
+                              Source="/Resource/Assets/btn1.jpg" 
+                              Width="240"
+                              Height="40"
+                              Style="{DynamicResource LeftBtn}"  
+                              Command="{S:Action Redirect}"
+                              CommandParameter="1"/>
+                <L:LoteButton Content="轻小说" 
+                              Source="/Resource/Assets/btn2.jpg" 
+                              Width="240"
+                              Height="40"
+                              Style="{DynamicResource LeftBtn}"  
+                              Command="{S:Action Redirect}"
+                              CommandParameter="2"/>
+                <L:LoteButton Content="动漫" 
+                              Source="/Resource/Assets/btn3.jpg" 
+                              Width="240"
+                              Height="40"
+                              Style="{DynamicResource LeftBtn}"  
+                              Command="{S:Action Redirect}"
+                              CommandParameter="3"/>
+                <L:LoteButton Content="壁纸" 
+                              Source="/Resource/Assets/btn4.jpg" 
+                              Width="240"
+                              Height="40"
+                              Style="{DynamicResource LeftBtn}"  
+                              Command="{S:Action Redirect}"
+                              CommandParameter="4"/>
+                <L:LoteButton Content="音乐" 
+                              Source="/Resource/Assets/btn5.jpg" 
+                              Width="240"
+                              Height="40"
+                              Style="{DynamicResource LeftBtn}"  
+                              Command="{S:Action Redirect}"
+                              CommandParameter="5"/>
+                <L:LoteButton Content="设置" 
+                              Source="/Resource/Assets/btn6.jpg" 
+                              Width="240"
+                              Height="40"
+                              Style="{DynamicResource LeftBtn}"  
+                              Command="{S:Action Redirect}"
+                              CommandParameter="6"/>
+            </WrapPanel>
+            <WrapPanel Grid.Column="1">
+                <ContentControl  S:View.Model="{Binding ActiveItem}"/>
+            </WrapPanel>
+        </Grid>
+    </Grid>
+
+</L:LoteWindow>

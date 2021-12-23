@@ -6,11 +6,12 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using XExten.Advance.LinqFramework;
 
 namespace Lote.Views
 {
-    public partial class RootView : HandyControl.Controls.Window
+    public partial class RootView : LoteWindow
     {
         public RootView()
         {
@@ -19,6 +20,7 @@ namespace Lote.Views
         public Color color;
         private void SysClick(object sender, RoutedEventArgs e)
         {
+            
             var btn = (sender as Button);
             var SysFunc = Enum.Parse<SysFuncEnum>(btn.CommandParameter.ToString());
             switch (SysFunc)
@@ -80,6 +82,30 @@ namespace Lote.Views
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 DragMove();
+            }
+        }
+
+        private void BackgroudSelect(object sender, SelectionChangedEventArgs e)
+        {
+            var select = (sender as ComboBox);
+
+            var item = (select.Items[select.SelectedIndex] as LoteComboBoxItem);
+
+            if (item.SeleteType == 0)
+            {
+                this.Source = new BitmapImage(new Uri("/Resource/Assets/Backgroud1.jpg", UriKind.Relative));
+            }
+            else if (item.SeleteType == 1)
+            {
+                this.Source = new BitmapImage(new Uri("/Resource/Assets/Backgroud2.jpg", UriKind.Relative));
+            }
+            else if (item.SeleteType == 2)
+            {
+                this.Source = new BitmapImage(new Uri("/Resource/Assets/Backgroud3.jpg", UriKind.Relative));
+            }
+            else if (item.SeleteType == 3)
+            {
+                this.Source = new BitmapImage(new Uri("/Resource/Assets/Backgroud4.jpg", UriKind.Relative));
             }
         }
     }

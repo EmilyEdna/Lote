@@ -111,6 +111,21 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Style x:Key="LeftBtn" TargetType="L:LoteButton" BasedOn="{StaticResource ButtonPrimary}">
+        <Setter Property="FontFamily" Value="/Lote;component/Resource/Assets/#HappyZcool-2016" />
+        <Setter Property="BorderBrush" Value="#FF10AEC2"/>
+        <Setter Property="Foreground" Value="#FFFF9999"/>
+        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+        
+        <Setter Property="Background">
+            <Setter.Value>
+                <ImageBrush ImageSource="{Binding Source, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type L:LoteButton}}}" 
+                            Stretch="UniformToFill" 
+                            TileMode="Tile" 
+                            Opacity="0.2"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
     <!--#endregion-->
     
     <!--#region 播放按钮-->

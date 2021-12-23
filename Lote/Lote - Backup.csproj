@@ -30,7 +30,6 @@
     <None Remove="Resource\Assets\btn5.jpg" />
     <None Remove="Resource\Assets\btn6.jpg" />
     <None Remove="Resource\Assets\HappyZcool.ttf" />
-    <None Remove="Resource\Assets\站酷快乐体2016修订版.ttf" />
     <None Remove="Resource\Assets\默认背景.jpg" />
     <None Remove="Style\默认背景.jpg" />
   </ItemGroup>
@@ -77,6 +76,5 @@
     <Resource Include="Resource\Assets\btn4.jpg" />
     <Resource Include="Resource\Assets\btn5.jpg" />
     <Resource Include="Resource\Assets\btn6.jpg" />
-    <Resource Include="Resource\Assets\站酷快乐体2016修订版.ttf" />
   </ItemGroup>
 </Project>

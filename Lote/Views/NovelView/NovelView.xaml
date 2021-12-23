@@ -9,24 +9,26 @@
              xmlns:local="clr-namespace:Lote.Views.NovelView"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:Views="clr-namespace:Lote.Views" 
+             Width="960"
+             Height="728"
+             Background="Transparent"
              mc:Ignorable="d">
-    <Grid Background="White">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.16*"/>
+            <RowDefinition Height="0.12*"/>
             <RowDefinition Height="0.1*"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="0.2*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="0.35*"/>
         </Grid.RowDefinitions>
         <WrapPanel Grid.ColumnSpan="2">
             <hc:SearchBar TextWrapping="Wrap" 
                           BorderThickness="1" 
                           Style="{StaticResource Search}"
-                          Width="{C:Binding (Width*0.799), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}"
-                          Height="{C:Binding (Height*0.0393), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}"
+                          Width="960"
                           ShowClearButton="True"
                           Command="{S:Action SearchBook}"
                           CommandParameter="{Binding Text, RelativeSource={RelativeSource Self}}" />
@@ -35,62 +37,75 @@
             <hc:ButtonGroup.ItemTemplate>
                 <DataTemplate>
                     <Button Content="{C:Binding CategoryName}" 
-                            Style="{StaticResource ButtonDashedDanger}"
+                            Style="{StaticResource ButtonDashedDanger.Small}"
                             Command="{S:Action Redirect}"
                             CommandParameter="{C:Binding CollectAddress}"/>
                 </DataTemplate>
             </hc:ButtonGroup.ItemTemplate>
         </hc:ButtonGroup>
-        <ListView Grid.Column="0" 
+        <ListBox Grid.Column="0" 
                   x:Name="listView_left"
                   Grid.Row="2" 
+                  Style="{StaticResource StackPanelVerticalListBox}"
                   ItemsSource="{C:Binding NovelRecommend}" 
                   BorderThickness="0"
-                  BorderBrush="White" 
-                  Background="White"
-                  d:ItemsSource="{d:SampleData ItemCount=5}" 
-                  SelectionMode="Single">
+                  BorderBrush="Transparent" 
+                  Background="Transparent"
+                  d:ItemsSource="{d:SampleData ItemCount=5}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">
                     <i:InvokeCommandAction Command="{S:Action GetBook}" CommandParameter="{Binding SelectedItem, ElementName=listView_left}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="书名" DisplayMemberBinding="{C:Binding BookName}"/>
-                    <GridViewColumn Header="作者" DisplayMemberBinding="{C:Binding Author}"/>
-                    <GridViewColumn Header="类型" DisplayMemberBinding="{C:Binding RecommendType}"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <ListView Grid.Column="1" Grid.Row="2"
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="0,0,0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="0.5*"/>
+                            <ColumnDefinition Width="0.25*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{C:Binding BookName}"/>
+                        <TextBlock Text="{C:Binding Author}" Grid.Column="1"/>
+                        <TextBlock Text="{C:Binding RecommendType}" Grid.Column="2"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <ListBox Grid.Column="1" Grid.Row="2"
                   x:Name="listView_right"
+                  Style="{StaticResource StackPanelVerticalListBox}"
                   ItemsSource="{C:Binding NovelSearch}" 
                   BorderThickness="0"
-                  BorderBrush="White" 
-                  Background="White"
-                  d:ItemsSource="{d:SampleData ItemCount=5}" 
-                  SelectionMode="Single">
+                  BorderBrush="Transparent" 
+                  Background="Transparent"
+                  d:ItemsSource="{d:SampleData ItemCount=5}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">
                     <i:InvokeCommandAction Command="{S:Action GetBook}" CommandParameter="{Binding SelectedItem, ElementName=listView_right}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="书名" DisplayMemberBinding="{C:Binding BookName}" Width="120"/>
-                    <GridViewColumn Header="作者" DisplayMemberBinding="{C:Binding Author}" Width="120"/>
-                    <GridViewColumn Header="类型" DisplayMemberBinding="{C:Binding RecommendType}" Width="100"/>
-                    <GridViewColumn Header="日期" DisplayMemberBinding="{C:Binding UpdateDate}" Width="100"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <hc:Pagination Grid.Row="3"  Grid.ColumnSpan="2"
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="0,0,0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="0.5*"/>
+                            <ColumnDefinition Width="0.25*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{C:Binding BookName}"/>
+                        <TextBlock Text="{C:Binding Author}" Grid.Column="1"/>
+                        <TextBlock Text="{C:Binding UpdateDate}" Grid.Column="2"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            </ListBox>
+            <hc:Pagination Grid.Row="3"  Grid.ColumnSpan="2"
                        Margin="0,5,0,0"
                        HorizontalAlignment="Center"
                        MaxPageCount="{C:Binding Total}" 
                        PageIndex="{C:Binding PageIndex}" 
-                       IsJumpEnabled="True">
+                       IsJumpEnabled="False">
             <hc:Interaction.Triggers>
                 <hc:EventTrigger EventName="PageUpdated">
                     <hc:EventToCommand Command="{S:Action PageUpdated}" PassEventArgsToCommand="True" />
