@@ -99,6 +99,7 @@
                                                         BorderThickness="0"
                                                         Margin="1"
                                                         Command="{S:Action Redirect}"
+                                                        Foreground="White"
                                                         Style="{StaticResource ButtonDashedPrimary.Small}"/>
                                             </WrapPanel>
                                         </DataTemplate>
