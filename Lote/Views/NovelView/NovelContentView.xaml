@@ -7,29 +7,21 @@
              xmlns:hc="https://handyorg.github.io/handycontrol"
              xmlns:C="clr-namespace:CalcBinding;assembly=CalcBinding"
              xmlns:S="https://github.com/canton7/Stylet"
+             Width="960"
+             Height="728"
+             Background="Transparent"
              mc:Ignorable="d">
-    <Grid Background="White">
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="0.35*"/>
+            <RowDefinition Height="400"/>
+            <RowDefinition Height="0.2*"/>
             <RowDefinition Height="0.2*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.5*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Border BorderThickness="1">
-            <Border.BorderBrush>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FFFDC500"/>
-                    <GradientStop Color="#FFD8C815" Offset="1"/>
-                    <GradientStop Color="#FFD8C815" Offset="0.2"/>
-                    <GradientStop Color="#FF62C834" Offset="0.6"/>
-                    <GradientStop Color="#FF62C834" Offset="0.4"/>
-                    <GradientStop Color="#FFD8C815" Offset="0.8"/>
-                    <GradientStop Color="#FF43CCB1" Offset="0.5"/>
-                </LinearGradientBrush>
-            </Border.BorderBrush>
+        <Border BorderThickness="1" BorderBrush="#FFFF9999" Height="400">
             <Image Source="{C:Binding NovelDetail.Cover}"  
                    HorizontalAlignment="Center" 
                    Stretch="Fill"
@@ -64,8 +56,8 @@
         </Grid>
         <ListBox Grid.Row="1" 
                  Grid.ColumnSpan="2" 
-                 Background="White"
-                 BorderBrush="White" 
+                 Background="Transparent"
+                 BorderBrush="Transparent" 
                  Style="{StaticResource WrapPanelHorizontalListBox}"
                  ItemsSource="{C:Binding NovelDetail.Details}" 
                  BorderThickness="0">
@@ -77,17 +69,16 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <WrapPanel Margin="1">
-                        <Button Content="{C:Binding ChapterName}" Command="{S:Action ShowContent}" CommandParameter="{C:Binding ChapterURL}"/>
+                        <Button Content="{C:Binding ChapterName}" Background="Transparent" BorderThickness="0" Command="{S:Action ShowContent}" CommandParameter="{C:Binding ChapterURL}"/>
                     </WrapPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
         <hc:Pagination Grid.Row="2"  Grid.ColumnSpan="2"
-                       Margin="0,5,0,0"
                        HorizontalAlignment="Center"
                        MaxPageCount="{C:Binding NovelDetail.TotalPage}" 
                        PageIndex="{C:Binding PageIndex}" 
-                       IsJumpEnabled="True">
+                       IsJumpEnabled="False">
             <hc:Interaction.Triggers>
                 <hc:EventTrigger EventName="PageUpdated">
                     <hc:EventToCommand Command="{S:Action PageUpdated}" PassEventArgsToCommand="True" />

@@ -1,4 +1,5 @@
-﻿using Lote.Core.Common;
+﻿using Lote.Common;
+using Lote.Core.Common;
 using Lote.Override;
 using Lote.ViewModels;
 using System;
@@ -56,24 +57,22 @@ namespace Lote.Views
             var item = (select.Items[select.SelectedIndex] as LoteComboBoxItem);
 
             if (item.SeleteType == 0)
-            {
                 color = (Color)ColorConverter.ConvertFromString("#FF2CCFA0");
-                Zone.Background = new SolidColorBrush(color);
-            }
             else if(item.SeleteType == 1)
-            {
                 color = (Color)ColorConverter.ConvertFromString("#FFFF9999");
-                Zone.Background = new SolidColorBrush(color);
-            }
             else if (item.SeleteType == 2)
-            {
                 color = (Color)ColorConverter.ConvertFromString("#FF10AEC2");
-                Zone.Background = new SolidColorBrush(color);
-            }
-            else if (item.SeleteType == 3)
-            {
+            else 
                 color = (Color)ColorConverter.ConvertFromString("#FFED556A");
-                Zone.Background = new SolidColorBrush(color);
+            //设置背景
+            Zone.Background = new SolidColorBrush(color);
+            //设置字体
+            if (Navs != null)
+            {
+                UiElementHelper.FindVisualChild<LoteButton>(Navs).ForEach(item =>
+                {
+                    item.Foreground = new SolidColorBrush(color);
+                });
             }
         }
 

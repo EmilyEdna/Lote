@@ -94,7 +94,7 @@
                 <ColumnDefinition Width="0.25*"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <WrapPanel Orientation="Vertical">
+            <WrapPanel Orientation="Vertical" x:Name="Navs">
                 <L:LoteButton Content="小说" 
                               Source="/Resource/Assets/btn1.jpg" 
                               Width="240"
