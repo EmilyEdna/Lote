@@ -25,4 +25,28 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style x:Key="Child" TargetType="L:LoteWindow">
+        <Setter Property="WindowStyle" Value="None"/>
+        <Setter Property="ResizeMode" Value="NoResize"/>
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="AllowsTransparency" Value="True"/>
+        <Setter Property="Source" Value="/Resource/Assets/Backgroud1.jpg"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="FontFamily" Value="/Lote;component/Resource/Assets/#HappyZcool-2016" />
+        <!--<Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="L:LoteWindow">
+                    <Canvas Width="{TemplateBinding Width}" Clip="{StaticResource Canva}">
+                        <Image Source="{TemplateBinding Source}" RenderOptions.BitmapScalingMode="HighQuality"  Width="1210"   SnapsToDevicePixels="True"  ClipToBounds="True"  Canvas.Left="-5"  Canvas.Top="-5" Stretch="Fill">
+                            <Image.Effect>
+                                <BlurEffect Radius="15"/>
+                            </Image.Effect>
+                        </Image>
+                        <ContentPresenter />
+                    </Canvas>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>-->
+    </Style>
 </ResourceDictionary>

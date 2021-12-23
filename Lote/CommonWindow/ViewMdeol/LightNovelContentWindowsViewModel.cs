@@ -17,7 +17,7 @@ namespace Lote.CommonWindow.ViewMdeol
         public LightNovelContentWindowsViewModel(IContainer container)
         {
             this.container = container;
-            this.FontSize = 22;
+            this.FontSize = 12;
 
         }
 
