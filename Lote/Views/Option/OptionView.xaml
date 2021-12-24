@@ -12,17 +12,20 @@
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:l="clr-namespace:Lote.Override"
              mc:Ignorable="d" 
-             d:DesignHeight="{C:Binding (Width*0.027), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}" 
-             d:DesignWidth="{C:Binding (Width*0.799), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}">
+             Width="960"
+             Height="728"
+             Background="Transparent">
     <UserControl.Resources>
 
         <Style x:Key="ProxyBox" TargetType="TextBox">
             <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Width" Value="{C:Binding ((Width-160)*0.19), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}"/>
         </Style>
 
         <Style x:Key="ProxyPwdBox" TargetType="PasswordBox">
             <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Width" Value="{C:Binding ((Width-160)*0.19), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Views:RootView}}}"/>
         </Style>
 
@@ -33,10 +36,10 @@
         </Style>
     </UserControl.Resources>
 
-    <Grid Background="White">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="0.7*"/>
         </Grid.RowDefinitions>
         <SelectiveScrollingGrid SelectiveScrollingOrientation="Vertical">
             <SelectiveScrollingGrid.RowDefinitions>
@@ -100,9 +103,10 @@
             </StackPanel>
         </SelectiveScrollingGrid>
         <WrapPanel HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="1">
-            <Button Style="{StaticResource ButtonWarning}" 
-                    Content="确定" 
-                    Margin="0,0,5,0"
+            <Button Style="{StaticResource ButtonDashedWarning}" 
+                    BorderThickness="0"
+                    Content="Ok" 
+                    Margin="0,0,10,0"
                     Command="{S:Action Submit}"/>
         </WrapPanel>
     </Grid>

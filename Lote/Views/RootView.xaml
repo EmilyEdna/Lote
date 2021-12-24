@@ -15,6 +15,14 @@
            Height="800" 
            Width="1200" 
            Style="{StaticResource Master}">
+    <L:LoteWindow.InputBindings>
+        <KeyBinding Key="N" Command="{S:Action Redirect}" CommandParameter="1"/>
+        <KeyBinding Key="L" Command="{S:Action Redirect}" CommandParameter="2"/>
+        <KeyBinding Key="A" Command="{S:Action Redirect}" CommandParameter="3"/>
+        <KeyBinding Key="W" Command="{S:Action Redirect}" CommandParameter="4"/>
+        <KeyBinding Key="M" Command="{S:Action Redirect}" CommandParameter="5"/>
+        <KeyBinding Key="S" Command="{S:Action Redirect}" CommandParameter="6"/>
+    </L:LoteWindow.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="72"/>
@@ -95,42 +103,42 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <WrapPanel Orientation="Vertical" x:Name="Navs">
-                <L:LoteButton Content="小说" 
+                <L:LoteButton Content="小说(N)" 
                               Source="/Resource/Assets/btn1.jpg" 
                               Width="240"
                               Height="40"
                               Style="{DynamicResource LeftBtn}"  
                               Command="{S:Action Redirect}"
                               CommandParameter="1"/>
-                <L:LoteButton Content="轻小说" 
+                <L:LoteButton Content="轻小说(L)" 
                               Source="/Resource/Assets/btn2.jpg" 
                               Width="240"
                               Height="40"
                               Style="{DynamicResource LeftBtn}"  
                               Command="{S:Action Redirect}"
                               CommandParameter="2"/>
-                <L:LoteButton Content="动漫" 
+                <L:LoteButton Content="动漫(A)" 
                               Source="/Resource/Assets/btn3.jpg" 
                               Width="240"
                               Height="40"
                               Style="{DynamicResource LeftBtn}"  
                               Command="{S:Action Redirect}"
                               CommandParameter="3"/>
-                <L:LoteButton Content="壁纸" 
+                <L:LoteButton Content="壁纸(W)" 
                               Source="/Resource/Assets/btn4.jpg" 
                               Width="240"
                               Height="40"
                               Style="{DynamicResource LeftBtn}"  
                               Command="{S:Action Redirect}"
                               CommandParameter="4"/>
-                <L:LoteButton Content="音乐" 
+                <L:LoteButton Content="音乐(M)" 
                               Source="/Resource/Assets/btn5.jpg" 
                               Width="240"
                               Height="40"
                               Style="{DynamicResource LeftBtn}"  
                               Command="{S:Action Redirect}"
                               CommandParameter="5"/>
-                <L:LoteButton Content="设置" 
+                <L:LoteButton Content="设置(S)" 
                               Source="/Resource/Assets/btn6.jpg" 
                               Width="240"
                               Height="40"

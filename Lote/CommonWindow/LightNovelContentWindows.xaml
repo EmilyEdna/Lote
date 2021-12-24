@@ -18,9 +18,9 @@
         Height="800" 
         Width="1200" 
         Style="{StaticResource Child}">
-    <hc:Window.Resources>
+    <L:LoteWindow.Resources>
         <Behavior:LightNovelTextBlockConverter x:Key="ContentConverter"/>
-    </hc:Window.Resources>
+    </L:LoteWindow.Resources>
     <Grid HorizontalAlignment="Center" Width="{Binding Width, ElementName=window}">
         <Grid.RowDefinitions>
             <RowDefinition Height="72"/>
@@ -129,7 +129,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock Text="字体大小：" Style="{StaticResource TextBlockDefaultPrimary}"/>
+                <TextBlock Text="字体大小：" Style="{StaticResource TextBlockDefaultPrimary}" Foreground="White"/>
                 <hc:PreviewSlider Width="200" Background="#FF00A1F5"
                                   Maximum="30"
                                   Value="22"
@@ -143,9 +143,10 @@
                 </hc:PreviewSlider>
             </WrapPanel>
             <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1">
-                <TextBlock Text="字体颜色：" Style="{StaticResource TextBlockDefaultPrimary}"/>
+                <TextBlock Text="字体颜色：" Style="{StaticResource TextBlockDefaultPrimary}" Foreground="White"/>
                 <Button Style="{StaticResource Colorful}" Background="LightPink" Click="WindowColor"/>
                 <Button Style="{StaticResource Colorful}" Background="Violet" Click="WindowColor"/>
+                <Button Style="{StaticResource Colorful}" Background="Red" Click="WindowColor"/>
                 <Button Style="{StaticResource Colorful}" Background="Orange" Click="WindowColor"/>
                 <Button Style="{StaticResource Colorful}" Background="White" Click="WindowColor"/>
                 <Button Style="{StaticResource Colorful}" Background="Black" Click="WindowColor"/>

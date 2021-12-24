@@ -34,6 +34,7 @@ namespace Lote.Views
                     break;
                 case SysFuncEnum.Close:
                     this.Close();
+                    Application.Current.Shutdown();
                     break;
                 default:
                     break;

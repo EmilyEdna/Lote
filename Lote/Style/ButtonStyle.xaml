@@ -186,6 +186,11 @@
         <Setter Property="Margin" Value="2,0,2,0"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="{x:Null}"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="Transparent"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
     <!--#endregion-->
 </ResourceDictionary>

@@ -19,7 +19,7 @@ namespace Lote.CommonWindow
     /// <summary>
     /// LightNovelContentWindows.xaml 的交互逻辑
     /// </summary>
-    public partial class LightNovelContentWindows : Lote.Override.LoteWindow
+    public partial class LightNovelContentWindows : LoteWindow
     {
         public LightNovelContentWindows()
         {
