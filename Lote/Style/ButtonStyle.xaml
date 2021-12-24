@@ -63,4 +63,15 @@
         </Style.Triggers>
     </Style>
     <!--#endregion-->
+    
+    <!--#region 线条-->
+    <Style x:Key="ProxyDivider" TargetType="hc:Divider" BasedOn="{StaticResource DividerBaseStyle}">
+        <Setter Property="Width" Value="400"/>
+        <Setter Property="Margin" Value="0,5,0,1"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="FontWeight" Value="DemiBold"/>
+        <Setter Property="LineStroke" Value="#FFF3BDF1"/>
+        <Setter Property="Foreground" Value="#FFDC6E11"/>
+    </Style>
+    <!--#endregion-->
 </ResourceDictionary>

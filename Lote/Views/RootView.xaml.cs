@@ -21,7 +21,7 @@ namespace Lote.Views
         public Color color;
         private void SysClick(object sender, RoutedEventArgs e)
         {
-            
+
             var btn = (sender as Button);
             var SysFunc = Enum.Parse<SysFuncEnum>(btn.CommandParameter.ToString());
             switch (SysFunc)
@@ -59,11 +59,11 @@ namespace Lote.Views
 
             if (item.SeleteType == 0)
                 color = (Color)ColorConverter.ConvertFromString("#FF2CCFA0");
-            else if(item.SeleteType == 1)
+            else if (item.SeleteType == 1)
                 color = (Color)ColorConverter.ConvertFromString("#FFFF9999");
             else if (item.SeleteType == 2)
                 color = (Color)ColorConverter.ConvertFromString("#FF10AEC2");
-            else 
+            else
                 color = (Color)ColorConverter.ConvertFromString("#FFED556A");
             //设置背景
             Zone.Background = new SolidColorBrush(color);

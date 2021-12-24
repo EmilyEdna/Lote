@@ -102,49 +102,62 @@
                 <ColumnDefinition Width="0.25*"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <WrapPanel Orientation="Vertical" x:Name="Navs">
-                <L:LoteButton Content="小说(N)" 
+            <WrapPanel Orientation="Vertical" Height="728">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="300"/>
+                    </Grid.RowDefinitions>
+                    <WrapPanel Orientation="Vertical" x:Name="Navs">
+                        <L:LoteButton Content="小说(N)" 
                               Source="/Resource/Assets/btn1.jpg" 
                               Width="240"
                               Height="40"
                               Style="{DynamicResource LeftBtn}"  
                               Command="{S:Action Redirect}"
                               CommandParameter="1"/>
-                <L:LoteButton Content="轻小说(L)" 
+                        <L:LoteButton Content="轻小说(L)" 
                               Source="/Resource/Assets/btn2.jpg" 
                               Width="240"
                               Height="40"
                               Style="{DynamicResource LeftBtn}"  
                               Command="{S:Action Redirect}"
                               CommandParameter="2"/>
-                <L:LoteButton Content="动漫(A)" 
+                        <L:LoteButton Content="动漫(A)" 
                               Source="/Resource/Assets/btn3.jpg" 
                               Width="240"
                               Height="40"
                               Style="{DynamicResource LeftBtn}"  
                               Command="{S:Action Redirect}"
                               CommandParameter="3"/>
-                <L:LoteButton Content="壁纸(W)" 
+                        <L:LoteButton Content="壁纸(W)" 
                               Source="/Resource/Assets/btn4.jpg" 
                               Width="240"
                               Height="40"
                               Style="{DynamicResource LeftBtn}"  
                               Command="{S:Action Redirect}"
                               CommandParameter="4"/>
-                <L:LoteButton Content="音乐(M)" 
+                        <L:LoteButton Content="音乐(M)" 
                               Source="/Resource/Assets/btn5.jpg" 
                               Width="240"
                               Height="40"
                               Style="{DynamicResource LeftBtn}"  
                               Command="{S:Action Redirect}"
                               CommandParameter="5"/>
-                <L:LoteButton Content="设置(S)" 
+                        <L:LoteButton Content="设置(S)" 
                               Source="/Resource/Assets/btn6.jpg" 
                               Width="240"
                               Height="40"
                               Style="{DynamicResource LeftBtn}"  
                               Command="{S:Action Redirect}"
                               CommandParameter="6"/>
+                    </WrapPanel>
+                    <Border Grid.Row="1" Height="300">
+                        <Border.Background>
+                            <ImageBrush ImageSource="/Resource/Assets/看板娘.png" Stretch="UniformToFill" Opacity="0.5"/>
+                        </Border.Background>
+                    </Border>
+                </Grid>
             </WrapPanel>
             <WrapPanel Grid.Column="1">
                 <ContentControl  S:View.Model="{Binding ActiveItem}"/>

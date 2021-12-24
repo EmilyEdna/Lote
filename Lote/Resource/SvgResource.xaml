@@ -1,7 +1,0 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Geometry x:Key="Canva">
-        M0,20 C0,8.954305 8.954305,0 20,0 L1180,0 C1191.0457,0 1200,8.954305 1200,20 L1200,655 C1200,666.04569 1191.0457,675 1180,675 L20,675 C8.954305,675 0,666.04569 0,655 z
-    </Geometry>
-</ResourceDictionary>
-

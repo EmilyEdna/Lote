@@ -96,7 +96,7 @@
                         </i:Interaction.Behaviors>
                     </PasswordBox>
                 </WrapPanel>
-                <WrapPanel Style="{StaticResource ProxyWrap}">
+                <WrapPanel Style="{StaticResource ProxyWrap}" Orientation="Horizontal">
                     <TextBlock Text="使用默认账号：" Style="{StaticResource TextBlockDefaultPrimary}" Foreground="Black"/>
                     <CheckBox IsChecked="{C:Binding Root.UseAuthorWKInfo}"/>
                 </WrapPanel>

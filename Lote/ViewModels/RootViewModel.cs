@@ -8,6 +8,7 @@ using Lote.Views.Wallpaper;
 using Stylet;
 using StyletIoC;
 using System.Windows.Controls;
+using System.Windows.Media;
 using XExten.Advance.LinqFramework;
 
 namespace Lote.ViewModels
@@ -19,7 +20,6 @@ namespace Lote.ViewModels
         {
             this.container = container;
         }
-
         public void NavigateTo(IScreen screen)
         {
             ActivateItem(screen);

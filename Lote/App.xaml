@@ -15,9 +15,9 @@
                 <hc:ThemeResources/>
                 <hc:Theme/>
                 <Material:MaterialDesignThemesResources/>
-                <ResourceDictionary Source="/Resource/SvgResource.xaml"/>
                 <ResourceDictionary Source="/Style/MergedStyle.xaml"/>
             </s:ApplicationLoader.MergedDictionaries>
+            
         </s:ApplicationLoader>
     </Application.Resources>
 </Application>
