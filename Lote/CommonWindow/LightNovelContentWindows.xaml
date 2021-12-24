@@ -25,7 +25,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="72"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="0.25*"/>
         </Grid.RowDefinitions>
         <Design:ColorZone x:Name="Zone" Background="#FFFF9999" 
                       Mode="PrimaryMid"
@@ -103,13 +103,16 @@
                            Style="{StaticResource TextBlockDefaultWarning}" FontSize="{C:Binding FontSize}"
                            TextWrapping="Wrap"
                            Width="{Binding Width, ElementName=window}"
+                           x:Name="Word"
                            Foreground="Black"/>
                 </hc:ScrollViewer>
             </WrapPanel>
             <WrapPanel Grid.Row="1" HorizontalAlignment="Center" Visibility="{C:Binding (!Show),FalseToVisibility=Hidden}">
                 <ListBox  ItemsSource="{Binding LightNovelContent.Image}"
                           BorderThickness="0"
-                         d:ItemsSource="{d:SampleData ItemCount=5}">
+                          Background="Transparent"
+                          Style="{StaticResource StackPanelVerticalListBox}"
+                          d:ItemsSource="{d:SampleData ItemCount=5}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Border BorderThickness="0">
@@ -140,12 +143,12 @@
                 </hc:PreviewSlider>
             </WrapPanel>
             <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1">
-                <TextBlock Text="切换背景：" Style="{StaticResource TextBlockDefaultPrimary}"/>
-                <Button Style="{StaticResource Colorful}" Background="#FFF3E2E2" Click="WindowColor"/>
-                <Button Style="{StaticResource Colorful}" Background="#FFDBCBA0" Click="WindowColor"/>
-                <Button Style="{StaticResource Colorful}" Background="#FFCCDADE" Click="WindowColor"/>
-                <Button Style="{StaticResource Colorful}" Background="#FFCEE0CE" Click="WindowColor"/>
-                <Button Style="{StaticResource Colorful}" Background="#FFCDCDCD" Click="WindowColor"/>
+                <TextBlock Text="字体颜色：" Style="{StaticResource TextBlockDefaultPrimary}"/>
+                <Button Style="{StaticResource Colorful}" Background="LightPink" Click="WindowColor"/>
+                <Button Style="{StaticResource Colorful}" Background="Violet" Click="WindowColor"/>
+                <Button Style="{StaticResource Colorful}" Background="Orange" Click="WindowColor"/>
+                <Button Style="{StaticResource Colorful}" Background="White" Click="WindowColor"/>
+                <Button Style="{StaticResource Colorful}" Background="Black" Click="WindowColor"/>
             </WrapPanel>
         </Grid>
     </Grid>

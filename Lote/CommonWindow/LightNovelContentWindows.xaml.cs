@@ -30,7 +30,7 @@ namespace Lote.CommonWindow
 
         private void WindowColor(object sender, RoutedEventArgs e)
         {
-            this.window.Background = (sender as Button).Background;
+            this.Word.Foreground = (sender as Button).Background;
         }
 
         private void SysClick(object sender, RoutedEventArgs e)
