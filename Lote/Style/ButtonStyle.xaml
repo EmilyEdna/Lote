@@ -20,28 +20,6 @@
     </Style>
     <!--#endregion-->
     
-    <!--#region 播放按钮-->
-    <Style x:Key="VLCBtn" TargetType="L:LoteButton">
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="SnapsToDevicePixels" Value="True"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="L:LoteButton">
-                    <Border BorderThickness="0" BorderBrush="White" CornerRadius="30" x:Name="PlayBorder" Background="#B2F7A35D">
-                        <Path Data="{TemplateBinding Svg}" Stretch="Fill" Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center" Stroke="AliceBlue"/>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="PlayBorder" Value="#FFF772BB"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    <!--#endregion-->
-
     <!--#region 查询-->
     <VisualBrush x:Key="Helper" Stretch="None" AlignmentX="Left" Opacity="0.3">
         <VisualBrush.Visual>

@@ -22,9 +22,9 @@ namespace Lote.CommonWindow
     /// <summary>
     /// AnimePlayWindows.xaml 的交互逻辑
     /// </summary>
-    public partial class AnimePlayWindows : HandyControl.Controls.Window
+    public partial class AnimePlayWindows : LoteWindow
     {
-
+        
         public AnimePlayWindows()
         {
             InitializeComponent();
@@ -38,6 +38,7 @@ namespace Lote.CommonWindow
 
         #region Field
         public LibVLC LibVlcs;
+        public Color color;
         public LibVLCSharp.Shared.MediaPlayer MediaPlayers;
         public Media Medias;
         public AnimePlayWindowsViewModel ViewModel;
@@ -52,7 +53,7 @@ namespace Lote.CommonWindow
 
         private void BtnClick(object sender, RoutedEventArgs e)
         {
-            var btn = (sender as LoteButton);
+            var btn = (sender as Button);
             var VlcFunc = Enum.Parse<VLCFuncEnum>(btn.CommandParameter.ToString());
             switch (VlcFunc)
             {
@@ -181,6 +182,56 @@ namespace Lote.CommonWindow
             this.MediaPlayers.Dispose();
             this.LibVlcs.Dispose();
             this.Close();
+        }
+
+        private void ColorZoneMouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                DragMove();
+            }
+        }
+
+        private void ThemeSelect(object sender, SelectionChangedEventArgs e)
+        {
+            var select = (sender as ComboBox);
+
+            var item = (select.Items[select.SelectedIndex] as LoteComboBoxItem);
+
+            if (item.SeleteType == 0)
+                color = (Color)ColorConverter.ConvertFromString("#FF2CCFA0");
+            else if (item.SeleteType == 1)
+                color = (Color)ColorConverter.ConvertFromString("#FFFF9999");
+            else if (item.SeleteType == 2)
+                color = (Color)ColorConverter.ConvertFromString("#FF10AEC2");
+            else
+                color = (Color)ColorConverter.ConvertFromString("#FFED556A");
+            //设置背景
+            Zone.Background = new SolidColorBrush(color);
+        }
+
+        private void BackgroudSelect(object sender, SelectionChangedEventArgs e)
+        {
+            var select = (sender as ComboBox);
+
+            var item = (select.Items[select.SelectedIndex] as LoteComboBoxItem);
+
+            if (item.SeleteType == 0)
+            {
+                this.Source = new BitmapImage(new Uri("/Resource/Assets/Backgroud1.jpg", UriKind.Relative));
+            }
+            else if (item.SeleteType == 1)
+            {
+                this.Source = new BitmapImage(new Uri("/Resource/Assets/Backgroud2.jpg", UriKind.Relative));
+            }
+            else if (item.SeleteType == 2)
+            {
+                this.Source = new BitmapImage(new Uri("/Resource/Assets/Backgroud3.jpg", UriKind.Relative));
+            }
+            else if (item.SeleteType == 3)
+            {
+                this.Source = new BitmapImage(new Uri("/Resource/Assets/Backgroud4.jpg", UriKind.Relative));
+            }
         }
     }
 }

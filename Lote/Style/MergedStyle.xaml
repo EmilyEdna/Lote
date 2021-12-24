@@ -4,6 +4,5 @@
         <!--样式表-->
         <ResourceDictionary Source="WindowStyle.xaml"/>
         <ResourceDictionary Source="ButtonStyle.xaml"/>
-        <ResourceDictionary Source="DividerStyle.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
