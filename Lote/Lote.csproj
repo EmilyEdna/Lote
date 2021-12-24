@@ -10,6 +10,7 @@
     <Copyright>Copyright © EmilyEdna 2021</Copyright>
     <FileVersion>1.0.0.0</FileVersion>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>TRACE;Core</DefineConstants>
@@ -32,6 +33,9 @@
     <None Remove="Resource\Assets\站酷快乐体2016修订版.ttf" />
     <None Remove="Resource\Assets\默认背景.jpg" />
     <None Remove="Style\默认背景.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="favicon.ico" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CalcBinding" Version="2.5.2" />
