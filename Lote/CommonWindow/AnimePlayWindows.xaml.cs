@@ -76,6 +76,8 @@ namespace Lote.CommonWindow
 
         private void Stop()
         {
+            this.RatePlay.Text = "00:00:00";
+            this.RateTotal.Text= "00:00:00";
             this.Videos.MediaPlayer.Stop();
         }
 
