@@ -10,8 +10,6 @@ namespace Lote.Core.Common
     {
         Pause=1,
         Play,
-        Stop,
-        FullScreen,
-        FullScreenExit
+        Stop
     }
 }

@@ -15,7 +15,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using System.Windows.Threading;
 
 namespace Lote.CommonWindow
 {
@@ -24,125 +24,88 @@ namespace Lote.CommonWindow
     /// </summary>
     public partial class AnimePlayWindows : LoteWindow
     {
-        
+
         public AnimePlayWindows()
         {
             InitializeComponent();
             LibVLCSharp.Shared.Core.Initialize(Environment.CurrentDirectory + @"\VLC\X64\");
             this.LibVlcs = new LibVLC();
             this.MediaPlayers = new LibVLCSharp.Shared.MediaPlayer(this.LibVlcs);
-            this.videos.MediaPlayer = this.MediaPlayers;
+            this.Videos.MediaPlayer = this.MediaPlayers;
             this.window.MaxWidth = SystemParameters.PrimaryScreenWidth;
             this.window.MaxHeight = SystemParameters.PrimaryScreenHeight;
+            Timer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromSeconds(10)
+            };
+            Timer.Tick += Timer_Tick;
+            Timer.Start();
         }
 
         #region Field
-        public LibVLC LibVlcs;
-        public Color color;
-        public LibVLCSharp.Shared.MediaPlayer MediaPlayers;
-        public Media Medias;
-        public AnimePlayWindowsViewModel ViewModel;
+        private DispatcherTimer Timer;
+        private LibVLC LibVlcs;
+        private Color color;
+        private LibVLCSharp.Shared.MediaPlayer MediaPlayers;
+        private Media Medias;
+        private AnimePlayWindowsViewModel ViewModel;
         #endregion
 
-
         #region Private
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            ViewModel = (this.DataContext as AnimePlayWindowsViewModel);
-        }
-
-        private void BtnClick(object sender, RoutedEventArgs e)
-        {
-            var btn = (sender as Button);
-            var VlcFunc = Enum.Parse<VLCFuncEnum>(btn.CommandParameter.ToString());
-            switch (VlcFunc)
-            {
-                case VLCFuncEnum.Pause:
-                    Pause();
-                    break;
-                case VLCFuncEnum.Play:
-                    Play();
-                    break;
-                case VLCFuncEnum.Stop:
-                    Stop();
-                    break;
-                case VLCFuncEnum.FullScreen:
-                    break;
-                case VLCFuncEnum.FullScreenExit:
-                    break;
-                default:
-                    break;
-            }
-
-        }
 
         private void Play()
         {
-            if (!this.videos.MediaPlayer.IsPlaying)
+            if (!this.Videos.MediaPlayer.IsPlaying)
             {
                 using (Medias = new Media(LibVlcs, new Uri(ViewModel.WatchRoute)))
-                    this.videos.MediaPlayer.Play(Medias);
+                    this.Videos.MediaPlayer.Play(Medias);
 
-                this.videos.MediaPlayer.Playing += MediaPlayer_Playing;
-                this.videos.MediaPlayer.PositionChanged += MediaPlayer_PositionChanged;
+                this.Videos.MediaPlayer.Playing += MediaPlayer_Playing;
+                this.Videos.MediaPlayer.PositionChanged += MediaPlayer_PositionChanged;
             }
             else
             {
-                this.videos.MediaPlayer.Play();
+                this.Videos.MediaPlayer.Play();
             }
-
-
-        }
-
-        private void MediaPlayer_PositionChanged(object sender, MediaPlayerPositionChangedEventArgs e)
-        {
-            Dispatcher.Invoke(() =>
-            {
-                var play = this.videos.MediaPlayer;
-                Rate.Value = play.Time / 1000;
-                RatePlay.Text = TimeSpan.FromSeconds(play.Time / 1000).ToString();
-                if (Rate.Value % 60 == 0)
-                {
-
-                }
-            });
-        }
-
-        private void MediaPlayer_Playing(object sender, EventArgs e)
-        {
-            Dispatcher.Invoke(() =>
-            {
-                var play = this.videos.MediaPlayer;
-                Rate.Maximum = play.Length / 1000;
-                RateTotal.Text = "/" + TimeSpan.FromSeconds(play.Length / 1000).ToString();
-            });
         }
 
         private void Pause()
         {
-            this.videos.MediaPlayer.Pause();
+            this.Videos.MediaPlayer.Pause();
         }
 
         private void Stop()
         {
-            this.videos.MediaPlayer.Stop();
+            this.Videos.MediaPlayer.Stop();
         }
 
+        private void Max()
+        {
+            this.window.WindowState = this.window.WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
+        }
+
+        private void Min()
+        {
+            this.window.WindowState = WindowState.Minimized;
+        }
+        #endregion
+
+        #region Event
         private void VoiceChange(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if (this.videos.MediaPlayer == null) return;
-            this.videos.MediaPlayer.Volume = Convert.ToInt32(e.NewValue) * 10;
+            if (this.Videos.MediaPlayer == null) return;
+            this.Videos.MediaPlayer.Volume = Convert.ToInt32(e.NewValue) * 10;
         }
 
         private void RateDragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {
-            if (this.videos.MediaPlayer == null) return;
+            if (this.Videos.MediaPlayer == null) return;
             var position = (float)(Rate.Value / Rate.Maximum);
             if (position == 1)
             {
                 position = 0.99f;
             }
-            this.videos.MediaPlayer.Position = position;
+            this.Videos.MediaPlayer.Position = position;
         }
 
         private void SysClick(object sender, RoutedEventArgs e)
@@ -165,23 +128,54 @@ namespace Lote.CommonWindow
             }
         }
 
-        private void Max()
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            this.window.WindowState = this.window.WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
+            ViewModel = (this.DataContext as AnimePlayWindowsViewModel);
         }
 
-        private void Min()
+        private void BtnClick(object sender, RoutedEventArgs e)
         {
-            this.window.WindowState = WindowState.Minimized;
-        }
-        #endregion
+            var btn = (sender as Button);
+            var VlcFunc = Enum.Parse<VLCFuncEnum>(btn.CommandParameter.ToString());
+            switch (VlcFunc)
+            {
+                case VLCFuncEnum.Pause:
+                    Pause();
+                    break;
+                case VLCFuncEnum.Play:
+                    Play();
+                    break;
+                case VLCFuncEnum.Stop:
+                    Stop();
+                    break;
+                default:
+                    break;
+            }
 
-        public void CloseBase()
+        }
+
+        private void MediaPlayer_PositionChanged(object sender, MediaPlayerPositionChangedEventArgs e)
         {
-            this.MediaPlayers.Stop();
-            this.MediaPlayers.Dispose();
-            this.LibVlcs.Dispose();
-            this.Close();
+            Dispatcher.Invoke(() =>
+            {
+                var play = this.Videos.MediaPlayer;
+                Rate.Value = play.Time / 1000;
+                RatePlay.Text = TimeSpan.FromSeconds(play.Time / 1000).ToString();
+                if (Rate.Value % 60 == 0)
+                {
+
+                }
+            });
+        }
+
+        private void MediaPlayer_Playing(object sender, EventArgs e)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                var play = this.Videos.MediaPlayer;
+                Rate.Maximum = play.Length / 1000;
+                RateTotal.Text = "/" + TimeSpan.FromSeconds(play.Length / 1000).ToString();
+            });
         }
 
         private void ColorZoneMouseMove(object sender, MouseEventArgs e)
@@ -232,6 +226,29 @@ namespace Lote.CommonWindow
             {
                 this.Source = new BitmapImage(new Uri("/Resource/Assets/Backgroud4.jpg", UriKind.Relative));
             }
+        }
+
+        private void WindowMouseEnter(object sender, MouseEventArgs e)
+        {
+            VideoHandle.Visibility = Visibility.Visible;
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            if (this.Videos != null && this.Videos.MediaPlayer != null && this.Videos.MediaPlayer.IsPlaying && VideoHandle.Visibility == Visibility.Visible)
+            {
+                VideoHandle.Visibility = Visibility.Hidden;
+            }
+        }
+        #endregion
+
+        public void CloseBase()
+        {
+            this.MediaPlayers.Stop();
+            this.MediaPlayers.Dispose();
+            this.LibVlcs.Dispose();
+            this.Timer.Stop();
+            this.Close();
         }
     }
 }
