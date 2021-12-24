@@ -4,9 +4,47 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Lote.Views.Wallpaper"
+             xmlns:C="clr-namespace:CalcBinding;assembly=CalcBinding"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
+             xmlns:S="https://github.com/canton7/Stylet"
+             xmlns:Design="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             Width="960"
+             Height="728"
+             Background="Transparent">
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.2*"/>
+        </Grid.RowDefinitions>
+        <ListBox d:ItemsSource="{d:SampleData ItemCount=5}" 
+                 Background="Transparent"
+                 BorderThickness="0"
+                 Style="{StaticResource WrapPanelVerticalListBox}"
+                 ItemsSource="{C:Binding Wallpaper}">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <WrapPanel Orientation="Horizontal">
+                        <Border Width="240" Height="260">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Image Source="{Binding Preview}" Width="200" Height="200" VerticalAlignment="Top" Margin="0,5,0,0"/>
+                                <WrapPanel Grid.Row="1" Margin="0,2,0,0">
+                                    <TextBlock Text="{Binding Author,StringFormat=作者:{0}}"/>
+                                </WrapPanel>
+                            </Grid>
+                        </Border>
+                    </WrapPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </UserControl>
