@@ -3,78 +3,6 @@
                     xmlns:hc="https://handyorg.github.io/handycontrol"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <!--#region 最大最小关闭-->
-    <Style x:Key="BtnClos" TargetType="Button">
-        <Setter Property="Background" Value="White"/>
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="SnapsToDevicePixels" Value="True"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border Width="18" Height="18" CornerRadius="30" Background="{TemplateBinding Background}" BorderThickness="0" x:Name="BorderClose">
-                        <Path Data="{StaticResource CloseGeometryIcon}" Stretch="Fill" Width="10" Height="10" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Path.Fill>
-                                #FFFF8000
-                            </Path.Fill>
-                        </Path>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="BorderClose" Value="DeepSkyBlue"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    <Style x:Key="BtnMin" TargetType="Button">
-        <Setter Property="Background" Value="White"/>
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="SnapsToDevicePixels" Value="True"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border Width="18" Height="18" CornerRadius="30" Background="{TemplateBinding Background}" BorderThickness="0" x:Name="BorderMin">
-                        <Path Data="{StaticResource MinGeometryIcon}" Stretch="Fill" Width="10" Height="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Path.Fill>
-                                #FFFF8000
-                            </Path.Fill>
-                        </Path>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="BorderMin" Value="DeepSkyBlue"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    <Style x:Key="BtnMax" TargetType="Button">
-        <Setter Property="Background" Value="White"/>
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="SnapsToDevicePixels" Value="True"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border Width="18" Height="18" CornerRadius="30" Background="{TemplateBinding Background}" BorderThickness="0" x:Name="BorderMax">
-                        <Path Data="{StaticResource MaxGeometryIcon}" Stretch="Fill" Width="10" Height="10" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Path.Fill>
-                                #FFFF8000
-                            </Path.Fill>
-                        </Path>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="BorderMax" Value="DeepSkyBlue"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    <!--#endregion-->
-
     <!--#region 导航按钮-->
     <Style x:Key="BtnNav" TargetType="L:LoteButton">
         <Setter Property="Background" Value="Transparent"/>
@@ -116,7 +44,6 @@
         <Setter Property="BorderBrush" Value="#FF10AEC2"/>
         <Setter Property="Foreground" Value="#FFFF9999"/>
         <Setter Property="BorderThickness" Value="0,0,0,1"/>
-        
         <Setter Property="Background">
             <Setter.Value>
                 <ImageBrush ImageSource="{Binding Source, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type L:LoteButton}}}" 
