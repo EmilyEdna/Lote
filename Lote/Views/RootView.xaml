@@ -16,12 +16,12 @@
            Width="1200" 
            Style="{StaticResource Master}">
     <L:LoteWindow.InputBindings>
-        <KeyBinding Key="N" Command="{S:Action Redirect}" CommandParameter="1"/>
-        <KeyBinding Key="L" Command="{S:Action Redirect}" CommandParameter="2"/>
-        <KeyBinding Key="A" Command="{S:Action Redirect}" CommandParameter="3"/>
-        <KeyBinding Key="W" Command="{S:Action Redirect}" CommandParameter="4"/>
-        <KeyBinding Key="M" Command="{S:Action Redirect}" CommandParameter="5"/>
-        <KeyBinding Key="S" Command="{S:Action Redirect}" CommandParameter="6"/>
+        <KeyBinding Key="N" Command="{S:Action Redirect}" CommandParameter="1" Modifiers="Ctrl"/>
+        <KeyBinding Key="L" Command="{S:Action Redirect}" CommandParameter="2" Modifiers="Ctrl"/>
+        <KeyBinding Key="A" Command="{S:Action Redirect}" CommandParameter="3" Modifiers="Ctrl"/>
+        <KeyBinding Key="W" Command="{S:Action Redirect}" CommandParameter="4" Modifiers="Ctrl"/>
+        <KeyBinding Key="M" Command="{S:Action Redirect}" CommandParameter="5" Modifiers="Ctrl"/>
+        <KeyBinding Key="S" Command="{S:Action Redirect}" CommandParameter="6" Modifiers="Ctrl"/>
     </L:LoteWindow.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
@@ -56,6 +56,7 @@
                     <L:LoteComboBoxItem Content="桃花粉" SeleteType="1"/>
                     <L:LoteComboBoxItem Content="旬子蓝" SeleteType="2"/>
                     <L:LoteComboBoxItem Content="山茶红" SeleteType="3"/>
+                    <L:LoteComboBoxItem Content="墨鱼黑" SeleteType="4"/>
                 </ComboBox>
                 <ComboBox SelectedIndex="0" 
                           Margin="8 0 0 0"
@@ -109,42 +110,42 @@
                         <RowDefinition Height="300"/>
                     </Grid.RowDefinitions>
                     <WrapPanel Orientation="Vertical" x:Name="Navs">
-                        <L:LoteButton Content="小说(N)" 
+                        <L:LoteButton Content="小说(Ctrl+N)" 
                               Source="/Resource/Assets/btn1.jpg" 
                               Width="240"
                               Height="40"
                               Style="{DynamicResource LeftBtn}"  
                               Command="{S:Action Redirect}"
                               CommandParameter="1"/>
-                        <L:LoteButton Content="轻小说(L)" 
+                        <L:LoteButton Content="轻小说(Ctrl+L)" 
                               Source="/Resource/Assets/btn2.jpg" 
                               Width="240"
                               Height="40"
                               Style="{DynamicResource LeftBtn}"  
                               Command="{S:Action Redirect}"
                               CommandParameter="2"/>
-                        <L:LoteButton Content="动漫(A)" 
+                        <L:LoteButton Content="动漫(Ctrl+A)" 
                               Source="/Resource/Assets/btn3.jpg" 
                               Width="240"
                               Height="40"
                               Style="{DynamicResource LeftBtn}"  
                               Command="{S:Action Redirect}"
                               CommandParameter="3"/>
-                        <L:LoteButton Content="壁纸(W)" 
+                        <L:LoteButton Content="壁纸(Ctrl+W)" 
                               Source="/Resource/Assets/btn4.jpg" 
                               Width="240"
                               Height="40"
                               Style="{DynamicResource LeftBtn}"  
                               Command="{S:Action Redirect}"
                               CommandParameter="4"/>
-                        <L:LoteButton Content="音乐(M)" 
+                        <L:LoteButton Content="音乐(Ctrl+M)" 
                               Source="/Resource/Assets/btn5.jpg" 
                               Width="240"
                               Height="40"
                               Style="{DynamicResource LeftBtn}"  
                               Command="{S:Action Redirect}"
                               CommandParameter="5"/>
-                        <L:LoteButton Content="设置(S)" 
+                        <L:LoteButton Content="设置(Ctrl+S)" 
                               Source="/Resource/Assets/btn6.jpg" 
                               Width="240"
                               Height="40"

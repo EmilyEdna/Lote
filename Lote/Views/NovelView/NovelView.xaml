@@ -99,8 +99,8 @@
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
-            </ListBox>
-            <hc:Pagination Grid.Row="3"  Grid.ColumnSpan="2"
+        </ListBox>
+        <hc:Pagination Grid.Row="3"  Grid.ColumnSpan="2"
                        Margin="0,5,0,0"
                        HorizontalAlignment="Center"
                        MaxPageCount="{C:Binding Total}" 

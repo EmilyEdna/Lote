@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Lote.Views.Wallpaper"
              xmlns:C="clr-namespace:CalcBinding;assembly=CalcBinding"
+             xmlns:L="clr-namespace:Lote.Override"
              xmlns:hc="https://handyorg.github.io/handycontrol"
              xmlns:S="https://github.com/canton7/Stylet"
              xmlns:Design="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -14,10 +15,21 @@
              Background="Transparent">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="0.055*"/>
             <RowDefinition/>
-            <RowDefinition Height="0.2*"/>
+            <RowDefinition Height="0.305*"/>
         </Grid.RowDefinitions>
+        <WrapPanel>
+            <hc:SearchBar TextWrapping="Wrap" 
+                          BorderThickness="1" 
+                          Style="{StaticResource Search}"
+                          Width="960"
+                          ShowClearButton="True"
+                          Command="{S:Action Search}"
+                          CommandParameter="{Binding Text, RelativeSource={RelativeSource Self}}" />
+        </WrapPanel>
         <ListBox d:ItemsSource="{d:SampleData ItemCount=5}" 
+                 Grid.Row="1"
                  Background="Transparent"
                  BorderThickness="0"
                  Style="{StaticResource WrapPanelVerticalListBox}"
@@ -37,8 +49,49 @@
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
                                 <Image Source="{Binding Preview}" Width="200" Height="200" VerticalAlignment="Top" Margin="0,5,0,0"/>
-                                <WrapPanel Grid.Row="1" Margin="0,2,0,0">
-                                    <TextBlock Text="{Binding Author,StringFormat=作者:{0}}"/>
+                                <WrapPanel Grid.Row="1" Margin="0,2,0,0" HorizontalAlignment="Center">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition Height="60"/>
+                                            <RowDefinition Height="20"/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Text="{Binding Author,StringFormat=作者:{0}}" Margin="10,0,0,0"/>
+                                        <TextBlock Text="{Binding Created,StringFormat=时间:{0:yyyy-MM-dd}}" Grid.Row="1" Margin="10,0,0,0"/>
+                                        <TextBlock Text="{Binding Pixel,StringFormat=像素:{0}}"  Grid.Row="2" Margin="10,0,0,0"/>
+                                        <WrapPanel Grid.Row="3" Margin="10,0,0,0">
+                                            <ListBox Style="{StaticResource WrapPanelHorizontalListBox}" 
+                                                     BorderThickness="0" 
+                                                     Background="Transparent"
+                                                     BorderBrush="Transparent" 
+                                                     ItemsSource="{Binding Labels}">
+                                                <ListBox.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <WrapPanel/>
+                                                    </ItemsPanelTemplate>
+                                                </ListBox.ItemsPanel>
+                                                <ListBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <WrapPanel>
+                                                            <Button Content="{Binding .}" 
+                                                                    Foreground="DeepSkyBlue"
+                                                                    BorderThickness="0"
+                                                                    Background="Transparent" 
+                                                                    Style="{StaticResource ButtonDanger.Small}"
+                                                                    Command="{S:Action Search}" 
+                                                                    CommandParameter="{Binding .}"/>
+                                                        </WrapPanel>
+                                                    </DataTemplate>
+                                                </ListBox.ItemTemplate>
+                                            </ListBox>
+                                        </WrapPanel>
+                                        <WrapPanel Orientation="Horizontal" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                            <L:LoteButton Svg="{StaticResource Download}" Style="{StaticResource WallpaperBtn}"/>
+                                            <L:LoteButton Svg="{StaticResource NoFavorite}" Style="{StaticResource WallpaperBtn}"/>
+                                        </WrapPanel>
+                                    </Grid>
                                 </WrapPanel>
                             </Grid>
                         </Border>
@@ -46,5 +99,17 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <hc:Pagination Grid.Row="2" 
+                       Margin="0,5,0,0"
+                       HorizontalAlignment="Center"
+                       MaxPageCount="{C:Binding Total}" 
+                       PageIndex="{C:Binding PageIndex}" 
+                       IsJumpEnabled="False">
+            <hc:Interaction.Triggers>
+                <hc:EventTrigger EventName="PageUpdated">
+                    <hc:EventToCommand Command="{S:Action PageUpdated}" PassEventArgsToCommand="True" />
+                </hc:EventTrigger>
+            </hc:Interaction.Triggers>
+        </hc:Pagination>
     </Grid>
 </UserControl>

@@ -81,7 +81,4 @@
     <Resource Include="Resource\Assets\看板娘.png" />
     <Resource Include="Resource\Assets\站酷快乐体2016修订版.ttf" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\" />
-  </ItemGroup>
 </Project>

@@ -11,7 +11,6 @@ namespace Lote.Override
 {
     public class LoteButton : Button
     {
-        
         public Geometry Svg
         {
             get { return (Geometry)GetValue(SvgProperty); }

@@ -1,4 +1,5 @@
-﻿using Lote.Core.Service;
+﻿using HandyControl.Data;
+using Lote.Core.Service;
 using Lote.Core.Service.DTO;
 using Stylet;
 using StyletIoC;
@@ -17,13 +18,14 @@ using XExten.Advance.LinqFramework;
 
 namespace Lote.Views.Wallpaper
 {
-    public class WallpaperViewModel:Screen
+    public class WallpaperViewModel : Screen
     {
         private readonly IContainer container;
         private readonly OptionRootDTO root;
         private readonly WallpaperProxy Proxy;
         public WallpaperViewModel(IContainer container)
         {
+            this.PageIndex = 1;
             this.container = container;
             this.root = container.Get<IOptionService>().Get() ?? new OptionRootDTO();
             this.Proxy = new WallpaperProxy
@@ -57,6 +59,11 @@ namespace Lote.Views.Wallpaper
             set { SetAndNotify(ref _PageIndex, value); }
         }
         #endregion
+
+        #region Field
+        private int Limit = 1;
+        private string KeyWord;
+        #endregion
         protected int CacheTime()
         {
             return root.CacheSpan.IsNullOrEmpty() ? 60 : Convert.ToInt32(root.CacheSpan);
@@ -68,13 +75,82 @@ namespace Lote.Views.Wallpaper
             {
                 opt.RequestParam = new WallpaperRequestInput
                 {
-                    CacheSpan= CacheTime(),
+                    CacheSpan = CacheTime(),
                     WallpaperType = WallpaperEnum.Init,
-                    Init = new WallpaperInit(),
+                    Init = new WallpaperInit
+                    {
+                        Limit = Limit
+                    },
                     Proxy = this.Proxy
                 };
             }).Runs();
+            this.Total = (WallpaperInit.Total+Limit-1)/Limit;
             this.Wallpaper = new ObservableCollection<WallpaperResult>(WallpaperInit.Result);
+        }
+
+        public void Search(string args) 
+        {
+            KeyWord = args;
+            var WallpaperSearch = WallpaperFactory.Wallpaper(opt =>
+            {
+                opt.RequestParam = new WallpaperRequestInput
+                {
+                    CacheSpan = CacheTime(),
+                    WallpaperType = WallpaperEnum.Search,
+                    Search = new WallpaperSearch
+                    {
+                        Limit = Limit,
+                        KeyWord= KeyWord
+                    },
+                    Proxy = this.Proxy
+                };
+            }).Runs();
+            this.Total = (WallpaperSearch.Total + Limit - 1) / Limit;
+            this.Wallpaper = new ObservableCollection<WallpaperResult>(WallpaperSearch.Result);
+        }
+
+        public void PageUpdated(FunctionEventArgs<int> args) 
+        {
+            PageIndex = args.Info;
+            if (KeyWord.IsNullOrEmpty())
+            {
+                var WallpaperInit = WallpaperFactory.Wallpaper(opt =>
+                {
+                    opt.RequestParam = new WallpaperRequestInput
+                    {
+                        CacheSpan = CacheTime(),
+                        WallpaperType = WallpaperEnum.Init,
+                        Init = new WallpaperInit
+                        {
+                            Page = PageIndex,
+                            Limit = Limit
+                        },
+                        Proxy = this.Proxy
+                    };
+                }).Runs();
+                this.Total = (WallpaperInit.Total + Limit - 1) / Limit;
+                this.Wallpaper = new ObservableCollection<WallpaperResult>(WallpaperInit.Result);
+            }
+            else
+            {
+                var WallpaperSearch = WallpaperFactory.Wallpaper(opt =>
+                {
+                    opt.RequestParam = new WallpaperRequestInput
+                    {
+                        CacheSpan = CacheTime(),
+                        WallpaperType = WallpaperEnum.Search,
+                        Search = new WallpaperSearch
+                        {
+                            Page = PageIndex,
+                            Limit = Limit,
+                            KeyWord = KeyWord
+                        },
+                        Proxy = this.Proxy
+                    };
+                }).Runs();
+                this.Total = (WallpaperSearch.Total + Limit - 1) / Limit;
+                this.Wallpaper = new ObservableCollection<WallpaperResult>(WallpaperSearch.Result);
+            }
         }
     }
 }
