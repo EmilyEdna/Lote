@@ -18,15 +18,16 @@ namespace Lote.Core
             {
                 DbType = DbType.Sqlite,
                 InitKeyType = InitKeyType.Attribute,
-                ConnectionString = $"DataSource={FileUtily.Instance.CreateFile("LoteDb","Lote.db")}",
+                ConnectionString = $"DataSource={FileUtily.Instance.CreateFile("LoteDb", "Lote.db")}",
                 IsAutoCloseConnection = true,
             });
             return db;
         }
-        public void InitDataBase() 
+        public void InitDataBase()
         {
-           var Table = SyncStatic.Assembly("Lote.Core").SelectMany(t => t.ExportedTypes.Where(x => x.BaseType == typeof(BasicEntity))).ToArray();
-            LiteBase().CodeFirst.InitTables(Table);
+            var Table = SyncStatic.Assembly("Lote.Core").SelectMany(t => t.ExportedTypes.Where(x => x.BaseType == typeof(BasicEntity))).ToList();
+            Table.Add(typeof(Favorite));
+            LiteBase().CodeFirst.InitTables(Table.ToArray());
         }
     }
 }

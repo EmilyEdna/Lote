@@ -29,10 +29,12 @@ namespace Lote.Core.Common
         /// 写入文件流
         /// </summary>
         /// <param name="bytes"></param>
+        /// <param name="DirectoryName"></param>
         /// <param name="FileName"></param>
-        public string DownFile(byte[] bytes,string FileName)
+        /// <returns></returns>
+        public string DownFile(byte[] bytes,string DirectoryName, string FileName)
         {
-            FileName = CreateFile($"Download{Path.DirectorySeparatorChar}LightNovel", FileName);
+            FileName = CreateFile($"Download{Path.DirectorySeparatorChar}{DirectoryName}",  FileName);
             Stream stream = new MemoryStream(bytes);
             FileStream fs = new FileStream(FileName, FileMode.Create);
             BinaryWriter writer = new BinaryWriter(fs);
@@ -41,7 +43,7 @@ namespace Lote.Core.Common
             fs.Close();
             stream.Close();
             stream.Dispose();
-            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"Download{Path.DirectorySeparatorChar}LightNovel");
+            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"Download{Path.DirectorySeparatorChar}{DirectoryName}");
         }
     }
 }

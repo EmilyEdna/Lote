@@ -24,5 +24,18 @@ namespace Lote.Views.Wallpaper
         {
             InitializeComponent();
         }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            var vm = (this.DataContext as WallpaperViewModel);
+            vm.PageIndex = 1;
+            vm.InitFavorite(string.Empty);
+        }
+
+        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            var vm = (this.DataContext as WallpaperViewModel);
+            vm.InitAll();
+        }
     }
 }

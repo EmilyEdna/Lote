@@ -24,6 +24,7 @@ namespace Lote
         protected override void ConfigureIoC(IStyletIoCBuilder builder)
         {
             builder.Bind<IOptionService>().To<OptionService>();
+            builder.Bind<IWallpaperService>().To<WallpaperService>();
 
             builder.Bind<NavigationController>().And<INavigationController>().To<NavigationController>().InSingletonScope();
         }

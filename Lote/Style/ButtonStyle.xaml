@@ -89,7 +89,7 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Fill" TargetName="Content" Value="#FFFF9999"/>
+                            <Setter Property="Fill" TargetName="Content" Value="DeepSkyBlue"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

@@ -19,14 +19,18 @@
             <RowDefinition/>
             <RowDefinition Height="0.305*"/>
         </Grid.RowDefinitions>
-        <WrapPanel>
+        <WrapPanel Orientation="Horizontal">
             <hc:SearchBar TextWrapping="Wrap" 
                           BorderThickness="1" 
                           Style="{StaticResource Search}"
-                          Width="960"
+                          Width="890"
                           ShowClearButton="True"
                           Command="{S:Action Search}"
                           CommandParameter="{Binding Text, RelativeSource={RelativeSource Self}}" />
+            <WrapPanel Orientation="Horizontal" Width="70" VerticalAlignment="Center">
+                <TextBlock Text="只看收藏:" Style="{StaticResource TextBlockDefaultPrimary}" Foreground="Black"/>
+                <CheckBox IsChecked="{C:Binding WatchFavorite}" Checked="CheckBox_Checked"  Unchecked="CheckBox_Unchecked"/>
+            </WrapPanel>
         </WrapPanel>
         <ListBox d:ItemsSource="{d:SampleData ItemCount=5}" 
                  Grid.Row="1"
@@ -88,8 +92,20 @@
                                             </ListBox>
                                         </WrapPanel>
                                         <WrapPanel Orientation="Horizontal" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Right">
-                                            <L:LoteButton Svg="{StaticResource Download}" Style="{StaticResource WallpaperBtn}"/>
-                                            <L:LoteButton Svg="{StaticResource NoFavorite}" Style="{StaticResource WallpaperBtn}"/>
+                                            <L:LoteButton Svg="{StaticResource Download}" 
+                                                          Style="{StaticResource WallpaperBtn}" 
+                                                          Command="{S:Action Download}"  
+                                                          CommandParameter="{Binding Id}"/>
+                                            <L:LoteButton Svg="{StaticResource NoFavorite}" 
+                                                          Visibility="{C:Binding !IsFavorite,FalseToVisibility=Hidden}"
+                                                          Style="{StaticResource WallpaperBtn}" 
+                                                          Command="{S:Action NoFavorite}"
+                                                          CommandParameter="{Binding Id}"/>
+                                            <L:LoteButton Svg="{StaticResource Favorite}" 
+                                                          Visibility="{C:Binding IsFavorite,FalseToVisibility=Hidden}"
+                                                          Style="{StaticResource WallpaperBtn}" 
+                                                          Command="{S:Action Favorite}"
+                                                          CommandParameter="{Binding Id}"/>
                                         </WrapPanel>
                                     </Grid>
                                 </WrapPanel>

@@ -406,7 +406,7 @@ namespace Lote.Views.LightNovelView
                         };
                     }).Runs();
 
-                    var dir = FileUtily.Instance.DownFile(LightNovelDown.DownResult.Down, $"{BookName}.txt");
+                    var dir = FileUtily.Instance.DownFile(LightNovelDown.DownResult.Down, "LightNovel", $"{BookName}.txt");
                     MessageBox.Info("下载完成", "提示");
                     Process.Start("explorer.exe", dir);
                     return false;
