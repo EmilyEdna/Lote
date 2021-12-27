@@ -9,7 +9,6 @@
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:C="clr-namespace:CalcBinding;assembly=CalcBinding"
              xmlns:S="https://github.com/canton7/Stylet"
-             xmlns:Views="clr-namespace:Lote.Views" 
              Background="Transparent"
              Width="960"
              Height="728"
