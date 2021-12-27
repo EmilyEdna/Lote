@@ -25,9 +25,8 @@ namespace Lote.Core
         }
         public void InitDataBase()
         {
-            var Table = SyncStatic.Assembly("Lote.Core").SelectMany(t => t.ExportedTypes.Where(x => x.BaseType == typeof(BasicEntity))).ToList();
-            Table.Add(typeof(Favorite));
-            LiteBase().CodeFirst.InitTables(Table.ToArray());
+            Type[] Table = { typeof(Favorite), typeof(GlobalSetting) };
+            LiteBase().CodeFirst.InitTables(Table);
         }
     }
 }

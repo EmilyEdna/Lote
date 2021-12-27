@@ -200,8 +200,10 @@ namespace Lote.CommonWindow
                 color = (Color)ColorConverter.ConvertFromString("#FFFF9999");
             else if (item.SeleteType == 2)
                 color = (Color)ColorConverter.ConvertFromString("#FF10AEC2");
-            else
+            else if (item.SeleteType == 3)
                 color = (Color)ColorConverter.ConvertFromString("#FFED556A");
+            else
+                color = (Color)ColorConverter.ConvertFromString("#FF000000");
             //设置背景
             Zone.Background = new SolidColorBrush(color);
         }

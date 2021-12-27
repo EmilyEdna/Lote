@@ -2,7 +2,9 @@
 using Lote.Core.Service;
 using Lote.NotifyUtil;
 using Lote.ViewModels;
+using Serilog;
 using Stylet;
+using Stylet.Logging;
 using StyletIoC;
 using System;
 using System.Windows;
@@ -17,6 +19,10 @@ namespace Lote
         /// </summary>
         protected override void OnStart()
         {
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Information()
+                .WriteTo.File("Logs/Lote.log", rollingInterval: RollingInterval.Day)
+                .CreateLogger();         
             //校验版本
             base.OnStart();
         }
@@ -80,6 +86,7 @@ namespace Lote
         /// <param name="e"></param>
         protected override void OnUnhandledException(DispatcherUnhandledExceptionEventArgs e)
         {
+            Log.Error(e.Exception.InnerException ?? e.Exception, "");
             HandyControl.Controls.MessageBox.Error("服务异常", "错误");
         }
     }

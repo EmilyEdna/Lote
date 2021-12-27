@@ -53,6 +53,7 @@
                     <L:LoteComboBoxItem Content="桃花粉" SeleteType="1"/>
                     <L:LoteComboBoxItem Content="旬子蓝" SeleteType="2"/>
                     <L:LoteComboBoxItem Content="山茶红" SeleteType="3"/>
+                    <L:LoteComboBoxItem Content="墨鱼黑" SeleteType="4"/>
                 </ComboBox>
                 <ComboBox SelectedIndex="0" 
                           Margin="8 0 0 0"
