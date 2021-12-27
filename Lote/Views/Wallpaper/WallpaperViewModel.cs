@@ -76,7 +76,7 @@ namespace Lote.Views.Wallpaper
         #endregion
 
         #region Field
-        private int Limit = 1;
+        private int Limit = 12;
         private string KeyWord;
         #endregion
 
