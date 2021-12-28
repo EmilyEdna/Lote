@@ -105,6 +105,18 @@ namespace Lote.Views.Music
             KeyWord = args;
             Search();
         }
+        public void ShowSheets() 
+        {
+            if (KeyWord.IsNullOrEmpty())
+                return;
+            Search(2);
+        }
+        public void ShowSong()
+        {
+            if (KeyWord.IsNullOrEmpty())
+                return;
+            Search();
+        }
         #endregion
 
         private void Search(int type = 1)

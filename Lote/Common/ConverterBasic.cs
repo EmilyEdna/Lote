@@ -26,8 +26,10 @@ namespace Lote.Common
                 return value.AsString().IsNullOrEmpty() ? null : $"\t{value.AsString().Replace("　", "\n\t")}";
             else if (Flag == 2)
                 return value.AsString().IsNullOrEmpty() ? null : $"\t{value.AsString().Replace("\r\n", "\n\t")}";
-            else
+            else if (Flag == 3)
                 return $"歌曲总数:{value}";
+            else
+                return string.Join(",", (value as List<string>));
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

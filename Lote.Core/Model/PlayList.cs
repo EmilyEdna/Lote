@@ -10,6 +10,8 @@ namespace Lote.Core.Model
     [SugarTable("PlayList")]
     public class PlayList : BasicEntity
     {
+        [SugarColumn(ColumnDataType = "varchar(150)", IsNullable = true)]
+        public string SongId { get; set; }
         [SugarColumn(ColumnDataType = "varchar(500)", IsNullable = true)]
         public string Address { get; set; }
         [SugarColumn(ColumnDataType = "varchar(200)", IsNullable = true)]

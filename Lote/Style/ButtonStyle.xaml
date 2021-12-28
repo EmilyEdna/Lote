@@ -76,7 +76,7 @@
     <!--#endregion-->
 
     <!--#region 自定义按钮-->
-    <Style x:Key="WallpaperBtn" TargetType="L:LoteButton">
+    <Style x:Key="LoteBtn" TargetType="L:LoteButton">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
@@ -84,12 +84,12 @@
             <Setter.Value>
                 <ControlTemplate TargetType="L:LoteButton">
                     <Grid Width="22" Height="22" Background="Transparent">
-                        <Path x:Name="Content" Width="15" Height="15"
+                        <Path x:Name="Content" Width="14" Height="14"
                                 Data="{TemplateBinding Svg}" Fill="Black" Stretch="Fill" UseLayoutRounding="True"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Fill" TargetName="Content" Value="DeepSkyBlue"/>
+                            <Setter Property="Fill" TargetName="Content" Value="DeepPink"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
