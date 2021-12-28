@@ -24,13 +24,13 @@ namespace Lote
                 .WriteTo.File("Logs/Lote.log", rollingInterval: RollingInterval.Day)
                 .CreateLogger();         
             //校验版本
-            base.OnStart();
         }
 
         protected override void ConfigureIoC(IStyletIoCBuilder builder)
         {
             builder.Bind<IOptionService>().To<OptionService>();
             builder.Bind<IWallpaperService>().To<WallpaperService>();
+            builder.Bind<IMusicPlayService>().To<MusicPlayService>();
 
             builder.Bind<NavigationController>().And<INavigationController>().To<NavigationController>().InSingletonScope();
         }
@@ -87,7 +87,9 @@ namespace Lote
         protected override void OnUnhandledException(DispatcherUnhandledExceptionEventArgs e)
         {
             Log.Error(e.Exception.InnerException ?? e.Exception, "");
-            HandyControl.Controls.MessageBox.Error("服务异常", "错误");
+            HandyControl.Controls.MessageBox.Error("服务异常，程序将自动关闭。", "错误");
+            GC.Collect();
+            Application.Current.Shutdown();
         }
     }
 }

@@ -19,7 +19,7 @@
                Width="1200" 
                Style="{StaticResource Child}">
     <L:LoteWindow.Resources>
-        <Behavior:NovelTextBlockConverter x:Key="ContentConverter"/>
+        <Behavior:ContentConverter x:Key="ContentConverter"/>
         <Behavior:NovelVisibilityConverter x:Key="VisibleConverter"/>
     </L:LoteWindow.Resources>
     <L:LoteWindow.InputBindings>
@@ -117,7 +117,7 @@
             </StackPanel>
             <WrapPanel Grid.Row="1">
                 <hc:ScrollViewer   VerticalScrollBarVisibility="Auto">
-                    <TextBlock Text="{Binding NovelContent.Content,Converter={StaticResource ContentConverter}}" 
+                    <TextBlock Text="{Binding NovelContent.Content,Converter={StaticResource ContentConverter},ConverterParameter=1}" 
                                Style="{StaticResource TextBlockDefaultWarning}" FontSize="{C:Binding FontSize}"
                                TextWrapping="Wrap"
                                Width="{Binding Width, ElementName=window}"

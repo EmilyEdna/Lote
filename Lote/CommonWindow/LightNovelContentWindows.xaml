@@ -19,7 +19,7 @@
         Width="1200" 
         Style="{StaticResource Child}">
     <L:LoteWindow.Resources>
-        <Behavior:LightNovelTextBlockConverter x:Key="ContentConverter"/>
+        <Behavior:ContentConverter x:Key="ContentConverter"/>
     </L:LoteWindow.Resources>
     <Grid HorizontalAlignment="Center" Width="{Binding Width, ElementName=window}">
         <Grid.RowDefinitions>
@@ -100,7 +100,7 @@
         <Grid Grid.Row="1">
             <WrapPanel Grid.Row="1" Visibility="{C:Binding Show,FalseToVisibility=Hidden}">
                 <hc:ScrollViewer   VerticalScrollBarVisibility="Auto" Style="{StaticResource ScrollViewerBaseStyle}">
-                    <TextBlock Text="{Binding LightNovelContent.Content,Converter={StaticResource ContentConverter}}" 
+                    <TextBlock Text="{Binding LightNovelContent.Content,Converter={StaticResource ContentConverter},ConverterParameter=2}" 
                            Style="{StaticResource TextBlockDefaultWarning}" FontSize="{C:Binding FontSize}"
                            TextWrapping="Wrap"
                            Width="{Binding Width, ElementName=window}"

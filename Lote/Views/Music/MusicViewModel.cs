@@ -23,10 +23,12 @@ namespace Lote.Views.Music
         private readonly IContainer container;
         private readonly OptionRootDTO root;
         private readonly MusicProxy Proxy;
+        private readonly IMusicPlayService MusciService;
         public MusicViewModel(IContainer container)
         {
             this.container = container;
             this.root = container.Get<IOptionService>().Get() ?? new OptionRootDTO();
+            this.MusciService = container.Get<IMusicPlayService>();
             this.Proxy = new MusicProxy
             {
                 IP = root.ProxyIP.IsNullOrEmpty() ? String.Empty : root.ProxyIP,
@@ -40,7 +42,6 @@ namespace Lote.Views.Music
 
         #region Field
         private string KeyWord;
-
         #endregion
 
         #region Property
@@ -57,11 +58,26 @@ namespace Lote.Views.Music
             get { return _SongSheets; }
             set { SetAndNotify(ref _SongSheets, value); }
         }
+
+        public ObservableCollection<PlayListDTO> _PlayLists;
+        public ObservableCollection<PlayListDTO> PlayLists
+        {
+            get { return _PlayLists; }
+            set { SetAndNotify(ref _PlayLists, value); }
+        }
+
         private int _Total;
         public int Total
         {
             get { return _Total; }
             set { SetAndNotify(ref _Total, value); }
+        }
+
+        private int _Count;
+        public int Count
+        {
+            get { return _Count; }
+            set { SetAndNotify(ref _Count, value); }
         }
 
         private int _PageIndex;
@@ -91,7 +107,7 @@ namespace Lote.Views.Music
         }
         #endregion
 
-        private void Search(int type=1)
+        private void Search(int type = 1)
         {
             switch (Platform)
             {
@@ -104,12 +120,12 @@ namespace Lote.Views.Music
                             {
                                 opt.RequestParam = new MusicRequestInput
                                 {
-                                    Proxy=this.Proxy,
+                                    Proxy = this.Proxy,
                                     MusicPlatformType = MusicPlatformEnum.QQMusic,
                                     MusicType = MusicTypeEnum.SongItem,
                                     Search = new MusicSearch
                                     {
-                                        Page=PageIndex,
+                                        Page = PageIndex,
                                         KeyWord = KeyWord
                                     }
                                 };
@@ -176,7 +192,7 @@ namespace Lote.Views.Music
                                     MusicType = MusicTypeEnum.SongSheet,
                                     Search = new MusicSearch
                                     {
-                                        Page=PageIndex,
+                                        Page = PageIndex,
                                         KeyWord = KeyWord
                                     }
                                 };
@@ -210,7 +226,8 @@ namespace Lote.Views.Music
                             this.Platform = SongItem.SongItemResult.MusicPlatformType.Value;
                             this.Total = SongItem.SongItemResult.Total.Value;
                         }
-                        else {
+                        else
+                        {
                             //歌单
                             var SongSheet = MusicFactory.Music(opt =>
                             {
@@ -255,7 +272,8 @@ namespace Lote.Views.Music
                             this.Platform = SongItem.SongItemResult.MusicPlatformType.Value;
                             this.Total = SongItem.SongItemResult.Total.Value;
                         }
-                        else {
+                        else
+                        {
                             //歌单
                             var SongSheet = MusicFactory.Music(opt =>
                             {
@@ -374,5 +392,11 @@ namespace Lote.Views.Music
             }
         }
 
+        protected override void OnViewLoaded()
+        {
+            var Result = this.MusciService.GetPlayList();
+            this.Count = Result.Count;
+            this.PlayLists = new ObservableCollection<PlayListDTO>(Result.Result);
+        }
     }
 }

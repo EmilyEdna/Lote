@@ -25,7 +25,7 @@ namespace Lote.Core
         }
         public void InitDataBase()
         {
-            Type[] Table = { typeof(Favorite), typeof(GlobalSetting) };
+            Type[] Table = { typeof(Favorite), typeof(GlobalSetting),typeof(PlayList)};
             LiteBase().CodeFirst.InitTables(Table);
         }
     }

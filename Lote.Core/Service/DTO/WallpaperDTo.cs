@@ -73,4 +73,10 @@ namespace Lote.Core.Service.DTO
 
         public bool IsFavorite => true;
     }
+
+    public class PageWallpaperDTo
+    {
+        public int Total { get; set; }
+        public List<WallpaperDTo> Result { get; set; }
+    }
 }

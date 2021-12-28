@@ -13,23 +13,21 @@ using XExten.Advance.StaticFramework;
 
 namespace Lote.Common
 {
-    public class NovelTextBlockConverter : IValueConverter
+    public class ContentConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value.AsString().IsNullOrEmpty() ? null : $"\t{value.AsString().Replace("　", "\n\t")}";
-        }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-    public class LightNovelTextBlockConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return value.AsString().IsNullOrEmpty() ? null : $"\t{value.AsString().Replace("\r\n", "\n\t")}";
+            if (parameter == null)
+                return string.Empty;
+
+            var Flag = parameter.AsString().AsInt();
+            if (Flag == 1)
+                return value.AsString().IsNullOrEmpty() ? null : $"\t{value.AsString().Replace("　", "\n\t")}";
+            else if (Flag == 2)
+                return value.AsString().IsNullOrEmpty() ? null : $"\t{value.AsString().Replace("\r\n", "\n\t")}";
+            else
+                return $"歌曲总数:{value}";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -65,4 +63,5 @@ namespace Lote.Common
             throw new NotImplementedException();
         }
     }
+
 }
