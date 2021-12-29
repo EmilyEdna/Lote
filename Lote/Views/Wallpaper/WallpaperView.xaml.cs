@@ -35,7 +35,10 @@ namespace Lote.Views.Wallpaper
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             var vm = (this.DataContext as WallpaperViewModel);
-            vm.InitAll();
+            Dispatcher.Invoke(() =>
+            {
+                vm.InitAll();
+            });
         }
     }
 }

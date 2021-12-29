@@ -59,11 +59,25 @@ namespace Lote.Views.Music
             set { SetAndNotify(ref _SongSheets, value); }
         }
 
+        private MusicSongSheetDetailResult _SheetDetail;
+        public MusicSongSheetDetailResult SheetDetail
+        {
+            get { return _SheetDetail; }
+            set { SetAndNotify(ref _SheetDetail, value); }
+        }
+
         public ObservableCollection<PlayListDTO> _PlayLists;
         public ObservableCollection<PlayListDTO> PlayLists
         {
             get { return _PlayLists; }
             set { SetAndNotify(ref _PlayLists, value); }
+        }
+
+        private MusicSongAlbumDetailResult _AlbumDetail;
+        public MusicSongAlbumDetailResult AlbumDetail
+        {
+            get { return _AlbumDetail; }
+            set { SetAndNotify(ref _AlbumDetail, value); }
         }
 
         private int _Total;
@@ -99,23 +113,55 @@ namespace Lote.Views.Music
         public void SearchType(ComboBoxItem control)
         {
             this.Platform = (MusicPlatformEnum)control.Tag.ToString().AsInt();
+            SheetDetail = null;
         }
         public void SearchMusic(string args)
         {
             KeyWord = args;
-            Search();
+            Task.Run(() => Search());
         }
-        public void ShowSheets() 
+        public void ShowSong(int args)
         {
             if (KeyWord.IsNullOrEmpty())
                 return;
-            Search(2);
+            if (args == 1 || args == 2)
+                Task.Run(() => Search(args));
         }
-        public void ShowSong()
+        public void SeleteSheet(MusicSongSheetItem entity)
         {
-            if (KeyWord.IsNullOrEmpty())
+            if (entity == null)
                 return;
-            Search();
+            var SheetDetail = MusicFactory.Music(opt =>
+            {
+                opt.RequestParam = new MusicRequestInput
+                {
+                    Proxy = this.Proxy,
+                    MusicPlatformType = Platform,
+                    MusicType = MusicTypeEnum.SheetDetail,
+                    SheetSearch = new MusicSheetSearch
+                    {
+                        Page = PageIndex,
+                        Id = entity.SongSheetId.AsString()
+                    }
+                };
+            }).Runs();
+            this.SheetDetail = SheetDetail.SongSheetDetailResult;
+        }
+        public void ShowAlbum(string args)
+        {
+            var SongAlbum = MusicFactory.Music(opt =>
+            {
+                opt.RequestParam = new MusicRequestInput
+                {
+                    MusicPlatformType = MusicPlatformEnum.NeteaseMusic,
+                    MusicType = MusicTypeEnum.AlbumDetail,
+                    AlbumSearch = new MusicAlbumSearch
+                    {
+                        AlbumId = args
+                    }
+                };
+            }).Runs();
+            this.AlbumDetail = SongAlbum.SongAlbumDetailResult;
         }
         #endregion
 

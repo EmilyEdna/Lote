@@ -61,7 +61,7 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition/>
-                <RowDefinition Height="0.2*"/>
+                <RowDefinition Height="0.5*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" Grid.Column="0">
                 <Rectangle HorizontalAlignment="Center" Height="500" VerticalAlignment="Top" Width="375" RadiusY="10" RadiusX="10">
@@ -105,6 +105,8 @@
                 </ListBox>
             </Grid>
             <TabControl  Grid.Row="0" Grid.Column="1"
+                         x:Name="Tabs"
+                         SelectionChanged="Tabs_SelectionChanged"
                         Background="Transparent" 
                         BorderThickness="0" 
                         HorizontalAlignment="Left">
@@ -114,14 +116,20 @@
                          BorderBrush="Transparent"
                          Style="{StaticResource TabItemTransparentStyle}">
                     <ListBox ItemsSource="{Binding SongItems}"  
+                             Style="{StaticResource WrapPanelVerticalListBox}"
                              BorderBrush="Transparent" 
                              Foreground="Transparent"
                              Background="Transparent">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <WrapPanel Orientation="Horizontal" Margin="2" Width="600">
                                     <TextBlock Style="{StaticResource TextBlockDefaultPrimary}">
-                                         <Run Text="{Binding SongName}" Foreground="Black"/>
+                                         <Run Text="{Binding SongName}" Foreground="#FFFF5555"/>
                                          <Run Text="{Binding SongAlbumName,StringFormat=({0})}" Foreground="DimGray" FontSize="10"/>
                                          <Run Text="————" Foreground="DimGray"/>
                                     </TextBlock>
@@ -131,6 +139,7 @@
                                     <WrapPanel Orientation="Horizontal" Margin="20,0,0,0">
                                         <L:LoteButton Style="{StaticResource LoteBtn}" 
                                                       Svg="{StaticResource Album}"
+                                                      Click="LoteButton_Click"
                                                       CommandParameter="{Binding SongAlbumId}"/>
                                         <L:LoteButton Style="{StaticResource LoteBtn}" 
                                                       Svg="{StaticResource Play}"
@@ -142,34 +151,170 @@
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </TabItem>
-                <TabItem Name="歌单" 
+                <TabItem Header="歌单" 
                          Background="Transparent" 
                          BorderBrush="Transparent"
                          BorderThickness="0" 
                          Style="{StaticResource TabItemTransparentStyle}">
-                    <TabItem.Header>
-                        <Button Content="歌单" Command="{S:Action ShowSheets}"/>
-                    </TabItem.Header>
                     <ListBox ItemsSource="{Binding SongSheets}"  
+                             x:Name="Sheets"
+                             Style="{StaticResource WrapPanelVerticalListBox}"
                              BorderBrush="Transparent" 
                              Foreground="Transparent"
-                             Background="Transparent">
+                             Background="Transparent"
+                             SelectionChanged="Sheets_SelectionChanged">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{S:Action SeleteSheet}" CommandParameter="{Binding SelectedItem, ElementName=Sheets}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <WrapPanel Orientation="Horizontal" Margin="2" Width="600">
                                     <Border Height="60" Width="60" BorderThickness="0" BorderBrush="Transparent">
                                         <Image Width="50" Height="50" Source="{Binding Cover}"/>
                                     </Border>
+                                    <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                                        <TextBlock>
+                                            <Run Text="歌单名称:" Foreground="#FFFF5555"/>
+                                            <Run Text="{Binding SongSheetName}" Foreground="DeepPink"/>
+                                        </TextBlock>
+                                        <TextBlock>
+                                             <Run Text="创建时间:" Foreground="#FFFF5555"/>
+                                            <Run Text="{Binding CreateTime}" Foreground="DeepPink"/>
+                                        </TextBlock>
+                                        <TextBlock>
+                                             <Run Text="播放次数:" Foreground="#FFFF5555"/>
+                                            <Run Text="{Binding ListenNumber}" Foreground="DeepPink"/>
+                                        </TextBlock>
+                                    </StackPanel>
                                 </WrapPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
+                </TabItem>
+                <TabItem Header="歌单详情" 
+                         Background="Transparent" 
+                         BorderBrush="Transparent"
+                         BorderThickness="0" 
+                         Style="{StaticResource TabItemTransparentStyle}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="70"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="70"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Border BorderThickness="0" Width="70" Height="70">
+                            <Image Source="{Binding SheetDetail.Logo}" Height="60" Width="60"/>
+                        </Border>
+                        <WrapPanel Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Vertical">
+                            <TextBlock>
+                                 <Run Text="歌单名称:" Foreground="#FFFF5555"/>
+                                 <Run Text="{Binding SheetDetail.DissName}" Foreground="DeepPink"/>
+                            </TextBlock>
+                            <TextBlock>
+                                <Run Text="歌曲数量:" Foreground="#FFFF5555"/>
+                                <Run Text="{Binding SheetDetail.MusicNum}" Foreground="DeepPink"/>
+                            </TextBlock>
+                            <TextBlock>
+                                <Run Text="播放次数:" Foreground="#FFFF5555"/>
+                                <Run Text="{Binding SheetDetail.ListenNum}" Foreground="DeepPink"/>
+                            </TextBlock>
+                            <TextBlock>
+                                  <Run Text="创建时间:" Foreground="#FFFF5555"/>
+                                  <Run Text="{Binding  SheetDetail.CreateTime}" Foreground="DeepPink"/>
+                            </TextBlock>
+                        </WrapPanel>
+                        <ListBox ItemsSource="{Binding SheetDetail.SongItems}"  
+                                 Grid.Row="1" Grid.ColumnSpan="2"
+                                 Style="{StaticResource WrapPanelVerticalListBox}"
+                                 BorderBrush="Transparent" 
+                                 Foreground="Transparent"
+                                 Background="Transparent">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <WrapPanel Orientation="Horizontal" Margin="2" Width="600">
+                                        <TextBlock Style="{StaticResource TextBlockDefaultPrimary}">
+                                         <Run Text="{Binding SongName}" Foreground="#FFFF5555"/>
+                                         <Run Text="{Binding SongAlbumName,StringFormat=({0})}" Foreground="DimGray" FontSize="10"/>
+                                         <Run Text="————" Foreground="DimGray"/>
+                                        </TextBlock>
+                                        <TextBlock Style="{StaticResource TextBlockDefaultPrimary}" 
+                                               Text="{Binding SongArtistName,Converter={StaticResource ContentConverter},ConverterParameter=4}" 
+                                               Foreground="White"/>
+                                        <WrapPanel Orientation="Horizontal" Margin="20,0,0,0">
+                                            <L:LoteButton Style="{StaticResource LoteBtn}" 
+                                                          Svg="{StaticResource Album}"
+                                                          Click="LoteButton_Click"
+                                                          CommandParameter="{Binding SongAlbumId}"/>
+                                            <L:LoteButton Style="{StaticResource LoteBtn}" 
+                                                      Svg="{StaticResource Play}"
+                                                      Command="{S:Action AddPlay}"
+                                                      CommandParameter="{Binding SongId}"/>
+                                        </WrapPanel>
+                                    </WrapPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Grid>
                 </TabItem>
                 <TabItem Header="专辑" 
                      Background="Transparent" 
                      BorderBrush="Transparent"
                      BorderThickness="0" 
                      Style="{StaticResource TabItemTransparentStyle}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="{Binding AlbumDetail.AlbumName}" Style="{StaticResource TextBlockLargeBold}" Foreground="DeepSkyBlue"/>
+                        <ListBox ItemsSource="{Binding AlbumDetail.SongItems}"  
+                                 Grid.Row="1"
+                                 Style="{StaticResource WrapPanelVerticalListBox}"
+                                 BorderBrush="Transparent" 
+                                 Foreground="Transparent"
+                                 Background="Transparent">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <WrapPanel Orientation="Horizontal" Margin="2" Width="600">
+                                        <TextBlock Style="{StaticResource TextBlockDefaultPrimary}">
+                                         <Run Text="{Binding SongName}" Foreground="#FFFF5555"/>
+                                         <Run Text="{Binding SongAlbumName,StringFormat=({0})}" Foreground="DimGray" FontSize="10"/>
+                                         <Run Text="————" Foreground="DimGray"/>
+                                        </TextBlock>
+                                        <TextBlock Style="{StaticResource TextBlockDefaultPrimary}" 
+                                               Text="{Binding SongArtistName,Converter={StaticResource ContentConverter},ConverterParameter=4}" 
+                                               Foreground="White"/>
+                                        <WrapPanel Orientation="Horizontal" Margin="20,0,0,0">
+                                            <L:LoteButton Style="{StaticResource LoteBtn}" 
+                                                      Svg="{StaticResource Play}"
+                                                      Command="{S:Action AddPlay}"
+                                                      CommandParameter="{Binding SongId}"/>
+                                        </WrapPanel>
+                                    </WrapPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Grid>
                 </TabItem>
             </TabControl>
         </Grid>

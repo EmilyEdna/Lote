@@ -109,48 +109,51 @@ namespace Lote.Views.LightNovelView
         {
             SyncStatic.TryCatch(() =>
             {
-                //初始化
-                var LightNovelInit = LightNovelFactory.LightNovel(opt =>
+                Task.Run(() =>
                 {
-                    opt.RequestParam = new LightNovelRequestInput
+                    //初始化
+                    var LightNovelInit = LightNovelFactory.LightNovel(opt =>
+                       {
+                           opt.RequestParam = new LightNovelRequestInput
+                           {
+                               CacheSpan = CacheTime(),
+                               LightNovelType = LightNovelEnum.Init,
+                               Proxy = this.Proxy
+                           };
+                       }).Runs(Light =>
+                       {
+                           Light.RefreshCookie(new LightNovelRefresh
+                           {
+                               UserName = WkInfo().Keys.FirstOrDefault(),
+                               PassWord = WkInfo().Values.FirstOrDefault()
+                           }, this.Proxy);
+                       });
+                    LightNovelCategory = new ObservableCollection<LightNovelCategoryResult>(LightNovelInit.CategoryResults);
+                    CategoryAddress = LightNovelInit.CategoryResults.FirstOrDefault().CategoryAddress;
+                    //分类
+                    var LightNovelCate = LightNovelFactory.LightNovel(opt =>
                     {
-                        CacheSpan = CacheTime(),
-                        LightNovelType = LightNovelEnum.Init,
-                        Proxy = this.Proxy
-                    };
-                }).Runs(Light =>
-                {
-                    Light.RefreshCookie(new LightNovelRefresh
-                    {
-                        UserName = WkInfo().Keys.FirstOrDefault(),
-                        PassWord = WkInfo().Values.FirstOrDefault()
-                    }, this.Proxy);
-                });
-                LightNovelCategory = new ObservableCollection<LightNovelCategoryResult>(LightNovelInit.CategoryResults);
-                CategoryAddress = LightNovelInit.CategoryResults.FirstOrDefault().CategoryAddress;
-                //分类
-                var LightNovelCate = LightNovelFactory.LightNovel(opt =>
-                {
-                    opt.RequestParam = new LightNovelRequestInput
-                    {
-                        LightNovelType = LightNovelEnum.Category,
-                        CacheSpan = CacheTime(),
-                        Proxy = this.Proxy,
-                        Category = new LightNovelCategory
+                        opt.RequestParam = new LightNovelRequestInput
                         {
-                            CategoryAddress = CategoryAddress
-                        }
-                    };
-                }).Runs(Light =>
-                {
-                    Light.RefreshCookie(new LightNovelRefresh
+                            LightNovelType = LightNovelEnum.Category,
+                            CacheSpan = CacheTime(),
+                            Proxy = this.Proxy,
+                            Category = new LightNovelCategory
+                            {
+                                CategoryAddress = CategoryAddress
+                            }
+                        };
+                    }).Runs(Light =>
                     {
-                        UserName = WkInfo().Keys.FirstOrDefault(),
-                        PassWord = WkInfo().Values.FirstOrDefault()
-                    }, new LightNovelProxy());
+                        Light.RefreshCookie(new LightNovelRefresh
+                        {
+                            UserName = WkInfo().Keys.FirstOrDefault(),
+                            PassWord = WkInfo().Values.FirstOrDefault()
+                        }, new LightNovelProxy());
+                    });
+                    LightNovelSingleCategory = new ObservableCollection<LightNovelSingleCategoryResults>(LightNovelCate.SingleCategoryResult.Result);
+                    Total = LightNovelCate.SingleCategoryResult.TotalPage;
                 });
-                LightNovelSingleCategory = new ObservableCollection<LightNovelSingleCategoryResults>(LightNovelCate.SingleCategoryResult.Result);
-                Total = LightNovelCate.SingleCategoryResult.TotalPage;
                 PageIndex = 1;
                 IsSearch = false;
             }, ex =>
@@ -172,32 +175,35 @@ namespace Lote.Views.LightNovelView
             this.PageIndex = Page == 0 ? 1 : Page;
             SyncStatic.TryCatch(() =>
             {
-                //搜索
-                var LightNovelSearch = LightNovelFactory.LightNovel(opt =>
-                 {
-                     opt.RequestParam = new LightNovelRequestInput
+                Task.Run(() =>
+                {
+                    //搜索
+                    var LightNovelSearch = LightNovelFactory.LightNovel(opt =>
                      {
-                         LightNovelType = LightNovelEnum.Search,
-                         CacheSpan = CacheTime(),
-                         Proxy = this.Proxy,
-                         Search = new LightNovelSearch
+                         opt.RequestParam = new LightNovelRequestInput
                          {
-                             Page = this.PageIndex,
-                             KeyWord = args,
-                             SearchType = SearchType
-                         }
-                     };
-                 }).Runs(Light =>
-                 {
-                     Light.RefreshCookie(new LightNovelRefresh
+                             LightNovelType = LightNovelEnum.Search,
+                             CacheSpan = CacheTime(),
+                             Proxy = this.Proxy,
+                             Search = new LightNovelSearch
+                             {
+                                 Page = this.PageIndex,
+                                 KeyWord = args,
+                                 SearchType = SearchType
+                             }
+                         };
+                     }).Runs(Light =>
                      {
-                         UserName = WkInfo().Keys.FirstOrDefault(),
-                         PassWord = WkInfo().Values.FirstOrDefault()
-                     }, new LightNovelProxy());
-                 });
+                         Light.RefreshCookie(new LightNovelRefresh
+                         {
+                             UserName = WkInfo().Keys.FirstOrDefault(),
+                             PassWord = WkInfo().Values.FirstOrDefault()
+                         }, new LightNovelProxy());
+                     });
 
-                LightNovelSingleCategory = new ObservableCollection<LightNovelSingleCategoryResults>(LightNovelSearch.SearchResults.Result.ToMapest<List<LightNovelSingleCategoryResults>>());
-                Total = LightNovelSearch.SearchResults.TotalPage;
+                    LightNovelSingleCategory = new ObservableCollection<LightNovelSingleCategoryResults>(LightNovelSearch.SearchResults.Result.ToMapest<List<LightNovelSingleCategoryResults>>());
+                    Total = LightNovelSearch.SearchResults.TotalPage;
+                });
                 IsSearch = true;
             }, ex =>
             {
@@ -218,29 +224,32 @@ namespace Lote.Views.LightNovelView
             this.PageIndex = Page == 0 ? 1 : Page;
             SyncStatic.TryCatch(() =>
             {
-                var LightNovelCate = LightNovelFactory.LightNovel(opt =>
+                Task.Run(() =>
                 {
-                    opt.RequestParam = new LightNovelRequestInput
+                    var LightNovelCate = LightNovelFactory.LightNovel(opt =>
                     {
-                        LightNovelType = LightNovelEnum.Category,
-                        CacheSpan = CacheTime(),
-                        Proxy = this.Proxy,
-                        Category = new LightNovelCategory
+                        opt.RequestParam = new LightNovelRequestInput
                         {
-                            Page = this.PageIndex,
-                            CategoryAddress = args
-                        }
-                    };
-                }).Runs(Light =>
-                {
-                    Light.RefreshCookie(new LightNovelRefresh
+                            LightNovelType = LightNovelEnum.Category,
+                            CacheSpan = CacheTime(),
+                            Proxy = this.Proxy,
+                            Category = new LightNovelCategory
+                            {
+                                Page = this.PageIndex,
+                                CategoryAddress = args
+                            }
+                        };
+                    }).Runs(Light =>
                     {
-                        UserName = WkInfo().Keys.FirstOrDefault(),
-                        PassWord = WkInfo().Values.FirstOrDefault()
-                    }, new LightNovelProxy());
+                        Light.RefreshCookie(new LightNovelRefresh
+                        {
+                            UserName = WkInfo().Keys.FirstOrDefault(),
+                            PassWord = WkInfo().Values.FirstOrDefault()
+                        }, new LightNovelProxy());
+                    });
+                    LightNovelSingleCategory = new ObservableCollection<LightNovelSingleCategoryResults>(LightNovelCate.SingleCategoryResult.Result);
+                    Total = LightNovelCate.SingleCategoryResult.TotalPage;
                 });
-                LightNovelSingleCategory = new ObservableCollection<LightNovelSingleCategoryResults>(LightNovelCate.SingleCategoryResult.Result);
-                Total = LightNovelCate.SingleCategoryResult.TotalPage;
                 IsSearch = false;
             }, ex =>
             {
@@ -275,50 +284,52 @@ namespace Lote.Views.LightNovelView
 
             SyncStatic.TryCatch(() =>
             {
-                var LightNovelDetail = LightNovelFactory.LightNovel(opt =>
+                Task.Run(() =>
                 {
-                    opt.RequestParam = new LightNovelRequestInput
+                    var LightNovelDetail = LightNovelFactory.LightNovel(opt =>
                     {
-                        LightNovelType = LightNovelEnum.Detail,
-                        CacheSpan = CacheTime(),
-                        Proxy = this.Proxy,
-                        Detail = new LightNovelDetail
+                        opt.RequestParam = new LightNovelRequestInput
                         {
-                            DetailAddress = entity.DetailAddress
-                        }
-                    };
-                }).Runs(Light =>
-                {
-                    Light.RefreshCookie(new LightNovelRefresh
+                            LightNovelType = LightNovelEnum.Detail,
+                            CacheSpan = CacheTime(),
+                            Proxy = this.Proxy,
+                            Detail = new LightNovelDetail
+                            {
+                                DetailAddress = entity.DetailAddress
+                            }
+                        };
+                    }).Runs(Light =>
                     {
-                        UserName = WkInfo().Keys.FirstOrDefault(),
-                        PassWord = WkInfo().Values.FirstOrDefault()
-                    }, new LightNovelProxy());
-                });
-
-                var LightNovelView = LightNovelFactory.LightNovel(opt =>
-                {
-                    opt.RequestParam = new LightNovelRequestInput
-                    {
-                        LightNovelType = LightNovelEnum.View,
-                        Proxy = new LightNovelProxy(),
-                        CacheSpan = CacheTime(),
-                        View = new LightNovel.SDK.ViewModel.Request.LightNovelView
+                        Light.RefreshCookie(new LightNovelRefresh
                         {
-                            ViewAddress = LightNovelDetail.DetailResult.Address,
-                        }
-                    };
-                }).Runs(Light =>
-                {
-                    Light.RefreshCookie(new LightNovelRefresh
+                            UserName = WkInfo().Keys.FirstOrDefault(),
+                            PassWord = WkInfo().Values.FirstOrDefault()
+                        }, new LightNovelProxy());
+                    });
+
+                    var LightNovelView = LightNovelFactory.LightNovel(opt =>
                     {
-                        UserName = WkInfo().Keys.FirstOrDefault(),
-                        PassWord = WkInfo().Values.FirstOrDefault()
-                    }, new LightNovelProxy());
+                        opt.RequestParam = new LightNovelRequestInput
+                        {
+                            LightNovelType = LightNovelEnum.View,
+                            Proxy = new LightNovelProxy(),
+                            CacheSpan = CacheTime(),
+                            View = new LightNovel.SDK.ViewModel.Request.LightNovelView
+                            {
+                                ViewAddress = LightNovelDetail.DetailResult.Address,
+                            }
+                        };
+                    }).Runs(Light =>
+                    {
+                        Light.RefreshCookie(new LightNovelRefresh
+                        {
+                            UserName = WkInfo().Keys.FirstOrDefault(),
+                            PassWord = WkInfo().Values.FirstOrDefault()
+                        }, new LightNovelProxy());
+                    });
+
+                    LightNovelViews = new ObservableCollection<LightNovelViewResult>(LightNovelView.ViewResult);
                 });
-
-                LightNovelViews = new ObservableCollection<LightNovelViewResult>(LightNovelView.ViewResult);
-
             }, ex =>
             {
                 LightNovelFactory.LightNovel(opt =>

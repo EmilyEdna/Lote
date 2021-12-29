@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace Lote.Common
 {
@@ -43,6 +45,25 @@ namespace Lote.Common
                 MessageBox.Show(ee.Message);
                 return null;
             }
+        }
+
+        public static Task RunNewWindowAsync<TWindow>() where TWindow : Window, new()
+        {
+            TaskCompletionSource<object> tc = new TaskCompletionSource<object>();
+            Thread thread = new Thread(() =>
+            {
+                TWindow win = new TWindow();
+                win.Closed += (d, k) =>
+                {
+                    Dispatcher.ExitAllFrames();
+                };
+                win.Show();
+                Dispatcher.Run();
+                tc.SetResult(null);
+            });
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
+            return tc.Task;
         }
     }
 }

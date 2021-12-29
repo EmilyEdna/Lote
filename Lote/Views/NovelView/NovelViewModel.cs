@@ -105,20 +105,23 @@ namespace Lote.Views.NovelView
 
         public void SearchBook(string args)
         {
-            var NovelSearch = NovelFactory.Novel(opt =>
-             {
-                 opt.RequestParam = new NovelRequestInput
+            Task.Run(() =>
+            {
+                var NovelSearch = NovelFactory.Novel(opt =>
                  {
-                     CacheSpan = CacheTime(),
-                     NovelType = NovelEnum.Search,
-                     Proxy = this.Proxy,
-                     Search = new NovelSearch
+                     opt.RequestParam = new NovelRequestInput
                      {
-                         NovelSearchKeyWord = args
-                     }
-                 };
-             }).Runs();
-            this.NovelSearch = new ObservableCollection<NovelSearchResult>(NovelSearch.SearchResults);
+                         CacheSpan = CacheTime(),
+                         NovelType = NovelEnum.Search,
+                         Proxy = this.Proxy,
+                         Search = new NovelSearch
+                         {
+                             NovelSearchKeyWord = args
+                         }
+                     };
+                 }).Runs();
+                this.NovelSearch = new ObservableCollection<NovelSearchResult>(NovelSearch.SearchResults);
+            });
             this.Total = 0;
             this.Page = 1;
         }
@@ -127,22 +130,25 @@ namespace Lote.Views.NovelView
         {
             this.DetailAddress = args;
             this.PageIndex = Page == 0 ? 1 : Page;
-            var NovelCate = NovelFactory.Novel(opt =>
-             {
-                 opt.RequestParam = new NovelRequestInput
+            Task.Run(() =>
+            {
+                var NovelCate = NovelFactory.Novel(opt =>
                  {
-                     CacheSpan = CacheTime(),
-                     NovelType = NovelEnum.Category,
-                     Proxy = this.Proxy,
-                     Category = new NovelCategory
+                     opt.RequestParam = new NovelRequestInput
                      {
-                         Page = this.PageIndex,
-                         NovelCategoryAddress = args
-                     }
-                 };
-             }).Runs();
-            this.Total = NovelCate.SingleCategories.TotalPage;
-            this.NovelSearch = new ObservableCollection<NovelSearchResult>(NovelCate.SingleCategories.NovelSingles.ToMapest<List<NovelSearchResult>>());
+                         CacheSpan = CacheTime(),
+                         NovelType = NovelEnum.Category,
+                         Proxy = this.Proxy,
+                         Category = new NovelCategory
+                         {
+                             Page = this.PageIndex,
+                             NovelCategoryAddress = args
+                         }
+                     };
+                 }).Runs();
+                this.Total = NovelCate.SingleCategories.TotalPage;
+                this.NovelSearch = new ObservableCollection<NovelSearchResult>(NovelCate.SingleCategories.NovelSingles.ToMapest<List<NovelSearchResult>>());
+            });
 
         }
 

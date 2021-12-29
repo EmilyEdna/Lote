@@ -73,21 +73,24 @@ namespace Lote.Views.NovelView
         public void PageUpdated(FunctionEventArgs<int> args)
         {
             PageIndex = args.Info;
-            var NovelDetail = NovelFactory.Novel(opt =>
+            Task.Run(() =>
             {
-                opt.RequestParam = new NovelRequestInput
+                var NovelDetail = NovelFactory.Novel(opt =>
                 {
-                    CacheSpan = CacheTime(),
-                    NovelType = NovelEnum.Detail,
-                    Proxy = this.Proxy,
-                    Detail = new NovelDetail
+                    opt.RequestParam = new NovelRequestInput
                     {
-                        Page = PageIndex,
-                        NovelDetailAddress = Addr
-                    }
-                };
-            }).Runs();
-            this.NovelDetail = NovelDetail.Details;
+                        CacheSpan = CacheTime(),
+                        NovelType = NovelEnum.Detail,
+                        Proxy = this.Proxy,
+                        Detail = new NovelDetail
+                        {
+                            Page = PageIndex,
+                            NovelDetailAddress = Addr
+                        }
+                    };
+                }).Runs();
+                this.NovelDetail = NovelDetail.Details;
+            });
         }
 
         public void ShowContent(string args)
@@ -98,7 +101,7 @@ namespace Lote.Views.NovelView
             {
                 opt.RequestParam = new NovelRequestInput
                 {
-                    CacheSpan= CacheTime(),
+                    CacheSpan = CacheTime(),
                     NovelType = NovelEnum.Watch,
                     Proxy = this.Proxy,
                     View = new SDKRequest.NovelView

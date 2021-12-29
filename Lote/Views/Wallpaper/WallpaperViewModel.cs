@@ -88,10 +88,10 @@ namespace Lote.Views.Wallpaper
 
         protected override void OnViewLoaded()
         {
-            InitAll();
+            Task.Run(() => InitAll());
         }
 
-        public void InitAll() 
+        public void InitAll()
         {
             var favoriteId = wallpaperService.GetAllFavorite();
             var WallpaperInit = WallpaperFactory.Wallpaper(opt =>
@@ -118,7 +118,7 @@ namespace Lote.Views.Wallpaper
             this.Wallpaper = new ObservableCollection<WallpaperResult>(WallpaperInit.Result);
         }
 
-        public void InitFavorite(string args) 
+        public void InitFavorite(string args)
         {
             var data = wallpaperService.GetFavorite(args, PageIndex).Result;
             this.Total = data.Total;
@@ -136,68 +136,7 @@ namespace Lote.Views.Wallpaper
                 var favoriteId = wallpaperService.GetAllFavorite();
 
                 KeyWord = args;
-                var WallpaperSearch = WallpaperFactory.Wallpaper(opt =>
-                {
-                    opt.RequestParam = new WallpaperRequestInput
-                    {
-                        CacheSpan = CacheTime(),
-                        WallpaperType = WallpaperEnum.Search,
-                        Search = new WallpaperSearch
-                        {
-                            Limit = Limit,
-                            KeyWord = KeyWord
-                        },
-                        Proxy = this.Proxy
-                    };
-                }).Runs();
-
-                if (favoriteId.Count > 0)
-                    WallpaperSearch.Result.ForEach(t =>
-                    {
-                        if (favoriteId.Contains(t.Id))
-                            t.IsFavorite = true;
-                    });
-                this.Total = (WallpaperSearch.Total + Limit - 1) / Limit;
-                this.Wallpaper = new ObservableCollection<WallpaperResult>(WallpaperSearch.Result);
-            }
-        }
-
-        public void PageUpdated(FunctionEventArgs<int> args)
-        {
-            PageIndex = args.Info;
-            if (WatchFavorite) {
-
-                InitFavorite(KeyWord);
-            }
-            else
-            {
-                var favoriteId = wallpaperService.GetAllFavorite();
-                if (KeyWord.IsNullOrEmpty())
-                {
-                    var WallpaperInit = WallpaperFactory.Wallpaper(opt =>
-                    {
-                        opt.RequestParam = new WallpaperRequestInput
-                        {
-                            CacheSpan = CacheTime(),
-                            WallpaperType = WallpaperEnum.Init,
-                            Init = new WallpaperInit
-                            {
-                                Page = PageIndex,
-                                Limit = Limit
-                            },
-                            Proxy = this.Proxy
-                        };
-                    }).Runs();
-                    if (favoriteId.Count > 0)
-                        WallpaperInit.Result.ForEach(t =>
-                        {
-                            if (favoriteId.Contains(t.Id))
-                                t.IsFavorite = true;
-                        });
-                    this.Total = (WallpaperInit.Total + Limit - 1) / Limit;
-                    this.Wallpaper = new ObservableCollection<WallpaperResult>(WallpaperInit.Result);
-                }
-                else
+                Task.Run(() =>
                 {
                     var WallpaperSearch = WallpaperFactory.Wallpaper(opt =>
                     {
@@ -207,13 +146,13 @@ namespace Lote.Views.Wallpaper
                             WallpaperType = WallpaperEnum.Search,
                             Search = new WallpaperSearch
                             {
-                                Page = PageIndex,
                                 Limit = Limit,
                                 KeyWord = KeyWord
                             },
                             Proxy = this.Proxy
                         };
                     }).Runs();
+
                     if (favoriteId.Count > 0)
                         WallpaperSearch.Result.ForEach(t =>
                         {
@@ -222,6 +161,77 @@ namespace Lote.Views.Wallpaper
                         });
                     this.Total = (WallpaperSearch.Total + Limit - 1) / Limit;
                     this.Wallpaper = new ObservableCollection<WallpaperResult>(WallpaperSearch.Result);
+                });
+            }
+        }
+
+        public void PageUpdated(FunctionEventArgs<int> args)
+        {
+            PageIndex = args.Info;
+            if (WatchFavorite)
+            {
+
+                InitFavorite(KeyWord);
+            }
+            else
+            {
+                var favoriteId = wallpaperService.GetAllFavorite();
+                if (KeyWord.IsNullOrEmpty())
+                {
+                    Task.Run(() =>
+                    {
+                        var WallpaperInit = WallpaperFactory.Wallpaper(opt =>
+                        {
+                            opt.RequestParam = new WallpaperRequestInput
+                            {
+                                CacheSpan = CacheTime(),
+                                WallpaperType = WallpaperEnum.Init,
+                                Init = new WallpaperInit
+                                {
+                                    Page = PageIndex,
+                                    Limit = Limit
+                                },
+                                Proxy = this.Proxy
+                            };
+                        }).Runs();
+                        if (favoriteId.Count > 0)
+                            WallpaperInit.Result.ForEach(t =>
+                            {
+                                if (favoriteId.Contains(t.Id))
+                                    t.IsFavorite = true;
+                            });
+                        this.Total = (WallpaperInit.Total + Limit - 1) / Limit;
+                        this.Wallpaper = new ObservableCollection<WallpaperResult>(WallpaperInit.Result);
+                    });
+                }
+                else
+                {
+                    Task.Run(() =>
+                    {
+                        var WallpaperSearch = WallpaperFactory.Wallpaper(opt =>
+                          {
+                              opt.RequestParam = new WallpaperRequestInput
+                              {
+                                  CacheSpan = CacheTime(),
+                                  WallpaperType = WallpaperEnum.Search,
+                                  Search = new WallpaperSearch
+                                  {
+                                      Page = PageIndex,
+                                      Limit = Limit,
+                                      KeyWord = KeyWord
+                                  },
+                                  Proxy = this.Proxy
+                              };
+                          }).Runs();
+                        if (favoriteId.Count > 0)
+                            WallpaperSearch.Result.ForEach(t =>
+                            {
+                                if (favoriteId.Contains(t.Id))
+                                    t.IsFavorite = true;
+                            });
+                        this.Total = (WallpaperSearch.Total + Limit - 1) / Limit;
+                        this.Wallpaper = new ObservableCollection<WallpaperResult>(WallpaperSearch.Result);
+                    });
                 }
             }
         }
@@ -229,7 +239,7 @@ namespace Lote.Views.Wallpaper
         public void Download(long Id)
         {
             var result = Wallpaper.FirstOrDefault(t => t.Id == Id);
-            Task.Factory.StartNew(() =>
+            Task.Run(() =>
             {
                 var bytes = IHttpMultiClient.HttpMulti
                      .InitWebProxy(this.Proxy.ToMapest<MultiProxy>())

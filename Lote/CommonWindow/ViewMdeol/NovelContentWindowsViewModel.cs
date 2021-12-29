@@ -68,20 +68,23 @@ namespace Lote.CommonWindow.ViewMdeol
         {
             if (string.IsNullOrEmpty(args))
                 return;
-            var NovelContent = NovelFactory.Novel(opt =>
+            Task.Run(() =>
             {
-                opt.RequestParam = new NovelRequestInput
+                var NovelContent = NovelFactory.Novel(opt =>
                 {
-                    CacheSpan = CacheTime(),
-                    NovelType = NovelEnum.Watch,
-                    Proxy = this.Proxy,
-                    View = new NovelView
+                    opt.RequestParam = new NovelRequestInput
                     {
-                        NovelViewAddress = args
-                    }
-                };
-            }).Runs();
-            this.NovelContent = NovelContent.Contents;
+                        CacheSpan = CacheTime(),
+                        NovelType = NovelEnum.Watch,
+                        Proxy = this.Proxy,
+                        View = new NovelView
+                        {
+                            NovelViewAddress = args
+                        }
+                    };
+                }).Runs();
+                this.NovelContent = NovelContent.Contents;
+            });
         }, null);
         #endregion
     }

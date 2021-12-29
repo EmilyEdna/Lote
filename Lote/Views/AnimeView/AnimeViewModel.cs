@@ -38,7 +38,7 @@ namespace Lote.Views.AnimeView
                 UserName = root.ProxyAccount.IsNullOrEmpty() ? String.Empty : root.ProxyAccount
             };
             LetterCate = "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z".Split(",").ToList();
-            data= new Dictionary<string, AnimePlayWindows>();
+            data = new Dictionary<string, AnimePlayWindows>();
             PageIndex = 1;
         }
 
@@ -107,57 +107,66 @@ namespace Lote.Views.AnimeView
 
         protected override void OnViewLoaded()
         {
-            var AnimeInit = AnimeFactory.Anime(opt =>
+            Task.Run(() =>
             {
-                opt.RequestParam = new AnimeRequestInput
+                var AnimeInit = AnimeFactory.Anime(opt =>
                 {
-                    AnimeType = AnimeEnum.Init,
-                    Proxy = this.Proxy,
-                };
-            }).Runs();
-            this.RecommendCategory = AnimeInit.RecommendCategory;
-            this.WeekDay = new ObservableCollection<AnimeWeekDayResult>(AnimeInit.WeekDays);
+                    opt.RequestParam = new AnimeRequestInput
+                    {
+                        AnimeType = AnimeEnum.Init,
+                        Proxy = this.Proxy,
+                    };
+                }).Runs();
+                this.RecommendCategory = AnimeInit.RecommendCategory;
+                this.WeekDay = new ObservableCollection<AnimeWeekDayResult>(AnimeInit.WeekDays);
+            });
         }
 
         public void SearchAnime(string args)
         {
             SearchKey = args;
             CategoryKey = string.Empty;
-            var AnimeSearch = AnimeFactory.Anime(opt =>
+            Task.Run(() =>
             {
-                opt.RequestParam = new AnimeRequestInput
+                var AnimeSearch = AnimeFactory.Anime(opt =>
                 {
-                    AnimeType = AnimeEnum.Search,
-                    CacheSpan = CacheTime(),
-                    Proxy = this.Proxy,
-                    Search = new AnimeSearch
+                    opt.RequestParam = new AnimeRequestInput
                     {
-                        AnimeSearchKeyWord = SearchKey,
-                        Page = PageIndex
-                    }
-                };
-            }).Runs();
-            this.Total = AnimeSearch.SeachResults.Page;
-            this.Result = new ObservableCollection<AnimeSearchResults>(AnimeSearch.SeachResults.Searchs);
+                        AnimeType = AnimeEnum.Search,
+                        CacheSpan = CacheTime(),
+                        Proxy = this.Proxy,
+                        Search = new AnimeSearch
+                        {
+                            AnimeSearchKeyWord = SearchKey,
+                            Page = PageIndex
+                        }
+                    };
+                }).Runs();
+                this.Total = AnimeSearch.SeachResults.Page;
+                this.Result = new ObservableCollection<AnimeSearchResults>(AnimeSearch.SeachResults.Searchs);
+            });
         }
 
         public void Redirect(string args)
         {
-            var AnimeDetail = AnimeFactory.Anime(opt =>
+            Task.Run(() =>
             {
-                opt.RequestParam = new AnimeRequestInput
-                {
-                    AnimeType = AnimeEnum.Detail,
-                    CacheSpan = CacheTime(),
-                    Proxy = this.Proxy,
-                    Detail = new AnimeDetail
-                    {
-                        DetailAddress = args
-                    }
-                };
-            }).Runs();
+                var AnimeDetail = AnimeFactory.Anime(opt =>
+                 {
+                     opt.RequestParam = new AnimeRequestInput
+                     {
+                         AnimeType = AnimeEnum.Detail,
+                         CacheSpan = CacheTime(),
+                         Proxy = this.Proxy,
+                         Detail = new AnimeDetail
+                         {
+                             DetailAddress = args
+                         }
+                     };
+                 }).Runs();
 
-            this.Detail = new ObservableCollection<AnimeDetailResult>(AnimeDetail.DetailResults);
+                this.Detail = new ObservableCollection<AnimeDetailResult>(AnimeDetail.DetailResults);
+            });
         }
 
         public void Category(string args)
@@ -166,27 +175,31 @@ namespace Lote.Views.AnimeView
             CategoryKey = args;
             if (this.LetterCate.Contains(CategoryKey))
             {
-                var AnimeCate = AnimeFactory.Anime(opt =>
+                Task.Run(() =>
                 {
-                    opt.RequestParam = new AnimeRequestInput
+                    var AnimeCate = AnimeFactory.Anime(opt =>
                     {
-                        CacheSpan = CacheTime(),
-                        AnimeType = AnimeEnum.Category,
-                        Proxy = this.Proxy,
-                        Category = new AnimeCategory
+                        opt.RequestParam = new AnimeRequestInput
                         {
-                            Page = PageIndex,
-                            AnimeLetterType = Enum.Parse<AnimeLetterEnum>(CategoryKey)
-                        }
-                    };
-                }).Runs();
-                this.Total = AnimeCate.SeachResults.Page;
-                this.Result = new ObservableCollection<AnimeSearchResults>(AnimeCate.SeachResults.Searchs);
+                            CacheSpan = CacheTime(),
+                            AnimeType = AnimeEnum.Category,
+                            Proxy = this.Proxy,
+                            Category = new AnimeCategory
+                            {
+                                Page = PageIndex,
+                                AnimeLetterType = Enum.Parse<AnimeLetterEnum>(CategoryKey)
+                            }
+                        };
+                    }).Runs();
+                    this.Total = AnimeCate.SeachResults.Page;
+                    this.Result = new ObservableCollection<AnimeSearchResults>(AnimeCate.SeachResults.Searchs);
+                });
             }
             else
             {
-               
-                var AnimeCateType = AnimeFactory.Anime(opt =>
+                Task.Run(() =>
+                {
+                    var AnimeCateType = AnimeFactory.Anime(opt =>
                 {
                     opt.RequestParam = new AnimeRequestInput
                     {
@@ -200,8 +213,9 @@ namespace Lote.Views.AnimeView
                         }
                     };
                 }).Runs();
-                this.Total = AnimeCateType.SeachResults.Page;
-                this.Result = new ObservableCollection<AnimeSearchResults>(AnimeCateType.SeachResults.Searchs);
+                    this.Total = AnimeCateType.SeachResults.Page;
+                    this.Result = new ObservableCollection<AnimeSearchResults>(AnimeCateType.SeachResults.Searchs);
+                });
             }
         }
 
