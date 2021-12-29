@@ -119,7 +119,8 @@
                              Style="{StaticResource WrapPanelVerticalListBox}"
                              BorderBrush="Transparent" 
                              Foreground="Transparent"
-                             Background="Transparent">
+                             Background="Transparent"
+                             ScrollViewer.ScrollChanged="SongItemChanged">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top"/>

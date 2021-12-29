@@ -42,6 +42,7 @@ namespace Lote.Views.Music
 
         #region Field
         private string KeyWord;
+        private int ShowType;
         #endregion
 
         #region Property
@@ -114,6 +115,7 @@ namespace Lote.Views.Music
         {
             this.Platform = (MusicPlatformEnum)control.Tag.ToString().AsInt();
             SheetDetail = null;
+            AlbumDetail = null;
         }
         public void SearchMusic(string args)
         {
@@ -124,6 +126,7 @@ namespace Lote.Views.Music
         {
             if (KeyWord.IsNullOrEmpty())
                 return;
+
             if (args == 1 || args == 2)
                 Task.Run(() => Search(args));
         }
@@ -165,8 +168,20 @@ namespace Lote.Views.Music
         }
         #endregion
 
+        #region LoadMore
+        public void SongLoadMore(bool types) 
+        {
+            int NextPage = types? PageIndex += 1:PageIndex-=1;
+            if (NextPage < 0)
+                return;
+            if (NextPage < Total)
+                Search(ShowType);
+        }
+        #endregion
+
         private void Search(int type = 1)
         {
+            ShowType = type;
             switch (Platform)
             {
                 case MusicPlatformEnum.QQMusic:

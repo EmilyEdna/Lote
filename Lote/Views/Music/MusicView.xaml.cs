@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -33,10 +34,8 @@ namespace Lote.Views.Music
             if (Tab == null)
                 return;
             var vm = (this.DataContext as MusicViewModel);
-            Dispatcher.Invoke(() =>
-            {
-                vm.ShowSong(Tab.SelectedIndex + 1);
-            });
+            vm.PageIndex = 1;
+            Dispatcher.Invoke(() => vm.ShowSong(Tab.SelectedIndex + 1));
 
         }
 
@@ -50,10 +49,26 @@ namespace Lote.Views.Music
             Tabs.SelectedIndex = 3;
             var vm = (this.DataContext as MusicViewModel);
             var id = (sender as LoteButton).CommandParameter.ToString();
-            Dispatcher.Invoke(() =>
+            Dispatcher.Invoke(() => vm.ShowAlbum(id));
+        }
+
+        private void SongItemChanged(object sender, ScrollChangedEventArgs e)
+        {
+            var vm = (this.DataContext as MusicViewModel);
+            if (vm.PageIndex == 1 && e.VerticalOffset == 0)
+                return;
+            if (vm.PageIndex > 1 && e.VerticalChange <0)
             {
-                vm.ShowAlbum(id);
-            });
+                Dispatcher.Invoke(() => vm.SongLoadMore(false));
+                var source = (e.OriginalSource as HandyControl.Controls.ScrollViewer);
+                source.ScrollToHome();
+            }
+            if (e.VerticalOffset >= 300&&e.VerticalChange.ToString().Contains("."))
+            {
+                Dispatcher.Invoke(() => vm.SongLoadMore(true));
+                var source = (e.OriginalSource as HandyControl.Controls.ScrollViewer);
+                source.ScrollToHome();
+            }
         }
     }
 }
