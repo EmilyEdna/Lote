@@ -177,6 +177,31 @@ namespace Lote.Views.Music
             if (NextPage < Total)
                 Search(ShowType);
         }
+        public void AddPlay(MusicSongItem input) 
+        {
+            var SongURL = MusicFactory.Music(opt =>
+            {
+                opt.RequestParam = new MusicRequestInput
+                {
+                    MusicPlatformType = MusicPlatformEnum.NeteaseMusic,
+                    MusicType = MusicTypeEnum.PlayAddress,
+                    AddressSearch = new MusicPlaySearch
+                    {
+                        Dynamic = input.SongId
+                    }
+                };
+            }).Runs();
+            if (SongURL.SongPlayAddressResult.CanPlay == false)
+                HandyControl.Controls.MessageBox.Info("当前歌曲已下架，请切换到其他其他平台搜索");
+            this.MusciService.AddPlayList(new PlayListDTO
+            {
+                Address= SongURL.SongPlayAddressResult.SongURL,
+                SongAlbum=input.SongAlbumName,
+                SongName=input.SongName,
+                SongArtist=string.Join(",",input.SongArtistName),
+            });
+            Init();
+        }
         #endregion
 
         private void Search(int type = 1)
@@ -465,11 +490,15 @@ namespace Lote.Views.Music
             }
         }
 
-        protected override void OnViewLoaded()
-        {
+        private void Init() {
             var Result = this.MusciService.GetPlayList();
             this.Count = Result.Count;
             this.PlayLists = new ObservableCollection<PlayListDTO>(Result.Result);
+        }
+
+        protected override void OnViewLoaded()
+        {
+            Init();
         }
     }
 }

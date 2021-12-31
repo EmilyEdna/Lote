@@ -57,7 +57,7 @@ namespace Lote.Views.Music
             var vm = (this.DataContext as MusicViewModel);
             if (vm.PageIndex == 1 && e.VerticalOffset == 0)
                 return;
-            if (vm.PageIndex > 1 && e.VerticalChange <0)
+            if (vm.PageIndex > 1 && e.VerticalChange >=-48&&e.VerticalOffset==0)
             {
                 Dispatcher.Invoke(() => vm.SongLoadMore(false));
                 var source = (e.OriginalSource as HandyControl.Controls.ScrollViewer);

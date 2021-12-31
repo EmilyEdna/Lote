@@ -145,7 +145,7 @@
                                         <L:LoteButton Style="{StaticResource LoteBtn}" 
                                                       Svg="{StaticResource Play}"
                                                       Command="{S:Action AddPlay}"
-                                                      CommandParameter="{Binding SongId}"/>
+                                                      CommandParameter="{Binding .}"/>
                                     </WrapPanel>
                                 </WrapPanel>
                             </DataTemplate>
@@ -264,7 +264,7 @@
                                             <L:LoteButton Style="{StaticResource LoteBtn}" 
                                                       Svg="{StaticResource Play}"
                                                       Command="{S:Action AddPlay}"
-                                                      CommandParameter="{Binding SongId}"/>
+                                                      CommandParameter="{Binding .}"/>
                                         </WrapPanel>
                                     </WrapPanel>
                                 </DataTemplate>
@@ -309,7 +309,7 @@
                                             <L:LoteButton Style="{StaticResource LoteBtn}" 
                                                       Svg="{StaticResource Play}"
                                                       Command="{S:Action AddPlay}"
-                                                      CommandParameter="{Binding SongId}"/>
+                                                      CommandParameter="{Binding .}"/>
                                         </WrapPanel>
                                     </WrapPanel>
                                 </DataTemplate>
