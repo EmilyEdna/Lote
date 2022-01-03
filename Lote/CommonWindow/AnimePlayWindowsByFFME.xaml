@@ -15,10 +15,9 @@
               Title="AnimePlayWindows" 
               Style="{StaticResource Child}"
               Height="800" 
-              MouseEnter="WindowMouseEnter"
               Width="1200"
-              WindowStartupLocation="CenterScreen"
-              Loaded="Window_Loaded">
+              Loaded="Window_Loaded"
+              WindowStartupLocation="CenterScreen">
     <Grid HorizontalAlignment="Center" Width="{Binding Width, ElementName=window}">
         <Grid.RowDefinitions>
             <RowDefinition Height="72"/>
@@ -94,5 +93,6 @@
                 </StackPanel>
             </Grid>
         </Design:ColorZone>
+
     </Grid>
 </L:LoteWindow>

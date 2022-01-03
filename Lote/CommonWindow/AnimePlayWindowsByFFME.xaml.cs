@@ -1,4 +1,5 @@
-﻿using Lote.Core.Common;
+﻿using Lote.CommonWindow.ViewMdeol;
+using Lote.Core.Common;
 using Lote.Override;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+
 namespace Lote.CommonWindow
 {
     /// <summary>
@@ -22,20 +24,18 @@ namespace Lote.CommonWindow
     public partial class AnimePlayWindowsByFFME : LoteWindow
     {
         private Color color;
+        private AnimePlayWindowsFFMEViewModel ViewModel;
+
         public AnimePlayWindowsByFFME()
         {
             InitializeComponent();
+          
         }
-
-        private void WindowMouseEnter(object sender, MouseEventArgs e)
-        {
-
-        }
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
+            ViewModel = (this.DataContext as AnimePlayWindowsFFMEViewModel);
         }
+
         private void SysClick(object sender, RoutedEventArgs e)
         {
             var btn = (sender as Button);
@@ -43,10 +43,10 @@ namespace Lote.CommonWindow
             switch (SysFunc)
             {
                 case SysFuncEnum.Min:
-                    Min();
+                    this.window.WindowState = WindowState.Minimized;
                     break;
                 case SysFuncEnum.Max:
-                    Max();
+                    this.window.WindowState = this.window.WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
                     break;
                 case SysFuncEnum.Close:
                     Close();
@@ -55,16 +55,6 @@ namespace Lote.CommonWindow
                     break;
             }
         }
-        private void Max()
-        {
-            this.window.WindowState = this.window.WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
-        }
-
-        private void Min()
-        {
-            this.window.WindowState = WindowState.Minimized;
-        }
-
         private void ThemeSelect(object sender, SelectionChangedEventArgs e)
         {
             var select = (sender as ComboBox);
@@ -116,5 +106,6 @@ namespace Lote.CommonWindow
                 DragMove();
             }
         }
+
     }
 }

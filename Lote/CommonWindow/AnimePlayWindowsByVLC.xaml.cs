@@ -28,7 +28,7 @@ namespace Lote.CommonWindow
         public AnimePlayWindowsByVLC()
         {
             InitializeComponent();
-            LibVLCSharp.Shared.Core.Initialize(Environment.CurrentDirectory + @"\VLC\X64\");
+            LibVLCSharp.Shared.Core.Initialize(Environment.CurrentDirectory + @"\Plugins\VLC_X64\");
             this.LibVlcs = new LibVLC();
             this.MediaPlayers = new LibVLCSharp.Shared.MediaPlayer(this.LibVlcs);
             this.Videos.MediaPlayer = this.MediaPlayers;

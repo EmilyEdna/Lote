@@ -25,7 +25,8 @@ namespace Lote.Views.AnimeView
         private readonly IContainer container;
         private readonly OptionRootDTO root;
         private readonly AnimeProxy Proxy;
-        private readonly IDictionary<string, AnimePlayWindowsByVLC> data;
+        private readonly IDictionary<string, AnimePlayWindowsByVLC> VLC;
+        private readonly IDictionary<string, AnimePlayWindowsByFFME> FFME;
         public AnimeViewModel(IContainer container)
         {
             this.container = container;
@@ -38,7 +39,8 @@ namespace Lote.Views.AnimeView
                 UserName = root.ProxyAccount.IsNullOrEmpty() ? String.Empty : root.ProxyAccount
             };
             LetterCate = "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z".Split(",").ToList();
-            data = new Dictionary<string, AnimePlayWindowsByVLC>();
+            VLC = new Dictionary<string, AnimePlayWindowsByVLC>();
+            FFME = new Dictionary<string, AnimePlayWindowsByFFME>();
             PageIndex = 1;
         }
 
@@ -246,20 +248,20 @@ namespace Lote.Views.AnimeView
             var vm = container.Get<AnimePlayWindowsVLCViewModel>();
             vm.WatchRoute = AnimeWath.PlayURL;
             AnimePlayWindowsByVLC win = null;
-            if (data.ContainsKey(nameof(AnimePlayWindowsByVLC)))
+            if (VLC.ContainsKey(nameof(AnimePlayWindowsByVLC)))
             {
-                win = data[nameof(AnimePlayWindowsByVLC)];
+                win = VLC[nameof(AnimePlayWindowsByVLC)];
                 win.CloseBase();
-                data.Clear();
+                VLC.Clear();
                 win = new AnimePlayWindowsByVLC();
-                data[nameof(AnimePlayWindowsByVLC)] = win;
+                VLC[nameof(AnimePlayWindowsByVLC)] = win;
                 win.DataContext = vm;
                 win.Show();
             }
             else
             {
                 win = new AnimePlayWindowsByVLC();
-                data[nameof(AnimePlayWindowsByVLC)] = win;
+                VLC[nameof(AnimePlayWindowsByVLC)] = win;
                 win.DataContext = vm;
                 win.Show();
             }
