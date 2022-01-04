@@ -18,8 +18,9 @@
         }
     </style>
     <script type="text/javascript">
+        const dp = dp || {};
         function Play(args) {
-            const dp = new DPlayer({
+            dp = new DPlayer({
                 container: document.getElementById('dplayer'),
                 video: {
                     url: args,
@@ -28,6 +29,13 @@
                 }
             });
             dp.play();
+        }
+        function Destory() {
+            try {
+                dp.destroy();
+            } catch (e) {
+
+            }
         }
     </script>
     <title>Dplayer</title>

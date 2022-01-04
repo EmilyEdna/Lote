@@ -62,6 +62,7 @@ namespace Lote.CommonWindow
                     this.window.WindowState = this.window.WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
                     break;
                 case SysFuncEnum.Close:
+                    webView.CoreWebView2.ExecuteScriptAsync($"Destory()");
                     Close();
                     break;
                 case SysFuncEnum.Play:
