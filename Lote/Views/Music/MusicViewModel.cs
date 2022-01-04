@@ -183,7 +183,8 @@ namespace Lote.Views.Music
             {
                 opt.RequestParam = new MusicRequestInput
                 {
-                    MusicPlatformType = MusicPlatformEnum.NeteaseMusic,
+                    Proxy=this.Proxy,
+                    MusicPlatformType = this.Platform,
                     MusicType = MusicTypeEnum.PlayAddress,
                     AddressSearch = new MusicPlaySearch
                     {

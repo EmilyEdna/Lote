@@ -81,25 +81,19 @@
                     <Label Content="{Binding Count,Converter={StaticResource ContentConverter}, ConverterParameter=3}" FontSize="18" Grid.Column="1" Margin="2" HorizontalAlignment="Left"/>
                 </Grid>
                 <ListBox x:Name="PlayList" 
-                         Margin="10,30,0,0"
-                         Clip="{StaticResource PlayList}" 
+                         Margin="-1,30,0,0"
+                         Width="373"
                          ItemsSource="{Binding PlayLists}"
                          BorderBrush="Transparent" 
                          Background="Transparent" 
                          Foreground="Transparent">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="200"/>
-                                    <ColumnDefinition Width="200"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock HorizontalAlignment="Left" Margin="0">
-                                       <Run Text="{Binding SongName}" Foreground="Black"/>
-                                       <Run Text="{Binding SongAlbum,StringFormat=({0})}" Foreground="DimGray" FontSize="10"/>
-                                </TextBlock>
-                                <TextBlock Grid.Column="1" Text="{Binding SongArtist}" Foreground="White"/>
-                            </Grid>
+                            <StackPanel>
+                                <TextBlock Text="{Binding SongName}" Foreground="Black" FontSize="14"/>
+                                <TextBlock Text="{Binding SongAlbum,StringFormat=({0})}" Foreground="DimGray" FontSize="10"/>
+                                <TextBlock Grid.Column="1" Text="{Binding SongArtist}" Foreground="Red" FontSize="14"/>
+                            </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
