@@ -10,6 +10,28 @@ namespace Lote.Core.Common
     public class FileUtily
     {
         public static FileUtily Instance => new Lazy<FileUtily>().Value;
+
+        public  void DeleteFolder(string dir)
+        {
+            if (Directory.Exists(dir))
+            {
+                string[] fileSystemEntries = Directory.GetFileSystemEntries(dir);
+                for (int i = 0; i < fileSystemEntries.Length; i++)
+                {
+                    string text = fileSystemEntries[i];
+                    if (File.Exists(text))
+                    {
+                        File.Delete(text);
+                    }
+                    else
+                    {
+                        DeleteFolder(text);
+                    }
+                }
+                Directory.Delete(dir);
+            }
+        }
+
         /// <summary>
         /// 创建文件
         /// </summary>

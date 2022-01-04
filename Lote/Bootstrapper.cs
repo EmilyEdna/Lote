@@ -1,15 +1,17 @@
-﻿using Lote.CommonWindow;
-using Lote.Core;
+﻿using Lote.Core;
 using Lote.Core.Service;
 using Lote.NotifyUtil;
 using Lote.ViewModels;
 using Serilog;
 using Stylet;
-using Stylet.Logging;
 using StyletIoC;
 using System;
 using System.Windows;
+using System.IO;
 using System.Windows.Threading;
+using System.Linq;
+using XExten.Advance.LinqFramework;
+using Lote.Core.Common;
 
 namespace Lote
 {
@@ -79,6 +81,7 @@ namespace Lote
         /// <param name="e"></param>
         protected override void OnExit(ExitEventArgs e)
         {
+            FileUtily.Instance.DeleteFolder(Path.Combine(Environment.CurrentDirectory, "Lote.exe.WebView2"));
             base.OnExit(e);
         }
 
