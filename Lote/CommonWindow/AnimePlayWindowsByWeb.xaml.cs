@@ -1,6 +1,7 @@
 ﻿using Lote.CommonWindow.ViewMdeol;
 using Lote.Core.Common;
 using Lote.Override;
+using Microsoft.Web.WebView2.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,19 +22,31 @@ namespace Lote.CommonWindow
     /// <summary>
     /// AnimePlayWindowsByFFME.xaml 的交互逻辑
     /// </summary>
-    public partial class AnimePlayWindowsByFFME : LoteWindow
+    public partial class AnimePlayWindowsByWEB : LoteWindow
     {
         private Color color;
-        private AnimePlayWindowsFFMEViewModel ViewModel;
+        private AnimePlayWindowsWebViewModel ViewModel;
 
-        public AnimePlayWindowsByFFME()
+        public AnimePlayWindowsByWEB()
         {
             InitializeComponent();
-          
         }
+
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            ViewModel = (this.DataContext as AnimePlayWindowsFFMEViewModel);
+            ViewModel = (this.DataContext as AnimePlayWindowsWebViewModel);
+            InitializeAsync();
+        }
+
+        async void InitializeAsync()
+        {
+            await webView.EnsureCoreWebView2Async(null);
+
+            webView.CoreWebView2.Navigate(new Uri($"{Environment.CurrentDirectory}/AppData/index.html").AbsoluteUri);
+
+            webView.CoreWebView2.Settings.AreDefaultContextMenusEnabled = false;
+            webView.CoreWebView2.Settings.AreDevToolsEnabled = false;
         }
 
         private void SysClick(object sender, RoutedEventArgs e)
@@ -50,6 +63,9 @@ namespace Lote.CommonWindow
                     break;
                 case SysFuncEnum.Close:
                     Close();
+                    break;
+                case SysFuncEnum.Play:
+                    webView.CoreWebView2.ExecuteScriptAsync($"Play('{ViewModel.WatchRoute}')");
                     break;
                 default:
                     break;
@@ -106,6 +122,5 @@ namespace Lote.CommonWindow
                 DragMove();
             }
         }
-
     }
 }

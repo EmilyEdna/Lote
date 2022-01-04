@@ -26,7 +26,7 @@ namespace Lote.Views.AnimeView
         private readonly OptionRootDTO root;
         private readonly AnimeProxy Proxy;
         private readonly IDictionary<string, AnimePlayWindowsByVLC> VLC;
-        private readonly IDictionary<string, AnimePlayWindowsByFFME> FFME;
+        private readonly IDictionary<string, AnimePlayWindowsByWEB> DPlayer;
         public AnimeViewModel(IContainer container)
         {
             this.container = container;
@@ -40,7 +40,7 @@ namespace Lote.Views.AnimeView
             };
             LetterCate = "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z".Split(",").ToList();
             VLC = new Dictionary<string, AnimePlayWindowsByVLC>();
-            FFME = new Dictionary<string, AnimePlayWindowsByFFME>();
+            DPlayer = new Dictionary<string, AnimePlayWindowsByWEB>();
             PageIndex = 1;
         }
 
@@ -244,26 +244,51 @@ namespace Lote.Views.AnimeView
                     }
                 };
             }).Runs();
-
-            var vm = container.Get<AnimePlayWindowsVLCViewModel>();
-            vm.WatchRoute = AnimeWath.PlayURL;
-            AnimePlayWindowsByVLC win = null;
-            if (VLC.ContainsKey(nameof(AnimePlayWindowsByVLC)))
+          
+            if (root.PlayBox == 0)
             {
-                win = VLC[nameof(AnimePlayWindowsByVLC)];
-                win.CloseBase();
-                VLC.Clear();
-                win = new AnimePlayWindowsByVLC();
-                VLC[nameof(AnimePlayWindowsByVLC)] = win;
-                win.DataContext = vm;
-                win.Show();
+                var vm = container.Get<AnimePlayWindowsVLCViewModel>();
+                vm.WatchRoute = AnimeWath.PlayURL;
+                AnimePlayWindowsByVLC win = null;
+                if (VLC.ContainsKey(nameof(AnimePlayWindowsByVLC)))
+                {
+                    win = VLC[nameof(AnimePlayWindowsByVLC)];
+                    win.CloseBase();
+                    VLC.Clear();
+                    win = new AnimePlayWindowsByVLC();
+                    VLC[nameof(AnimePlayWindowsByVLC)] = win;
+                    win.DataContext = vm;
+                    win.Show();
+                }
+                else
+                {
+                    win = new AnimePlayWindowsByVLC();
+                    VLC[nameof(AnimePlayWindowsByVLC)] = win;
+                    win.DataContext = vm;
+                    win.Show();
+                }
             }
-            else
+            if (root.PlayBox == 1)
             {
-                win = new AnimePlayWindowsByVLC();
-                VLC[nameof(AnimePlayWindowsByVLC)] = win;
-                win.DataContext = vm;
-                win.Show();
+                var vm = container.Get<AnimePlayWindowsWebViewModel>();
+                vm.WatchRoute = AnimeWath.PlayURL;
+                AnimePlayWindowsByWEB win = null;
+                if (DPlayer.ContainsKey(nameof(AnimePlayWindowsByWEB)))
+                {
+                    win = DPlayer[nameof(AnimePlayWindowsByWEB)];
+                    win.Close();
+                    DPlayer.Clear();
+                    win = new AnimePlayWindowsByWEB();
+                    DPlayer[nameof(AnimePlayWindowsByWEB)] = win;
+                    win.DataContext = vm;
+                    win.Show();
+                }
+                else {
+                    win = new AnimePlayWindowsByWEB();
+                    DPlayer[nameof(AnimePlayWindowsByWEB)] = win;
+                    win.DataContext = vm;
+                    win.Show();
+                }
             }
         }
         #endregion

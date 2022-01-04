@@ -10,6 +10,7 @@ namespace Lote.Core.Common
     {
         Min,
         Max,
-        Close
+        Close,
+        Play
     }
 }

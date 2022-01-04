@@ -21,6 +21,7 @@ namespace Lote.Core.Service.DTO
         public string WkAccount { get; set; }
         public string WkPwd { get; set; }
         public bool UseAuthorWKInfo { get; set; }
+        public int PlayBox { get; set; }
         #endregion
     }
 }

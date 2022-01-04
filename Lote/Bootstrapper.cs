@@ -1,4 +1,5 @@
-﻿using Lote.Core;
+﻿using Lote.CommonWindow;
+using Lote.Core;
 using Lote.Core.Service;
 using Lote.NotifyUtil;
 using Lote.ViewModels;
@@ -19,10 +20,11 @@ namespace Lote
         /// </summary>
         protected override void OnStart()
         {
+            //日志
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Information()
                 .WriteTo.File("Logs/Lote.log", rollingInterval: RollingInterval.Day)
-                .CreateLogger();         
+                .CreateLogger();
             //校验版本
         }
 

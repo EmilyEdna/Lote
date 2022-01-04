@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using XExten.Advance.LinqFramework;
 
 namespace Lote.Views.Option
 {
@@ -30,6 +31,13 @@ namespace Lote.Views.Option
         {
             Regex re = new Regex("[^0-9]+");
             e.Handled = re.IsMatch(e.Text);
+        }
+
+        private void PlayBoxChecked(object sender, RoutedEventArgs e)
+        {
+            var rb = (sender as RadioButton);
+            var vm = (this.DataContext as OptionViewModel);
+            vm.Root.PlayBox = rb.CommandParameter.ToString().AsInt();
         }
     }
 }

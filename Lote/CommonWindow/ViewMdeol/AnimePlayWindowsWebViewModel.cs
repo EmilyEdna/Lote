@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace Lote.CommonWindow.ViewMdeol
 {
-    public class AnimePlayWindowsFFMEViewModel: Screen
+    public class AnimePlayWindowsWebViewModel: Screen
     {
         private readonly IContainer container;
-        public AnimePlayWindowsFFMEViewModel(IContainer container)
+        public AnimePlayWindowsWebViewModel(IContainer container)
         {
             this.container = container;
 

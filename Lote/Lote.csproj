@@ -46,6 +46,7 @@
 		<PackageReference Include="HtmlAgilityPack" Version="1.11.39" />
 		<PackageReference Include="LibVLCSharp.WPF" Version="3.6.5" />
 		<PackageReference Include="MaterialDesignThemes" Version="4.3.0" />
+		<PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1054.31" />
 		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
 		<PackageReference Include="Serilog" Version="2.10.0" />
 		<PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
@@ -84,5 +85,10 @@
 		<Resource Include="Resource\Assets\btn6.jpg" />
 		<Resource Include="Resource\Assets\看板娘.png" />
 		<Resource Include="Resource\Assets\站酷快乐体2016修订版.ttf" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Update="AppData\index.html">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
 	</ItemGroup>
 </Project>

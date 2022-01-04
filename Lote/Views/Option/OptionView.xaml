@@ -49,6 +49,8 @@
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="75"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
             </SelectiveScrollingGrid.RowDefinitions>
             <hc:Divider  Content="代理配置" Style="{StaticResource ProxyDivider}"/>
             <StackPanel Grid.Row="1" HorizontalAlignment="Left">
@@ -99,6 +101,28 @@
                 <WrapPanel Style="{StaticResource ProxyWrap}" Orientation="Horizontal">
                     <TextBlock Text="使用默认账号：" Style="{StaticResource TextBlockDefaultPrimary}" Foreground="Black"/>
                     <CheckBox IsChecked="{C:Binding Root.UseAuthorWKInfo}"/>
+                </WrapPanel>
+            </StackPanel>
+            <hc:Divider  Grid.Row="6"  Content="播放器设置" Style="{StaticResource ProxyDivider}"/>
+            <StackPanel Grid.Row="7" HorizontalAlignment="Left">
+                <WrapPanel Style="{StaticResource ProxyWrap}" Orientation="Horizontal">
+                    <RadioButton Content="VLC" 
+                                 BorderThickness="0" 
+                                 GroupName="PlayBox"
+                                 Background="Transparent" 
+                                 Checked="PlayBoxChecked"
+                                 IsChecked="{C:Binding 'Root.PlayBox == 0'}"
+                                 Style="{StaticResource RadioButtonIcon}"  
+                                 CommandParameter="0"/>
+                    <RadioButton Margin="10,0,0,0" 
+                                 Content="DPlayer" 
+                                 GroupName="PlayBox"
+                                 BorderThickness="0"  
+                                 Checked="PlayBoxChecked"
+                                 Background="Transparent" 
+                                 IsChecked="{C:Binding 'Root.PlayBox == 1'}"
+                                 Style="{StaticResource RadioButtonIcon}" 
+                                 CommandParameter="1"/>
                 </WrapPanel>
             </StackPanel>
         </SelectiveScrollingGrid>

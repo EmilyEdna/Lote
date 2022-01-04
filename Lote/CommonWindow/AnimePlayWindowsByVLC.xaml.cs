@@ -248,7 +248,6 @@ namespace Lote.CommonWindow
 
         public void CloseBase()
         {
-            this.MediaPlayers.Stop();
             this.MediaPlayers.Dispose();
             this.LibVlcs.Dispose();
             this.Timer.Stop();

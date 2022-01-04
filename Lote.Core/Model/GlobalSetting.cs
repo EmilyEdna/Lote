@@ -25,5 +25,6 @@ namespace Lote.Core.Model
         [SugarColumn(ColumnDataType = "varchar(80)", IsNullable = true)]
         public string WkPwd { get; set; }
         public bool UseAuthorWKInfo { get; set; }
+        public int PlayBox { get; set; }
     }
 }

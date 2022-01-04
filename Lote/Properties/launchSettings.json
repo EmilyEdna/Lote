@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Lote": {
+      "commandName": "Project",
+      "jsWebView2Debugging": false
+    }
+  }
+}
