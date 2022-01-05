@@ -10,11 +10,13 @@ using StyletIoC;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using XExten.Advance.LinqFramework;
+using XExten.Advance.StaticFramework;
 
 namespace Lote.Views.Music
 {
@@ -188,18 +190,30 @@ namespace Lote.Views.Music
                     MusicType = MusicTypeEnum.PlayAddress,
                     AddressSearch = new MusicPlaySearch
                     {
-                        Dynamic = input.SongId
+                        Dynamic = input.SongId,
+                        KuGouAlbumId=input.SongAlbumId,
                     }
                 };
             }).Runs();
             if (SongURL.SongPlayAddressResult.CanPlay == false)
                 HandyControl.Controls.MessageBox.Info("当前歌曲已下架，请切换到其他其他平台搜索");
+
+            string CacheAddress = string.Empty;
+
+            if (this.Platform == MusicPlatformEnum.BiliBiliMusic)
+            {
+                var dir =  SyncStatic.CreateDir(Path.Combine(Environment.CurrentDirectory, "Caches"));
+                var file =  SyncStatic.CreateFile(Path.Combine(dir, $"{Guid.NewGuid()}.mp3"));
+                CacheAddress = SyncStatic.WriteFile(SongURL.SongPlayAddressResult.BilibiliFileBytes, file);
+            }
+
             this.MusciService.AddPlayList(new PlayListDTO
             {
                 Address= SongURL.SongPlayAddressResult.SongURL,
                 SongAlbum=input.SongAlbumName,
                 SongName=input.SongName,
                 SongArtist=string.Join(",",input.SongArtistName),
+                CacheAddress= CacheAddress
             });
             Init();
         }
