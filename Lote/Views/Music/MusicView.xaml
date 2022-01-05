@@ -22,6 +22,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="0.05*"/>
             <RowDefinition/>
+            <RowDefinition Height="0.05*"/>
         </Grid.RowDefinitions>
         <WrapPanel>
             <ComboBox x:Name="comboBox"  
@@ -313,5 +314,66 @@
                 </TabItem>
             </TabControl>
         </Grid>
+        <Canvas x:Name="底部播放栏"  Grid.Row="2" Margin="0,-200,0,0"
+                HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Top="564.072" Height="110" Width="1200" Cursor="Hand">
+            <Rectangle x:Name="播放栏背景" Fill="{Binding Background, ElementName=colorZone}" HorizontalAlignment="Left" Height="105.928" VerticalAlignment="Bottom" Width="1200" Opacity="0.4" Canvas.Top="5">
+                <Rectangle.Effect>
+                    <BlurEffect Radius="10"/>
+                </Rectangle.Effect>
+            </Rectangle>
+            <Slider x:Name="进度条" Height="21.012" VerticalAlignment="Top" Foreground="{Binding Background, ElementName=colorZone}"   IsMoveToPointEnabled="True"   Maximum="100" BorderBrush="{x:Null}" SnapsToDevicePixels="True" IsEnabled="False" TickFrequency="0.001" SmallChange="0.001" AutoToolTipPrecision="2" Style="{DynamicResource SliderStyle2}" Cursor="Hand"  Canvas.Left="10" Canvas.Top="5" Width="1180"  />
+            <Button x:Name="上一曲"
+                Style="{DynamicResource MaterialDesignFloatingActionMiniButton}"
+                Design:ShadowAssist.ShadowDepth="Depth2" VerticalAlignment="Bottom" Background="{Binding Background, ElementName=colorZone}" BorderBrush="{x:Null}" Canvas.Left="545.019" Canvas.Top="45">
+                <Design:PackIcon Width="30" Height="30" Kind="SkipPrevious"/>
+            </Button>
+            <Button x:Name="下一曲"
+                Style="{DynamicResource MaterialDesignFloatingActionMiniButton}"
+                Design:ShadowAssist.ShadowDepth="Depth2" VerticalAlignment="Bottom" Background="{Binding Background, ElementName=colorZone}" BorderBrush="{x:Null}"  Canvas.Left="695.019" Canvas.Top="45">
+                <Design:PackIcon Width="30" Height="30" Kind="SkipNext"/>
+            </Button>
+            <Button x:Name="暂停"
+                Style="{DynamicResource MaterialDesignFloatingActionMiniButton}"
+                Design:ShadowAssist.ShadowDepth="Depth2" Width="60" Height="60" VerticalAlignment="Bottom" Background="{Binding Background, ElementName=colorZone}" BorderBrush="{x:Null}"  Visibility="Collapsed" Canvas.Left="610.019" Canvas.Top="35">
+                <Design:PackIcon Width="40" Height="40" Kind="Pause"/>
+            </Button>
+            <Button x:Name="播放"
+                Style="{DynamicResource MaterialDesignFloatingActionMiniButton}"
+                Design:ShadowAssist.ShadowDepth="Depth2" Width="60" Height="60" VerticalAlignment="Bottom" Background="{Binding Background, ElementName=colorZone}" BorderBrush="{x:Null}" Canvas.Left="610.019" Canvas.Top="35" x:FieldModifier="public">
+                <Design:PackIcon Width="40" Height="40" Kind="play"/>
+            </Button>
+            <ListBox x:Name="底部列表"
+                Style="{StaticResource MaterialDesignToolToggleListBox}" Width="200" Background="{Binding Background, ElementName=colorZone}" SelectedIndex="0" VerticalAlignment="Bottom" Canvas.Left="92.75" Canvas.Top="63" BorderBrush="{x:Null}">
+
+                <ListBoxItem Background="{x:Null}" ToolTip="列表循环" Foreground="#DD000000">
+                    <Design:PackIcon  
+                        Kind="Repeat"  />
+                </ListBoxItem>
+                <ListBoxItem ToolTip="单曲循环">
+                    <Design:PackIcon
+                        Kind="RepeatOnce" />
+                </ListBoxItem>
+                <ListBoxItem ToolTip="随机播放">
+                    <Design:PackIcon
+                        Kind="ShuffleVariant"/>
+                </ListBoxItem>
+                <ListBoxItem  ToolTip="顺序播放" Width="50">
+                    <Design:PackIcon
+                        Kind="ShuffleDisabled" Width="25" Height="25" />
+                </ListBoxItem>
+            </ListBox>
+            <ListBox x:Name="音量调节"
+                Style="{StaticResource MaterialDesignToolToggleListBox}"
+                Width="50" Background="{Binding Background, ElementName=colorZone}" HorizontalContentAlignment="Center"  Height="34.512" Canvas.Left="1070" Canvas.Top="60" Margin="56,0,0,0">
+
+                <ListBoxItem x:Name="音量" ToolTip="音量调节" Width="50" Background="{x:Null}"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                    <Design:PackIcon  
+                        Kind="VolumeHigh" Height="25" Padding="0" Width="25" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"  />
+                </ListBoxItem>
+            </ListBox>
+            <Label x:Name="歌曲名称" Content="请选择要播放的歌曲..." HorizontalAlignment="Left" Height="35" VerticalAlignment="Bottom" VerticalContentAlignment="Center" FontSize="18" FontFamily="/方糖音乐播放器;component/Resources/#HappyZcool-2016" Foreground="#FD000000" Canvas.Left="88.29" Canvas.Top="26.012" ToolTip="{Binding Content, ElementName=歌曲名称}" MaxWidth="440"/>
+            <Label x:Name="播放时间" Content="00:00-00:00" HorizontalAlignment="Left" Height="28.988" VerticalAlignment="Top" Width="190" FontSize="20" FontFamily="/方糖音乐播放器;component/Resources/#298-CAI978" HorizontalContentAlignment="Right" Canvas.Left="1000" Canvas.Top="20"/>
+            <Image x:Name="播放栏专辑" UseLayoutRounding="True" RenderOptions.BitmapScalingMode="HighQuality" Height="70" VerticalAlignment="Bottom" Source="Resources/图标2.png" Width="70" Stretch="UniformToFill" Canvas.Left="10" Canvas.Top="30" Clip="M0.5,5 C0.5,2.5147186 2.5147186,0.5 5,0.5 L65,0.5 C67.485281,0.5 69.5,2.5147186 69.5,5 L69.5,65 C69.5,67.485281 67.485281,69.5 65,69.5 L5,69.5 C2.5147186,69.5 0.5,67.485281 0.5,65 z"/>
+        </Canvas>
     </Grid>
 </UserControl>
