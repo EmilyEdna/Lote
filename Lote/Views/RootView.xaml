@@ -161,7 +161,7 @@
                 </Grid>
             </WrapPanel>
             <WrapPanel Grid.Column="1">
-                <ContentControl  S:View.Model="{Binding ActiveItem}"/>
+                <ContentControl  S:View.Model="{Binding ActiveItem}" x:Name="Contents"/>
             </WrapPanel>
         </Grid>
     </Grid>

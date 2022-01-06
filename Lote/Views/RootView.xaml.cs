@@ -9,6 +9,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using XExten.Advance.LinqFramework;
+using System.Linq;
+using System.Windows.Shapes;
 
 namespace Lote.Views
 {
@@ -69,6 +71,7 @@ namespace Lote.Views
                 color = (Color)ColorConverter.ConvertFromString("#FF000000");
             //设置背景
             Zone.Background = new SolidColorBrush(color);
+
             //设置字体
             if (Navs != null)
             {
@@ -76,6 +79,15 @@ namespace Lote.Views
                 {
                     item.Foreground = new SolidColorBrush(color);
                 });
+            }
+            if (Contents != null)
+            {
+                var MyContents = UiElementHelper.FindVisualChild<ContentControl>(Contents).FirstOrDefault();
+                if (MyContents != null)
+                {
+                    if (MyContents.FindName("播放器背景") != null)
+                        ((Rectangle)MyContents.FindName("播放器背景")).Fill = Zone.Background;
+                }
             }
         }
 

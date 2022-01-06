@@ -70,5 +70,10 @@ namespace Lote.Views.Music
                 source.ScrollToHome();
             }
         }
+
+        private void VolumeClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }
