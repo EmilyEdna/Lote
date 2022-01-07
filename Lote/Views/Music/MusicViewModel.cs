@@ -15,6 +15,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using XExten.Advance.HttpFramework.MultiFactory;
 using XExten.Advance.LinqFramework;
 using XExten.Advance.StaticFramework;
 
@@ -170,28 +171,28 @@ namespace Lote.Views.Music
         }
         #endregion
 
-        #region LoadMore
-        public void SongLoadMore(bool types) 
+        #region Function
+        public void SongLoadMore(bool types)
         {
-            int NextPage = types? PageIndex += 1:PageIndex-=1;
+            int NextPage = types ? PageIndex += 1 : PageIndex -= 1;
             if (NextPage < 0)
                 return;
             if (NextPage < Total)
                 Search(ShowType);
         }
-        public void AddPlay(MusicSongItem input) 
+        public void AddPlay(MusicSongItem input)
         {
             var SongURL = MusicFactory.Music(opt =>
             {
                 opt.RequestParam = new MusicRequestInput
                 {
-                    Proxy=this.Proxy,
+                    Proxy = this.Proxy,
                     MusicPlatformType = this.Platform,
                     MusicType = MusicTypeEnum.PlayAddress,
                     AddressSearch = new MusicPlaySearch
                     {
                         Dynamic = input.SongId,
-                        KuGouAlbumId=input.SongAlbumId,
+                        KuGouAlbumId = input.SongAlbumId,
                     }
                 };
             }).Runs();
@@ -199,22 +200,34 @@ namespace Lote.Views.Music
                 HandyControl.Controls.MessageBox.Info("当前歌曲已下架，请切换到其他其他平台搜索");
 
             string CacheAddress = string.Empty;
-
+            var dir = SyncStatic.CreateDir(Path.Combine(Environment.CurrentDirectory, "Caches"));
+            var SongArtist = string.Join(",", input.SongArtistName);
+            var SongFile = $"{input.SongName}({input.SongAlbumName})-{SongArtist}_{Platform}.mp3";
             if (this.Platform == MusicPlatformEnum.BiliBiliMusic)
             {
-                var dir =  SyncStatic.CreateDir(Path.Combine(Environment.CurrentDirectory, "Caches"));
-                var file =  SyncStatic.CreateFile(Path.Combine(dir, $"{Guid.NewGuid()}.mp3"));
+                var file = SyncStatic.CreateFile(Path.Combine(dir, SongFile));
                 CacheAddress = SyncStatic.WriteFile(SongURL.SongPlayAddressResult.BilibiliFileBytes, file);
+            }
+            else
+            {
+                var file = SyncStatic.CreateFile(Path.Combine(dir, SongFile));
+                var filebytes = IHttpMultiClient.HttpMulti.AddNode(opt => opt.NodePath = SongURL.SongPlayAddressResult.SongURL).Build().RunBytes().FirstOrDefault();
+                CacheAddress = SyncStatic.WriteFile(filebytes, file);
             }
 
             this.MusciService.AddPlayList(new PlayListDTO
             {
-                Address= SongURL.SongPlayAddressResult.SongURL,
-                SongAlbum=input.SongAlbumName,
-                SongName=input.SongName,
-                SongArtist=string.Join(",",input.SongArtistName),
-                CacheAddress= CacheAddress
+                Address = SongURL.SongPlayAddressResult.SongURL,
+                SongAlbum = input.SongAlbumName,
+                SongName = input.SongName,
+                SongArtist = SongArtist,
+                CacheAddress = CacheAddress,
             });
+            Init();
+        }
+        public void Remove(Guid args)
+        {
+            this.MusciService.RemovePlayList(args);
             Init();
         }
         #endregion
@@ -505,10 +518,11 @@ namespace Lote.Views.Music
             }
         }
 
-        private void Init() {
+        private void Init()
+        {
             var Result = this.MusciService.GetPlayList();
             this.Count = Result.Count;
-            this.PlayLists = new ObservableCollection<PlayListDTO>(Result.Result);
+            this.PlayLists = new ObservableCollection<PlayListDTO>(Result);
         }
 
         protected override void OnViewLoaded()

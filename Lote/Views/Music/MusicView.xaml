@@ -155,6 +155,11 @@
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel>
+                                <StackPanel.ContextMenu>
+                                    <ContextMenu Style="{StaticResource LoteContextMenu}" Background="#FFED556A">
+                                        <MenuItem Header="删除" Command="{S:Action Remove}" CommandParameter="{Binding Id}"/>
+                                    </ContextMenu>
+                                </StackPanel.ContextMenu>
                                 <TextBlock Text="{Binding SongName}" Foreground="Black" FontSize="14"/>
                                 <TextBlock Text="{Binding SongAlbum, StringFormat=(\{0\})}" Foreground="DimGray" FontSize="10"/>
                                 <TextBlock Grid.Column="1" Text="{Binding SongArtist}" Foreground="Red" FontSize="14"/>
@@ -195,7 +200,7 @@
                                     <WrapPanel Orientation="Horizontal" Margin="20,0,0,0">
                                         <L:LoteButton Style="{StaticResource LoteBtn}" 
                                                       Svg="{StaticResource Album}"
-                                                      Click="LoteButton_Click"
+                                                      Click="ShowAlbumClick"
                                                       CommandParameter="{Binding SongAlbumId}"/>
                                         <L:LoteButton Style="{StaticResource LoteBtn}" 
                                                       Svg="{StaticResource Play}"
@@ -289,7 +294,7 @@
                                         <WrapPanel Orientation="Horizontal" Margin="20,0,0,0">
                                             <L:LoteButton Style="{StaticResource LoteBtn}" 
                                                           Svg="{StaticResource Album}"
-                                                          Click="LoteButton_Click"
+                                                          Click="ShowAlbumClick"
                                                           CommandParameter="{Binding SongAlbumId}"/>
                                             <L:LoteButton Style="{StaticResource LoteBtn}" 
                                                       Svg="{StaticResource Play}"
@@ -345,13 +350,18 @@
                 </TabItem>
             </TabControl>
         </Grid>
+        <MediaElement x:Name="MediaPlay" LoadedBehavior="Manual" SpeedRatio="1" SnapsToDevicePixels="True" Volume="1" d:IsHidden="True">
+            <MediaElement.Effect>
+                <DropShadowEffect BlurRadius="15" Opacity="0.5"/>
+            </MediaElement.Effect>
+        </MediaElement>
         <Canvas  Grid.Row="2" Margin="0,-200,0,0" VerticalAlignment="Top" Width="960" Cursor="Hand">
             <Rectangle x:Name="播放器背景" HorizontalAlignment="Left" Height="108" VerticalAlignment="Bottom" Width="960" Opacity="0.5" Fill="#FFFF9999">
                 <Rectangle.Effect>
                     <BlurEffect Radius="10"/>
                 </Rectangle.Effect>
             </Rectangle>
-            <Slider  VerticalAlignment="Top" 
+            <Slider  VerticalAlignment="Top"  x:Name="ProgressBars"
                      Foreground="{Binding Fill, ElementName=播放器背景}"   
                      IsMoveToPointEnabled="True"   
                      Maximum="100" 
@@ -366,6 +376,8 @@
                      Canvas.Top="5" 
                      Width="940"  />
             <Button  Style="{DynamicResource MaterialDesignFloatingActionMiniButton}"
+                     Click="PlayHandleClick"
+                     CommandParameter="3"
                      Design:ShadowAssist.ShadowDepth="Depth2" 
                      VerticalAlignment="Bottom" 
                      BorderBrush="Transparent"
@@ -378,24 +390,32 @@
                     Design:ShadowAssist.ShadowDepth="Depth2" 
                     VerticalAlignment="Bottom" 
                     Background="{Binding Fill, ElementName=播放器背景}" 
-                   BorderBrush="Transparent"   
+                    BorderBrush="Transparent"   
                     Canvas.Left="695" 
+                    Click="PlayHandleClick"
+                     CommandParameter="2"
                     Canvas.Top="45">
                 <Design:PackIcon Width="30" Height="30" Kind="SkipNext"/>
             </Button>
             <Button  Style="{DynamicResource MaterialDesignFloatingActionMiniButton}"
+                     x:Name="UserPause"
+                     CommandParameter="1"
+                     Click="PlayHandleClick"
                      Design:ShadowAssist.ShadowDepth="Depth2" 
                      Width="60" 
                      Height="60" 
                      VerticalAlignment="Bottom" 
                      Background="{Binding Fill, ElementName=播放器背景}" 
-                    BorderBrush="Transparent" 
+                     BorderBrush="Transparent" 
                      Visibility="Collapsed" 
                      Canvas.Left="610" 
                      Canvas.Top="35">
                 <Design:PackIcon Width="40" Height="40" Kind="Pause"/>
             </Button>
             <Button Style="{DynamicResource MaterialDesignFloatingActionMiniButton}"
+                    Click="PlayHandleClick"
+                    CommandParameter="0"
+                    x:Name="UserPlay"
                     Design:ShadowAssist.ShadowDepth="Depth2" 
                     Width="60" 
                     Height="60" 
@@ -407,6 +427,7 @@
                 <Design:PackIcon Width="40" Height="40" Kind="play"/>
             </Button>
             <ListBox  Style="{StaticResource MaterialDesignToolToggleListBox}" 
+                      x:Name="PlayCondition"
                       Width="200" 
                       Background="{Binding Fill, ElementName=播放器背景}" 
                       SelectedIndex="0" 
@@ -444,6 +465,7 @@
                 </ListBoxItem>
             </ListBox>
             <Label Content="请选择要播放的歌曲..." 
+                   x:Name="SongNameLbl"
                    HorizontalAlignment="Left" 
                    Height="35" VerticalAlignment="Bottom" 
                    VerticalContentAlignment="Center" 
@@ -452,6 +474,7 @@
                    ToolTip="{Binding Content, ElementName=歌曲名称}" 
                    MaxWidth="440"/>
             <Label Content="00:00:00" 
+                   x:Name="SongTimeLbl"
                    HorizontalAlignment="Left" 
                    Height="29" 
                    VerticalAlignment="Top" 
@@ -460,52 +483,54 @@
                    HorizontalContentAlignment="Right" 
                    Canvas.Left="720" 
                    Canvas.Top="20"/>
+            <!--音量-->
+            <SelectiveScrollingGrid x:Name="VolumeSetting" 
+                                    Canvas.Left="835"
+                                    Canvas.Bottom="0"
+                                    Margin="0,0,0,-60"
+                                    HorizontalAlignment="Left" 
+                                    Height="220" 
+                                    VerticalAlignment="Top" 
+                                    Width="75" 
+                                    Visibility="Collapsed"
+                                    RenderTransformOrigin="0.5,0.5">
+                <SelectiveScrollingGrid.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </SelectiveScrollingGrid.RenderTransform>
+                <Rectangle HorizontalAlignment="Left" 
+                           Height="215" 
+                           RadiusY="14.5" 
+                           RadiusX="14.5" 
+                           VerticalAlignment="Top" 
+                           Width="75" 
+                           Fill="White" 
+                           Stroke="{Binding Fill, ElementName=播放器背景}"/>
+                <Label   Content="100%" 
+                         HorizontalAlignment="Left" 
+                         Height="30" 
+                         Margin="0,185,0,0" 
+                         VerticalAlignment="Top" 
+                         Width="75" 
+                         FontSize="18" 
+                         HorizontalContentAlignment="Center" 
+                         VerticalContentAlignment="Center"/>
+                <Slider TickFrequency="5"
+                        Orientation="Vertical"
+                        Maximum="100" 
+                        Margin="27,20,21,35" 
+                        Foreground="{Binding Fill, ElementName=播放器背景}"
+                        TickPlacement="BottomRight" 
+                        SmallChange="1" 
+                        Value="100" 
+                        BorderBrush="Transparent" 
+                        Minimum="1" 
+                        Focusable="False" />
+            </SelectiveScrollingGrid>
         </Canvas>
-
-
-        <SelectiveScrollingGrid x:Name="VolumeSetting" 
-                                HorizontalAlignment="Left" 
-                                Height="220" 
-                                VerticalAlignment="Top" 
-                                Width="75" 
-                                RenderTransformOrigin="0.5,0.5" 
-                                Visibility="Collapsed">
-            <SelectiveScrollingGrid.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </SelectiveScrollingGrid.RenderTransform>
-            <Rectangle HorizontalAlignment="Left" 
-                       Height="215" 
-                       RadiusY="14.5" 
-                       RadiusX="14.5" 
-                       VerticalAlignment="Top" 
-                       Width="75" 
-                       Fill="White" 
-                       Stroke="{Binding Fill, ElementName=播放器背景}"/>
-            <Label   Content="100%" 
-                   HorizontalAlignment="Left" 
-                   Height="30" 
-                   Margin="0,185,0,0" 
-                   VerticalAlignment="Top" 
-                   Width="75" 
-                   FontSize="18" 
-                   HorizontalContentAlignment="Center" 
-                   VerticalContentAlignment="Center"/>
-            <Slider TickFrequency="5"
-                    Orientation="Vertical"
-                    Maximum="100" 
-                    Margin="27,20,21,35" 
-                    Foreground="{Binding Fill, ElementName=播放器背景}"
-                    TickPlacement="BottomRight" 
-                    SmallChange="1" 
-                    Value="100" 
-                    BorderBrush="{x:Null}" 
-                    Minimum="1" 
-                    Focusable="False" />
-        </SelectiveScrollingGrid>
     </Grid>
 </UserControl>

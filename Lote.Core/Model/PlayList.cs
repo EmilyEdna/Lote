@@ -22,5 +22,7 @@ namespace Lote.Core.Model
         public string SongAlbum { get; set; }
         [SugarColumn(ColumnDataType = "varchar(200)", IsNullable = true)]
         public string SongArtist { get; set; }
+        [SugarColumn(ColumnDataType = "bigint", IsNullable = false)]
+        public long Span { get; set; }
     }
 }
