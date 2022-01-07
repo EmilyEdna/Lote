@@ -11,6 +11,7 @@ using System.Windows.Media.Imaging;
 using XExten.Advance.LinqFramework;
 using System.Linq;
 using System.Windows.Shapes;
+using Lote.Views.Music;
 
 namespace Lote.Views
 {
@@ -35,6 +36,13 @@ namespace Lote.Views
                     Max();
                     break;
                 case SysFuncEnum.Close:
+                    if (Contents != null)
+                    {
+                        if (Contents.Content is MusicView)
+                        {
+                            (Contents.Content as MusicView).timer.Close();
+                        }
+                    }
                     this.Close();
                     Application.Current.Shutdown();
                     break;
@@ -82,12 +90,8 @@ namespace Lote.Views
             }
             if (Contents != null)
             {
-                var MyContents = UiElementHelper.FindVisualChild<ContentControl>(Contents).FirstOrDefault();
-                if (MyContents != null)
-                {
-                    if (MyContents.FindName("播放器背景") != null)
-                        ((Rectangle)MyContents.FindName("播放器背景")).Fill = Zone.Background;
-                }
+                if (Contents.FindName("播放器背景") != null)
+                    ((Rectangle)Contents.FindName("播放器背景")).Fill = Zone.Background;
             }
         }
 

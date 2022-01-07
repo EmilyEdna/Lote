@@ -157,12 +157,22 @@
                             <StackPanel>
                                 <StackPanel.ContextMenu>
                                     <ContextMenu Style="{StaticResource LoteContextMenu}" Background="#FFED556A">
+                                        <MenuItem Header="搜索" Command="{S:Action SearchMusic}" CommandParameter="{Binding SongName}"/>
                                         <MenuItem Header="删除" Command="{S:Action Remove}" CommandParameter="{Binding Id}"/>
                                     </ContextMenu>
                                 </StackPanel.ContextMenu>
-                                <TextBlock Text="{Binding SongName}" Foreground="Black" FontSize="14"/>
-                                <TextBlock Text="{Binding SongAlbum, StringFormat=(\{0\})}" Foreground="DimGray" FontSize="10"/>
-                                <TextBlock Grid.Column="1" Text="{Binding SongArtist}" Foreground="Red" FontSize="14"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding Select}" Foreground="Black"/>
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock Text="{Binding SongName}" Foreground="Black" FontSize="14"/>
+                                        <TextBlock Text="{Binding SongAlbum, StringFormat=(\{0\})}" Foreground="DimGray" FontSize="10"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding SongArtist}" Foreground="Red" FontSize="14"/>
+                                    </StackPanel>
+                                </Grid>
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>

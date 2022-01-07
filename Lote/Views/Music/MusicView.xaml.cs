@@ -28,7 +28,8 @@ namespace Lote.Views.Music
     public partial class MusicView : UserControl
     {
         private MusicViewModel vm;
-        private System.Timers.Timer timer;
+        public System.Timers.Timer timer;
+        private int PlayState = -1;
         public MusicView()
         {
             InitializeComponent();
@@ -50,7 +51,7 @@ namespace Lote.Views.Music
                     }
                     else
                     {
-                        if (this.MediaPlay.Source != null)
+                        if (this.MediaPlay.Source != null&& PlayState!=-1)
                         {
                             this.SongTimeLbl.Content = this.MediaPlay.Position.ToString().Split(".").FirstOrDefault();
                             this.ProgressBars.Value = this.MediaPlay.Position.TotalSeconds;
@@ -166,6 +167,7 @@ namespace Lote.Views.Music
                         this.UserPause.Visibility = Visibility.Visible;
                         this.UserPlay.Visibility = Visibility.Collapsed;
                         this.timer.Start();
+                        PlayState = 1;
                     }
                     else
                         PlayingConditions();
@@ -175,12 +177,47 @@ namespace Lote.Views.Music
                     this.UserPause.Visibility = Visibility.Collapsed;
                     this.UserPlay.Visibility = Visibility.Visible;
                     this.timer.Stop();
+                    PlayState = -1;
                     break;
                 case MusicPlayFuncEnum.SkipNext:
-                    PlayingConditions();
+
                     break;
                 case MusicPlayFuncEnum.SkipPrevious:
-                    PlayingConditions();
+                    if (PlayCondition.SelectedIndex != -1 && vm.PlayLists.Count >= 1)
+                    {
+                        if (PlayCondition.SelectedIndex == 0 || PlayCondition.SelectedIndex == 1 || PlayCondition.SelectedIndex == 3)
+                        {
+                            if (PlayList.SelectedIndex == 0)//从最底部播放
+                            {
+                                Playing(vm.PlayLists[PlayList.Items.Count - 1]);
+                                PlayList.SelectedIndex = PlayList.Items.Count - 1;
+                            }
+                            else//正常上一曲
+                            {
+                                if (PlayList.SelectedIndex == -1)
+                                {
+                                    Playing(vm.PlayLists[PlayList.Items.Count - 1]);
+                                    PlayList.SelectedIndex = PlayList.Items.Count - 1;
+                                }
+                                else
+                                {
+                                    Playing(vm.PlayLists[PlayList.SelectedIndex - 1]);
+                                    PlayList.SelectedIndex -= 1;
+                                }
+                            }
+                        }
+                        else if (PlayCondition.SelectedIndex == 2) { PlayingConditions(); }
+                    }
+                    else
+                    {
+                        if (PlayList.Items.Count != 0)
+                        {
+                            PlayCondition.SelectedIndex = 0;
+                            PlayHandleClick(btn, e);
+                        }
+                        else
+                            HandyControl.Controls.MessageBox.Info("木有任何歌曲（；´д｀）ゞ", "提示");
+                    }
                     break;
                 default:
                     break;
@@ -189,13 +226,14 @@ namespace Lote.Views.Music
 
         private void Playing(PlayListDTO input)
         {
+            SongNameLbl.Content = input.SongName;
             MediaPlay.Close();
             MediaPlay.Source = new Uri(input.CacheAddress, UriKind.Absolute);
             MediaPlay.Play();
-            SongNameLbl.Content = input.SongName;
             LoadTime();
             UserPlay.Visibility = Visibility.Collapsed;
             UserPause.Visibility = Visibility.Visible;
+            PlayState = 1;
         }
 
         private void LoadTime()
@@ -219,6 +257,9 @@ namespace Lote.Views.Music
 
         private void PlayingConditions()
         {
+            if (PlayList.Items.Count <= 0)
+                return;
+
             if (PlayCondition.SelectedIndex == -1) { PlayCondition.SelectedIndex = 0; }//如果用户没有选择播放模式默认列表循环
             InitPlayBox();
             if (PlayCondition.SelectedIndex == 0)//列表循环
@@ -233,17 +274,20 @@ namespace Lote.Views.Music
                 {
                     Playing(vm.PlayLists[PlayList.SelectedIndex + 1]);
                     PlayList.SelectedIndex += 1;//定位
+                    (PlayList.SelectedItems[PlayList.SelectedIndex] as PlayListDTO).Select = "√";
                 }
             }
             else if (PlayCondition.SelectedIndex == 1)//单曲循环
             {
-                //Play_Misic(Number[主页的播放列表.SelectedIndex].ToString());//播放当前选中项
+                var index = PlayList.SelectedIndex == -1 ? 0:PlayList.SelectedIndex;
+                Playing(vm.PlayLists[index]);
+                PlayList.SelectedIndex = index;
             }
             else if (PlayCondition.SelectedIndex == 2)//随机播放
             {
                 if (PlayList.Items.Count == 1)
                 {
-                    //Play_Misic(Number[0].ToString());//播放歌曲
+                    Playing(vm.PlayLists[0]);
                     PlayList.SelectedIndex = 0;//定位
                 }
                 else
@@ -254,7 +298,7 @@ namespace Lote.Views.Music
                         int i = new Random().Next(PlayList.Items.Count - 1);//随机范围在列表最大-1
                         if (PlayList.SelectedIndex != i)//排除当前正在播放的
                         {
-                            //Play_Misic(Number[i].ToString());//播放歌曲
+                            Playing(vm.PlayLists[i]);//播放歌曲
                             PlayList.SelectedIndex = i;//定位
                             stc = 1;//条件排除
                         }
@@ -265,7 +309,7 @@ namespace Lote.Views.Music
             {
                 if (PlayList.SelectedIndex + 1 != PlayList.Items.Count)
                 {
-                    // Play_Misic(Number[主页的播放列表.SelectedIndex + 1].ToString());
+                    Playing(vm.PlayLists[PlayList.SelectedIndex + 1]);
                     PlayList.SelectedIndex += 1;
                 }
             }
