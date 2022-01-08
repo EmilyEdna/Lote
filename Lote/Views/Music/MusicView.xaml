@@ -161,18 +161,9 @@
                                         <MenuItem Header="删除" Command="{S:Action Remove}" CommandParameter="{Binding Id}"/>
                                     </ContextMenu>
                                 </StackPanel.ContextMenu>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Text="{Binding Select}" Foreground="Black"/>
-                                    <StackPanel Grid.Column="1">
-                                        <TextBlock Text="{Binding SongName}" Foreground="Black" FontSize="14"/>
-                                        <TextBlock Text="{Binding SongAlbum, StringFormat=(\{0\})}" Foreground="DimGray" FontSize="10"/>
-                                        <TextBlock Grid.Column="1" Text="{Binding SongArtist}" Foreground="Red" FontSize="14"/>
-                                    </StackPanel>
-                                </Grid>
+                                <TextBlock Text="{Binding SongName}" Foreground="Black" FontSize="14"/>
+                                <TextBlock Text="{Binding SongAlbum, StringFormat=(\{0\})}" Foreground="DimGray" FontSize="10"/>
+                                <TextBlock Grid.Column="1" Text="{Binding SongArtist}" Foreground="Red" FontSize="14"/>
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
@@ -495,6 +486,7 @@
                    Canvas.Top="20"/>
             <!--音量-->
             <SelectiveScrollingGrid x:Name="VolumeSetting" 
+                                    MouseLeave="VolumeSettingMouseLeave"
                                     Canvas.Left="835"
                                     Canvas.Bottom="0"
                                     Margin="0,0,0,-60"
@@ -521,6 +513,7 @@
                            Fill="White" 
                            Stroke="{Binding Fill, ElementName=播放器背景}"/>
                 <Label   Content="100%" 
+                         x:Name="VolumeShow"
                          HorizontalAlignment="Left" 
                          Height="30" 
                          Margin="0,185,0,0" 
@@ -537,6 +530,7 @@
                         TickPlacement="BottomRight" 
                         SmallChange="1" 
                         Value="100" 
+                        ValueChanged="VolumeChanged"
                         BorderBrush="Transparent" 
                         Minimum="1" 
                         Focusable="False" />

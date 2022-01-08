@@ -33,7 +33,6 @@ namespace Lote.Views.Music
         public MusicView()
         {
             InitializeComponent();
-            InitPlayBox();
             timer = new System.Timers.Timer
             {
                 AutoReset = true,
@@ -51,7 +50,7 @@ namespace Lote.Views.Music
                     }
                     else
                     {
-                        if (this.MediaPlay.Source != null&& PlayState!=-1)
+                        if (this.MediaPlay.Source != null && PlayState != -1)
                         {
                             this.SongTimeLbl.Content = this.MediaPlay.Position.ToString().Split(".").FirstOrDefault();
                             this.ProgressBars.Value = this.MediaPlay.Position.TotalSeconds;
@@ -60,11 +59,14 @@ namespace Lote.Views.Music
                     }
                 });
             };
+            InitPlayBox();
         }
 
         private void InitPlayBox()
         {
+            this.timer.Close();
             this.MediaPlay.Source = null;
+            this.MediaPlay.Stop();
             this.UserPause.Visibility = Visibility.Collapsed;
             this.UserPlay.Visibility = Visibility.Visible;
             this.SongNameLbl.Content = "请选择要播放的歌曲...";
@@ -180,9 +182,39 @@ namespace Lote.Views.Music
                     PlayState = -1;
                     break;
                 case MusicPlayFuncEnum.SkipNext:
-
+                    Dispatcher.Invoke(() => InitPlayBox());
+                    if (PlayCondition.SelectedIndex != -1 && vm.PlayLists.Count >= 1)
+                    {
+                        if (PlayCondition.SelectedIndex == 0 || PlayCondition.SelectedIndex == 1 || PlayCondition.SelectedIndex == 3)
+                        {
+                            if (PlayList.SelectedIndex + 1 == PlayList.Items.Count)
+                            {
+                                Playing(vm.PlayLists[0]);
+                                PlayList.SelectedIndex = 0;
+                                SetSelect();
+                            }
+                            else
+                            {
+                                Playing(vm.PlayLists[PlayList.SelectedIndex + 1]);
+                                PlayList.SelectedIndex += 1;
+                                SetSelect();
+                            }
+                        }
+                        else if (PlayCondition.SelectedIndex == 2) { PlayingConditions(); }
+                    }
+                    else
+                    {
+                        if (PlayList.Items.Count != 0)
+                        {
+                            PlayCondition.SelectedIndex = 0;
+                            PlayHandleClick(btn, e);
+                        }
+                        else
+                            HandyControl.Controls.MessageBox.Info("木有任何歌曲（；´д｀）ゞ", "提示");
+                    }
                     break;
                 case MusicPlayFuncEnum.SkipPrevious:
+                    Dispatcher.Invoke(() => InitPlayBox());
                     if (PlayCondition.SelectedIndex != -1 && vm.PlayLists.Count >= 1)
                     {
                         if (PlayCondition.SelectedIndex == 0 || PlayCondition.SelectedIndex == 1 || PlayCondition.SelectedIndex == 3)
@@ -191,6 +223,7 @@ namespace Lote.Views.Music
                             {
                                 Playing(vm.PlayLists[PlayList.Items.Count - 1]);
                                 PlayList.SelectedIndex = PlayList.Items.Count - 1;
+                                SetSelect();
                             }
                             else//正常上一曲
                             {
@@ -198,11 +231,13 @@ namespace Lote.Views.Music
                                 {
                                     Playing(vm.PlayLists[PlayList.Items.Count - 1]);
                                     PlayList.SelectedIndex = PlayList.Items.Count - 1;
+                                    SetSelect();
                                 }
                                 else
                                 {
                                     Playing(vm.PlayLists[PlayList.SelectedIndex - 1]);
                                     PlayList.SelectedIndex -= 1;
+                                    SetSelect();
                                 }
                             }
                         }
@@ -224,6 +259,10 @@ namespace Lote.Views.Music
             }
         }
 
+        /// <summary>
+        /// 播放
+        /// </summary>
+        /// <param name="input"></param>
         private void Playing(PlayListDTO input)
         {
             SongNameLbl.Content = input.SongName;
@@ -234,8 +273,12 @@ namespace Lote.Views.Music
             UserPlay.Visibility = Visibility.Collapsed;
             UserPause.Visibility = Visibility.Visible;
             PlayState = 1;
+            timer.Start();
         }
 
+        /// <summary>
+        /// 加载音频的时常
+        /// </summary>
         private void LoadTime()
         {
             Dispatcher.Invoke(() =>
@@ -255,6 +298,9 @@ namespace Lote.Views.Music
             });
         }
 
+        /// <summary>
+        /// 播放条件
+        /// </summary>
         private void PlayingConditions()
         {
             if (PlayList.Items.Count <= 0)
@@ -269,19 +315,21 @@ namespace Lote.Views.Music
                     var PlayDto = vm.PlayLists.FirstOrDefault();
                     Playing(PlayDto);
                     PlayList.SelectedIndex = 0;//定位
+                    SetSelect();
                 }
                 else
                 {
                     Playing(vm.PlayLists[PlayList.SelectedIndex + 1]);
                     PlayList.SelectedIndex += 1;//定位
-                    (PlayList.SelectedItems[PlayList.SelectedIndex] as PlayListDTO).Select = "√";
+                    SetSelect();
                 }
             }
             else if (PlayCondition.SelectedIndex == 1)//单曲循环
             {
-                var index = PlayList.SelectedIndex == -1 ? 0:PlayList.SelectedIndex;
+                var index = PlayList.SelectedIndex == -1 ? 0 : PlayList.SelectedIndex;
                 Playing(vm.PlayLists[index]);
                 PlayList.SelectedIndex = index;
+                SetSelect();
             }
             else if (PlayCondition.SelectedIndex == 2)//随机播放
             {
@@ -289,6 +337,7 @@ namespace Lote.Views.Music
                 {
                     Playing(vm.PlayLists[0]);
                     PlayList.SelectedIndex = 0;//定位
+                    SetSelect();
                 }
                 else
                 {
@@ -301,6 +350,7 @@ namespace Lote.Views.Music
                             Playing(vm.PlayLists[i]);//播放歌曲
                             PlayList.SelectedIndex = i;//定位
                             stc = 1;//条件排除
+                            SetSelect();
                         }
                     }
                 }
@@ -311,7 +361,50 @@ namespace Lote.Views.Music
                 {
                     Playing(vm.PlayLists[PlayList.SelectedIndex + 1]);
                     PlayList.SelectedIndex += 1;
+                    SetSelect();
                 }
+            }
+        }
+
+        /// <summary>
+        /// 音量条离开事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void VolumeSettingMouseLeave(object sender, MouseEventArgs e)
+        {
+            BeginStoryboard((Storyboard)FindResource("Close"));
+            VolumeAnime = 0;
+        }
+
+        /// <summary>
+        /// 音量改变事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void VolumeChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            var slider = (sender as Slider);
+            VolumeShow.Content = (int)slider.Value + "%";
+            MediaPlay.Volume = slider.Value / 100;
+        }
+        private void SetSelect()
+        {
+            for (int index = 0; index < this.PlayList.Items.Count; index++)
+            {
+                var item = (this.PlayList.ItemContainerGenerator.ContainerFromIndex(index) as ListBoxItem);
+
+                if (index == this.PlayList.SelectedIndex)
+                {
+                    item.IsSelected = true;
+                    item.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF9999"));
+                }
+                else
+                {
+                    item.IsSelected = false;
+                    item.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#00FFFFFF"));
+                }
+
             }
         }
     }
