@@ -14,7 +14,9 @@ namespace Lote.Core.Service.DTO
         public string SongName { get; set; }
         public string SongAlbum { get; set; }
         public string SongArtist { get; set; }
+        public string SongId { get; set; }
         public long Span { get; set; } = DateTime.Now.Ticks;
+        public int Platform { get; set; }
     }
 
     public class PagePlayListDTO {

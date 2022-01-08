@@ -30,9 +30,11 @@ namespace Lote.Views.Music
         private MusicViewModel vm;
         public System.Timers.Timer timer;
         private int PlayState = -1;
+        private Dictionary<string, PlayListDTO> CurrentPlay = null;
         public MusicView()
         {
             InitializeComponent();
+            CurrentPlay = new Dictionary<string, PlayListDTO>();
             timer = new System.Timers.Timer
             {
                 AutoReset = true,
@@ -265,6 +267,8 @@ namespace Lote.Views.Music
         /// <param name="input"></param>
         private void Playing(PlayListDTO input)
         {
+            CurrentPlay.Clear();
+            CurrentPlay.Add(nameof(PlayListDTO), input);
             SongNameLbl.Content = input.SongName;
             MediaPlay.Close();
             MediaPlay.Source = new Uri(input.CacheAddress, UriKind.Absolute);
@@ -404,6 +408,21 @@ namespace Lote.Views.Music
                     item.IsSelected = false;
                     item.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#00FFFFFF"));
                 }
+
+            }
+        }
+
+        int LyricState = 0;
+        private void SongLyricClick(object sender, MouseButtonEventArgs e)
+        {
+
+            if (this.MediaPlay.Source != null && LyricState == 0)
+            {
+                MusicLyricResult result = this.vm.LoadLyric(CurrentPlay.Values.FirstOrDefault());
+                LyricState = 1;
+            }
+            if (this.MediaPlay.Source == null || LyricState == 1)
+            {
 
             }
         }

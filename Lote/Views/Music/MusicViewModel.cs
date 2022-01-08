@@ -221,7 +221,9 @@ namespace Lote.Views.Music
                 SongAlbum = input.SongAlbumName,
                 SongName = input.SongName,
                 SongArtist = SongArtist,
+                SongId = input.SongId,
                 CacheAddress = CacheAddress,
+                Platform = (int)this.Platform
             });
             Init();
         }
@@ -229,6 +231,25 @@ namespace Lote.Views.Music
         {
             this.MusciService.RemovePlayList(args);
             Init();
+        }
+        public MusicLyricResult LoadLyric(PlayListDTO args) 
+        {
+            var SongLyric = MusicFactory.Music(opt =>
+            {
+                opt.RequestParam = new MusicRequestInput
+                {
+                    
+                    MusicPlatformType = (MusicPlatformEnum)args.Platform,
+                    Proxy=this.Proxy,
+                    MusicType = MusicTypeEnum.Lyric,
+                    LyricSearch = new MusicLyricSearch
+                    {
+                        Dynamic = args.SongId
+                    }
+                };
+            }).Runs();
+
+           return SongLyric.SongLyricResult;
         }
         #endregion
 

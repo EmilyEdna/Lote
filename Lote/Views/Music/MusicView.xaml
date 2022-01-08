@@ -450,11 +450,11 @@
                 </ListBoxItem>
             </ListBox>
             <ListBox Style="{StaticResource MaterialDesignToolToggleListBox}"
-                     Width="50" 
+                     Width="100" 
                      Background="{Binding Fill, ElementName=播放器背景}" 
                      HorizontalContentAlignment="Center"  
                      Height="34" 
-                     Canvas.Left="850" 
+                     Canvas.Left="825" 
                      Canvas.Top="60">
                 <ListBoxItem  ToolTip="音量调节" 
                              Width="50" 
@@ -463,6 +463,15 @@
                              HorizontalContentAlignment="Center" 
                              VerticalContentAlignment="Center">
                     <Design:PackIcon  Kind="VolumeHigh" Height="25" Padding="0" Width="25" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"  />
+                </ListBoxItem>
+                <ListBoxItem ToolTip="桌面歌词"
+                              Width="50" 
+                              Content="词"
+                              FontSize="18px"
+                              MouseUp="SongLyricClick"
+                              Background="Transparent"  
+                              HorizontalContentAlignment="Center" 
+                              VerticalContentAlignment="Center">
                 </ListBoxItem>
             </ListBox>
             <Label Content="请选择要播放的歌曲..." 

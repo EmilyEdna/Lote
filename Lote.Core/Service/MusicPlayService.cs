@@ -29,6 +29,7 @@ namespace Lote.Core.Service
             LiteBase().Insertable(play).CallEntityMethod(t => t.Create()).ExecuteCommand();
         }
 
+
         public void RemovePlayList(Guid Id)
         {
             LiteBase().Deleteable<PlayList>(t => t.Id == Id).ExecuteCommand();

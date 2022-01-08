@@ -24,5 +24,7 @@ namespace Lote.Core.Model
         public string SongArtist { get; set; }
         [SugarColumn(ColumnDataType = "bigint", IsNullable = false)]
         public long Span { get; set; }
+        [SugarColumn(ColumnDataType = "int", IsNullable = false)]
+        public int Platform { get; set; }
     }
 }
