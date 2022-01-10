@@ -40,7 +40,9 @@ namespace Lote.Views
                     {
                         if (Contents.Content is MusicView)
                         {
-                            (Contents.Content as MusicView).timer.Close();
+                            var view = (Contents.Content as MusicView);
+                            view.timer.Close();
+                            view.lyrictimer.Close();
                         }
                     }
                     this.Close();

@@ -253,6 +253,10 @@ namespace Lote.Views.Music
         }
         #endregion
 
+        public T GetContainer<T>()
+        {
+           return container.Get<T>();
+        }
         private void Search(int type = 1)
         {
             ShowType = type;

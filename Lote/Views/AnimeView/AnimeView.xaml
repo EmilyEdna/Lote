@@ -128,8 +128,7 @@
                     <WrapPanel Orientation="Horizontal" Margin="8">
                         <StackPanel>
                             <Border BorderThickness="1" BorderBrush="DeepPink">
-                                <Image Source="{C:Binding AnimeCover}"   hc:Poptip.Content="{Binding AnimeName}"
-                                    hc:Poptip.Placement="Bottom"  Stretch="UniformToFill" Width="160"/>
+                                <Image Source="{C:Binding AnimeCover}"  Stretch="UniformToFill" Width="160"/>
                             </Border>
                             <Button Content="{Binding AnimeName,Converter={StaticResource ContentConverter}}" 
                                     Style="{StaticResource ButtonDashedInfo.Small}"

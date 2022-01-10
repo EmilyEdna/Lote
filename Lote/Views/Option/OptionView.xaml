@@ -127,7 +127,7 @@
             </StackPanel>
         </SelectiveScrollingGrid>
         <WrapPanel HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="1">
-            <Button Style="{StaticResource ButtonDashedWarning}" 
+            <Button Style="{StaticResource ButtonDashedDanger}" 
                     BorderThickness="0"
                     Content="Ok" 
                     Margin="0,0,10,0"

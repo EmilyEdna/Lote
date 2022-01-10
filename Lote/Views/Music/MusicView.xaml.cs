@@ -1,4 +1,6 @@
-﻿using Lote.Core.Common;
+﻿using Lote.CommonWindow;
+using Lote.CommonWindow.ViewMdeol;
+using Lote.Core.Common;
 using Lote.Core.Service.DTO;
 using Lote.Override;
 using Music.SDK.ViewModel.Response;
@@ -29,12 +31,15 @@ namespace Lote.Views.Music
     {
         private MusicViewModel vm;
         public System.Timers.Timer timer;
+        public System.Timers.Timer lyrictimer;
         private int PlayState = -1;
         private Dictionary<string, PlayListDTO> CurrentPlay = null;
+        private Dictionary<string, MusicLyricWindows> windows = null;
         public MusicView()
         {
             InitializeComponent();
             CurrentPlay = new Dictionary<string, PlayListDTO>();
+            windows = new Dictionary<string, MusicLyricWindows>();
             timer = new System.Timers.Timer
             {
                 AutoReset = true,
@@ -60,6 +65,13 @@ namespace Lote.Views.Music
 
                     }
                 });
+            };
+
+            lyrictimer = new System.Timers.Timer
+            {
+                AutoReset = true,
+                Interval = 100,
+                Enabled = true
             };
             InitPlayBox();
         }
@@ -412,18 +424,52 @@ namespace Lote.Views.Music
             }
         }
 
-        int LyricState = 0;
+        private int LyricState = 0;
         private void SongLyricClick(object sender, MouseButtonEventArgs e)
         {
-
             if (this.MediaPlay.Source != null && LyricState == 0)
             {
                 MusicLyricResult result = this.vm.LoadLyric(CurrentPlay.Values.FirstOrDefault());
+                if (result == null)
+                    return;
                 LyricState = 1;
+                MusicLyricWindows win = new MusicLyricWindows();
+                win.DataContext = vm.GetContainer<MusicLyricWindowsViewModel>();
+
+                lyrictimer.Elapsed += (s, e) =>
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        var Seconds = this.MediaPlay.Position.ToString().Split(".").FirstOrDefault();
+                        foreach (var item in result.Lyrics)
+                        {
+                            var Target = "00:" + item.Time.Split(".").FirstOrDefault();
+                            if (Target == Seconds)
+                            {
+                                (win.DataContext as MusicLyricWindowsViewModel).Lyric = item.Lyric;
+                            }
+                        }
+                    });
+                };
+
+                win.WindowStartupLocation = WindowStartupLocation.Manual;
+                win.Top = (SystemParameters.PrimaryScreenHeight / 10) * 7.5;
+                win.Left = (SystemParameters.PrimaryScreenWidth / 10) * 1.9;
+                win.Topmost = true;
+                win.Show();
+                windows.Add(nameof(MusicLyricWindows), win);
+                lyrictimer.Start();
+                return;
             }
             if (this.MediaPlay.Source == null || LyricState == 1)
             {
-
+                var win = windows.Values.FirstOrDefault();
+                if (win == null)
+                    return;
+                (win.DataContext as MusicLyricWindowsViewModel).Lyric = String.Empty;
+                win.Close();
+                lyrictimer.Close();
+                LyricState = 0;
             }
         }
     }

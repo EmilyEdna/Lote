@@ -23,5 +23,13 @@ namespace Lote.CommonWindow
         {
             InitializeComponent();
         }
+
+        private void LyricMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                DragMove();
+            }
+        }
     }
 }

@@ -6,18 +6,23 @@
         xmlns:local="clr-namespace:Lote.CommonWindow"
         mc:Ignorable="d"
         Height="130" 
-        Width="800"
+        Width="1200"
+        xmlns:viewModels="clr-namespace:Lote.CommonWindow.ViewMdeol"
+        d:DataContext="{d:DesignInstance Type=viewModels:MusicLyricWindowsViewModel}"
         AllowsTransparency="True"
         WindowStyle="None"
         SnapsToDevicePixels="True"
         Background="Transparent"
+        MouseMove="LyricMove"
         ShowInTaskbar="False" 
+        FontFamily="/Lote;component/Resource/Assets/#HappyZcool-2016"
+        WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize">
     <Grid Margin="10" SnapsToDevicePixels="True" >
         <Rectangle HorizontalAlignment="Left" 
                    Height="105" 
                    VerticalAlignment="Top" 
-                   Width="780" 
+                   Width="1180" 
                    RadiusX="10" 
                    RadiusY="10" 
                    Opacity="0.7">
@@ -25,9 +30,17 @@
                 <BlurEffect Radius="7"/>
             </Rectangle.Effect>
         </Rectangle>
-        <Label x:Name="主" Content="123123" HorizontalAlignment="Left" Height="50" VerticalAlignment="Center" Width="760" VerticalContentAlignment="Center" FontSize="30" Foreground="#FFFF3838" Margin="10,10,0,0">
+        <Label Content="{Binding Lyric}" 
+               HorizontalAlignment="Left" 
+               Height="70" 
+               VerticalAlignment="Center" 
+               Width="1160" 
+               VerticalContentAlignment="Center" 
+               FontSize="40" 
+               Foreground="#FFED556A" 
+               Margin="10,0,0,0">
             <Label.Effect>
-                <DropShadowEffect BlurRadius="10" Opacity="0.5"/>
+                <DropShadowEffect BlurRadius="5" Opacity="0.6" Color="#FFFF9999"/>
             </Label.Effect>
         </Label>
     </Grid>
