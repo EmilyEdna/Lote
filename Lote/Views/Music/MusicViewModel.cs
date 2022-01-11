@@ -232,30 +232,49 @@ namespace Lote.Views.Music
             this.MusciService.RemovePlayList(args);
             Init();
         }
-        public MusicLyricResult LoadLyric(PlayListDTO args) 
+        public MusicLyricResult LoadLyric(PlayListDTO args)
         {
-            var SongLyric = MusicFactory.Music(opt =>
+            var data = this.MusciService.GetLyrics(args.SongId, args.Platform);
+            if (data != null)
             {
-                opt.RequestParam = new MusicRequestInput
+                return new MusicLyricResult
                 {
-                    
-                    MusicPlatformType = (MusicPlatformEnum)args.Platform,
-                    Proxy=this.Proxy,
-                    MusicType = MusicTypeEnum.Lyric,
-                    LyricSearch = new MusicLyricSearch
-                    {
-                        Dynamic = args.SongId
-                    }
+                    Lyrics = data.ToMapest<List<MusicLyricItemResult>>()
                 };
-            }).Runs();
+            }
+            else
+            {
+                var SongLyric = MusicFactory.Music(opt =>
+                {
+                    opt.RequestParam = new MusicRequestInput
+                    {
 
-           return SongLyric.SongLyricResult;
+                        MusicPlatformType = (MusicPlatformEnum)args.Platform,
+                        Proxy = this.Proxy,
+                        MusicType = MusicTypeEnum.Lyric,
+                        LyricSearch = new MusicLyricSearch
+                        {
+                            Dynamic = args.SongId
+                        }
+                    };
+                }).Runs();
+                if (SongLyric.SongLyricResult.Lyrics != null)
+                {
+                    var lyric = string.Join("_", SongLyric.SongLyricResult.Lyrics.Select(t => $"{t.Time}|{t.Lyric}"));
+                    this.MusciService.AddLyric(args.SongId, args.Platform, lyric);
+                }
+                return SongLyric.SongLyricResult;
+            }
+        }
+        public string GetPlayRoute(Guid Id)
+        {
+            return this.MusciService.GetPlayRoute(Id);
         }
         #endregion
 
         public T GetContainer<T>()
         {
-           return container.Get<T>();
+            return container.Get<T>();
         }
         private void Search(int type = 1)
         {

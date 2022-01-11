@@ -21,6 +21,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using XExten.Advance.LinqFramework;
+using XExten.Advance.StaticFramework;
 
 namespace Lote.Views.Music
 {
@@ -81,10 +82,12 @@ namespace Lote.Views.Music
             this.timer.Close();
             this.MediaPlay.Source = null;
             this.MediaPlay.Stop();
+            this.MediaPlay.Close();
             this.UserPause.Visibility = Visibility.Collapsed;
             this.UserPlay.Visibility = Visibility.Visible;
             this.SongNameLbl.Content = "请选择要播放的歌曲...";
             this.SongTimeLbl.Content = "00:00:00";
+            this.ProgressBars.Value = 0;
             this.ProgressBars.IsEnabled = false;
         }
 
@@ -183,6 +186,7 @@ namespace Lote.Views.Music
                         this.UserPause.Visibility = Visibility.Visible;
                         this.UserPlay.Visibility = Visibility.Collapsed;
                         this.timer.Start();
+                        this.lyrictimer.Start();
                         PlayState = 1;
                     }
                     else
@@ -193,6 +197,7 @@ namespace Lote.Views.Music
                     this.UserPause.Visibility = Visibility.Collapsed;
                     this.UserPlay.Visibility = Visibility.Visible;
                     this.timer.Stop();
+                    this.lyrictimer.Stop();
                     PlayState = -1;
                     break;
                 case MusicPlayFuncEnum.SkipNext:
@@ -226,6 +231,8 @@ namespace Lote.Views.Music
                         else
                             HandyControl.Controls.MessageBox.Info("木有任何歌曲（；´д｀）ゞ", "提示");
                     }
+                    LyricState = 0;
+                    SongLyricClick(null, null);
                     break;
                 case MusicPlayFuncEnum.SkipPrevious:
                     Dispatcher.Invoke(() => InitPlayBox());
@@ -267,6 +274,8 @@ namespace Lote.Views.Music
                         else
                             HandyControl.Controls.MessageBox.Info("木有任何歌曲（；´д｀）ゞ", "提示");
                     }
+                    LyricState = 0;
+                    SongLyricClick(null, null);
                     break;
                 default:
                     break;
@@ -427,10 +436,11 @@ namespace Lote.Views.Music
         private int LyricState = 0;
         private void SongLyricClick(object sender, MouseButtonEventArgs e)
         {
+
             if (this.MediaPlay.Source != null && LyricState == 0)
             {
                 MusicLyricResult result = this.vm.LoadLyric(CurrentPlay.Values.FirstOrDefault());
-                if (result == null)
+                if (result == null && result.Lyrics == null)
                     return;
                 LyricState = 1;
                 MusicLyricWindows win = new MusicLyricWindows();
@@ -441,14 +451,18 @@ namespace Lote.Views.Music
                     Dispatcher.Invoke(() =>
                     {
                         var Seconds = this.MediaPlay.Position.ToString().Split(".").FirstOrDefault();
-                        foreach (var item in result.Lyrics)
+                        if (result.Lyrics != null)
                         {
-                            var Target = "00:" + item.Time.Split(".").FirstOrDefault();
-                            if (Target == Seconds)
+                            foreach (var item in result.Lyrics)
                             {
-                                (win.DataContext as MusicLyricWindowsViewModel).Lyric = item.Lyric;
+                                var Target = "00:" + item.Time.Split(".").FirstOrDefault();
+                                if (Target == Seconds)
+                                {
+                                    (win.DataContext as MusicLyricWindowsViewModel).Lyric = item.Lyric;
+                                }
                             }
                         }
+
                     });
                 };
 
@@ -457,6 +471,11 @@ namespace Lote.Views.Music
                 win.Left = (SystemParameters.PrimaryScreenWidth / 10) * 1.9;
                 win.Topmost = true;
                 win.Show();
+                if (windows.Count != 0)
+                {
+                    windows.Values.FirstOrDefault().Close();
+                    windows.Clear();
+                }
                 windows.Add(nameof(MusicLyricWindows), win);
                 lyrictimer.Start();
                 return;
@@ -471,6 +490,21 @@ namespace Lote.Views.Music
                 lyrictimer.Close();
                 LyricState = 0;
             }
+        }
+
+        private void RemoveClick(object sender, RoutedEventArgs e)
+        {
+            var mitem = (sender as MenuItem);
+            var Route = vm.GetPlayRoute(Guid.Parse(mitem.CommandParameter.ToString()));
+            if (this.MediaPlay.Source != null)
+            {
+                if (this.MediaPlay.Source.LocalPath.Equals(Route))
+                {
+                    InitPlayBox();
+                    SyncStatic.DeleteFile(Route);
+                }
+            }
+
         }
     }
 }

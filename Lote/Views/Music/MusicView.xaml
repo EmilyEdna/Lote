@@ -158,7 +158,7 @@
                                 <StackPanel.ContextMenu>
                                     <ContextMenu Style="{StaticResource LoteContextMenu}" Background="#FFED556A">
                                         <MenuItem Header="搜索" Command="{S:Action SearchMusic}" CommandParameter="{Binding SongName}"/>
-                                        <MenuItem Header="删除" Command="{S:Action Remove}" CommandParameter="{Binding Id}"/>
+                                        <MenuItem Header="删除" Command="{S:Action Remove}" CommandParameter="{Binding Id}" Click="RemoveClick"/>
                                     </ContextMenu>
                                 </StackPanel.ContextMenu>
                                 <TextBlock Text="{Binding SongName}" Foreground="Black" FontSize="14"/>
