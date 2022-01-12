@@ -19,9 +19,10 @@
         <KeyBinding Key="N" Command="{S:Action Redirect}" CommandParameter="1" Modifiers="Ctrl"/>
         <KeyBinding Key="L" Command="{S:Action Redirect}" CommandParameter="2" Modifiers="Ctrl"/>
         <KeyBinding Key="A" Command="{S:Action Redirect}" CommandParameter="3" Modifiers="Ctrl"/>
-        <KeyBinding Key="W" Command="{S:Action Redirect}" CommandParameter="4" Modifiers="Ctrl"/>
-        <KeyBinding Key="M" Command="{S:Action Redirect}" CommandParameter="5" Modifiers="Ctrl"/>
-        <KeyBinding Key="S" Command="{S:Action Redirect}" CommandParameter="6" Modifiers="Ctrl"/>
+        <KeyBinding Key="M" Command="{S:Action Redirect}" CommandParameter="4" Modifiers="Ctrl"/>
+        <KeyBinding Key="W" Command="{S:Action Redirect}" CommandParameter="5" Modifiers="Ctrl"/>
+        <KeyBinding Key="Y" Command="{S:Action Redirect}" CommandParameter="6" Modifiers="Ctrl"/>
+        <KeyBinding Key="S" Command="{S:Action Redirect}" CommandParameter="7" Modifiers="Ctrl"/>
     </L:LoteWindow.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
@@ -131,27 +132,34 @@
                               Style="{DynamicResource LeftBtn}"  
                               Command="{S:Action Redirect}"
                               CommandParameter="3"/>
+                        <L:LoteButton Content="漫画(Ctrl+M)" 
+                              Source="/Resource/Assets/btn5.jpg" 
+                              Width="240"
+                              Height="40"
+                              Style="{DynamicResource LeftBtn}"  
+                              Command="{S:Action Redirect}"
+                              CommandParameter="4"/>
                         <L:LoteButton Content="壁纸(Ctrl+W)" 
                               Source="/Resource/Assets/btn4.jpg" 
                               Width="240"
                               Height="40"
                               Style="{DynamicResource LeftBtn}"  
                               Command="{S:Action Redirect}"
-                              CommandParameter="4"/>
-                        <L:LoteButton Content="音乐(Ctrl+M)" 
+                              CommandParameter="5"/>
+                        <L:LoteButton Content="音乐(Ctrl+Y)" 
                               Source="/Resource/Assets/btn5.jpg" 
                               Width="240"
                               Height="40"
                               Style="{DynamicResource LeftBtn}"  
                               Command="{S:Action Redirect}"
-                              CommandParameter="5"/>
+                              CommandParameter="6"/>
                         <L:LoteButton Content="设置(Ctrl+S)" 
                               Source="/Resource/Assets/btn6.jpg" 
                               Width="240"
                               Height="40"
                               Style="{DynamicResource LeftBtn}"  
                               Command="{S:Action Redirect}"
-                              CommandParameter="6"/>
+                              CommandParameter="7"/>
                     </WrapPanel>
                     <Border Grid.Row="1" Height="300">
                         <Border.Background>

@@ -35,15 +35,15 @@ namespace Lote.ViewModels
                 NavigateTo(container.Get<LightNovelViewModel>());
             if (type == 3)
                 NavigateTo(container.Get<AnimeViewModel>());
-            if (type == 4)
+            if (type == 5)
             {
                 var res = HandyControl.Controls.MessageBox.Show("未满18周岁请勿点击，部分内容可能引起不适", "警告", MessageBoxButton.YesNo, MessageBoxImage.Warning);
                 if (res == MessageBoxResult.Yes)
                     NavigateTo(container.Get<WallpaperViewModel>());
             }
-            if (type == 5)
-                NavigateTo(container.Get<MusicViewModel>());
             if (type == 6)
+                NavigateTo(container.Get<MusicViewModel>());
+            if (type == 7)
                 NavigateTo(container.Get<OptionViewModel>());
         }
     }
