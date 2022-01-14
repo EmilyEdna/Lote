@@ -1,4 +1,5 @@
-﻿using Lote.Core.Service;
+﻿using HandyControl.Controls;
+using Lote.Core.Service;
 using Lote.Core.Service.DTO;
 using Manga.SDK;
 using Manga.SDK.ViewModel;
@@ -68,6 +69,7 @@ namespace Lote.Views.MangaViews
 
         #region Field
         public int Type { get; set; }
+        private string Keyword = string.Empty;
         #endregion
 
         #region Method
@@ -75,7 +77,8 @@ namespace Lote.Views.MangaViews
         {
             this.Type = 1;
             this.PageIndex = 1;
-            Handle(args);
+            Keyword = args;
+            Handle();
             Chapters = new ObservableCollection<MangaChapterResult>();
         }
 
@@ -83,12 +86,15 @@ namespace Lote.Views.MangaViews
         {
             this.Type = 2;
             this.PageIndex = 1;
-            Handle(args);
+            Keyword = args;
+            Handle();
             Chapters = new ObservableCollection<MangaChapterResult>();
         }
 
         public void GetManga(MangaRecommendResult input)
         {
+            if (input == null)
+                return;
             Task.Run(() =>
             {
                 //详情
@@ -110,11 +116,24 @@ namespace Lote.Views.MangaViews
         }
 
         public void GetContent(MangaChapterResult input)
-        { 
-        
+        {
+            if (Chapters.Count != 0)
+            {
+                Chapters.Where(t => t.TagKey == input.TagKey).ToList();
+            }
         }
 
-        public void Handle(string args)
+        public void LoadMore(bool types)
+        {
+            if (Type == 0 || Keyword.IsNullOrEmpty())
+                return;
+            int NextPage = types ? PageIndex += 1 : PageIndex -= 1;
+            if (NextPage < 0) return;
+            Handle();
+        }
+        #endregion
+
+        protected void Handle()
         {
             if (Type == 1)
             {
@@ -122,19 +141,22 @@ namespace Lote.Views.MangaViews
                 {
                     //检索
                     var MangaSearch = MangaFactory.Manga(opt =>
-                     {
-                         opt.RequestParam = new MangaRequestInput
-                         {
-                             MangaType = MangaEnum.Search,
-                             Proxy = new MangaProxy(),
-                             Search = new MangaSearch
-                             {
-                                 KeyWord = args,
-                                 Page = PageIndex
-                             }
-                         };
-                     }).Runs();
-                    MangaRecommend = new ObservableCollection<MangaRecommendResult>(MangaSearch.SearchResults.ToMapest<List<MangaRecommendResult>>());
+                    {
+                        opt.RequestParam = new MangaRequestInput
+                        {
+                            MangaType = MangaEnum.Search,
+                            Proxy = new MangaProxy(),
+                            Search = new MangaSearch
+                            {
+                                KeyWord = Keyword,
+                                Page = PageIndex
+                            }
+                        };
+                    }).Runs();
+                    if (MangaSearch.SearchResults.Count == 0)
+                        MessageBox.Info("数据已到底~`(*>﹏<*)′", "提示");
+                    else
+                        MangaRecommend = new ObservableCollection<MangaRecommendResult>(MangaSearch.SearchResults.ToMapest<List<MangaRecommendResult>>());
                 });
             }
             else
@@ -150,22 +172,22 @@ namespace Lote.Views.MangaViews
                             Proxy = new MangaProxy(),
                             Category = new MangaCategory
                             {
-                                Address = args,
+                                Address = Keyword,
                                 Page = PageIndex
                             }
                         };
                     }).Runs();
-                    MangaRecommend = new ObservableCollection<MangaRecommendResult>(MangaCate.SearchResults.ToMapest<List<MangaRecommendResult>>());
+                    if (MangaCate.SearchResults.Count == 0)
+                        MessageBox.Info("数据已到底~`(*>﹏<*)′", "提示");
+                    else
+                        MangaRecommend = new ObservableCollection<MangaRecommendResult>(MangaCate.SearchResults.ToMapest<List<MangaRecommendResult>>());
                 });
             }
         }
-        #endregion
-
         protected int CacheTime()
         {
             return root.CacheSpan.IsNullOrEmpty() ? 60 : Convert.ToInt32(root.CacheSpan);
         }
-
         protected override void OnViewLoaded()
         {
             PageIndex = 1;

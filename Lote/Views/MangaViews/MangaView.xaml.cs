@@ -24,5 +24,24 @@ namespace Lote.Views.MangaViews
         {
             InitializeComponent();
         }
+
+        private void MangaChanged(object sender, ScrollChangedEventArgs e)
+        {
+            var vm = (this.DataContext as MangaViewModel);
+            if (vm.PageIndex == 1 && e.VerticalOffset == 0)
+                return;
+            if (vm.PageIndex > 1 && e.VerticalChange >= -48 && e.VerticalOffset == 0)
+            {
+                Dispatcher.Invoke(() => vm.LoadMore(false));
+                var source = (e.OriginalSource as HandyControl.Controls.ScrollViewer);
+                source.ScrollToHome();
+            }
+            if (e.VerticalOffset >= 106)
+            {
+                Dispatcher.Invoke(() => vm.LoadMore(true));
+                var source = (e.OriginalSource as HandyControl.Controls.ScrollViewer);
+                source.ScrollToHome();
+            }
+        }
     }
 }
