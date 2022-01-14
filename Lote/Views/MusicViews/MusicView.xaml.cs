@@ -34,8 +34,8 @@ namespace Lote.Views.MusicViews
         public System.Timers.Timer timer;
         public System.Timers.Timer lyrictimer;
         private int PlayState = -1;
-        private Dictionary<string, PlayListDTO> CurrentPlay = null;
-        private Dictionary<string, MusicLyricWindows> windows = null;
+        private IDictionary<string, PlayListDTO> CurrentPlay = null;
+        private IDictionary<string, MusicLyricWindows> windows = null;
         public MusicView()
         {
             InitializeComponent();

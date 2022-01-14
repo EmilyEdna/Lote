@@ -1,5 +1,4 @@
-﻿using Lote.CommonWindow.ViewMdeol;
-using Lote.Core.Common;
+﻿using Lote.Core.Common;
 using Lote.Override;
 using System;
 using System.Collections.Generic;
@@ -18,19 +17,16 @@ using System.Windows.Shapes;
 namespace Lote.CommonWindow
 {
     /// <summary>
-    /// NovelContentWindows.xaml 的交互逻辑
+    /// MangaReaderWindows.xaml 的交互逻辑
     /// </summary>
-    public partial class NovelContentWindows : LoteWindow
+    public partial class MangaReaderWindows : LoteWindow
     {
-        public NovelContentWindows()
+        public MangaReaderWindows()
         {
             InitializeComponent();
         }
         public Color color;
-        private void WindowColor(object sender, RoutedEventArgs e)
-        {
-            this.Word.Foreground = (sender as Button).Background;
-        }
+
         private void SysClick(object sender, RoutedEventArgs e)
         {
             var btn = (sender as Button);
@@ -111,6 +107,12 @@ namespace Lote.CommonWindow
             {
                 this.Source = new BitmapImage(new Uri("/Resource/Assets/Backgroud4.jpg", UriKind.Relative));
             }
+        }
+
+        private void MangaChanged(object sender, ScrollChangedEventArgs e)
+        {
+            var sc = (sender as ScrollViewer);
+            sc.ScrollToVerticalOffset(MangaContent.ActualHeight);
         }
     }
 }

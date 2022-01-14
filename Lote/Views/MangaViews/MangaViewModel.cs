@@ -1,4 +1,6 @@
 ﻿using HandyControl.Controls;
+using Lote.CommonWindow;
+using Lote.CommonWindow.ViewMdeol;
 using Lote.Core.Service;
 using Lote.Core.Service.DTO;
 using Manga.SDK;
@@ -23,7 +25,7 @@ namespace Lote.Views.MangaViews
         private readonly IContainer container;
         private readonly OptionRootDTO root;
         private readonly MangaProxy Proxy;
-
+        private readonly IDictionary<string, MangaReaderWindows> data;
         public MangaViewModel(IContainer container)
         {
             this.container = container;
@@ -35,6 +37,7 @@ namespace Lote.Views.MangaViews
                 Port = Convert.ToInt32(root.ProxyPort.IsNullOrEmpty() ? "-1" : root.ProxyPort),
                 UserName = root.ProxyAccount.IsNullOrEmpty() ? String.Empty : root.ProxyAccount
             };
+            this.data = new Dictionary<string, MangaReaderWindows>();
         }
 
         #region Property
@@ -119,7 +122,33 @@ namespace Lote.Views.MangaViews
         {
             if (Chapters.Count != 0)
             {
-                Chapters.Where(t => t.TagKey == input.TagKey).ToList();
+                if (Chapters.FirstOrDefault(t => t.TagKey == input.TagKey) != null)
+                {
+                    MangaReaderWindowsViewModel vm = container.Get<MangaReaderWindowsViewModel>();
+                    vm.Chapters = Chapters;
+                    vm.Index= Chapters.IndexOf(input);
+                    vm.InitCurrent();
+
+                    MangaReaderWindows win = null;
+                    if (data.ContainsKey(nameof(MangaReaderWindows)))
+                    {
+                        win = data[nameof(MangaReaderWindows)];
+                        win.Close();
+                        data.Clear();
+                        win = new MangaReaderWindows();
+                        data[nameof(MangaReaderWindows)] = win;
+                        win.DataContext = vm;
+                        win.Show();
+                    }
+                    else
+                    {
+                        win = new MangaReaderWindows();
+                        data[nameof(MangaReaderWindows)] = win;
+                        win.DataContext = vm;
+                        win.Show();
+                    }
+                }
+
             }
         }
 

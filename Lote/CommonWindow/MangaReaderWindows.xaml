@@ -1,0 +1,116 @@
+﻿<L:LoteWindow x:Class="Lote.CommonWindow.MangaReaderWindows"
+        x:Name="window"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Lote.CommonWindow"
+        xmlns:C="clr-namespace:CalcBinding;assembly=CalcBinding"
+        xmlns:S="https://github.com/canton7/Stylet"
+        xmlns:L="clr-namespace:Lote.Override"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:Behavior="clr-namespace:Lote.Common"
+        xmlns:Design="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        xmlns:viewModels="clr-namespace:Lote.CommonWindow.ViewMdeol"
+        d:DataContext="{d:DesignInstance Type=viewModels:MangaReaderWindowsViewModel}"
+        xmlns:hc="https://handyorg.github.io/handycontrol"
+        WindowStartupLocation="CenterScreen"
+        Height="800" 
+        Width="1200" 
+        Style="{StaticResource Child}">
+    <Grid HorizontalAlignment="Center" Width="{Binding Width, ElementName=window}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="72"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Design:ColorZone x:Name="Zone" Background="#FFFF9999" 
+                      Mode="PrimaryMid"
+                      Padding="16" 
+                      MouseMove="ColorZoneMouseMove" 
+                      Style="{DynamicResource ColorZoneStyle2}" 
+                      Width="{Binding Width,ElementName=window}">
+            <Grid Width="{C:Binding (Width-100),ElementName=window}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.2*"/>
+                    <ColumnDefinition Width="1.8*"/>
+                    <ColumnDefinition Width="0.2*"/>
+                    <ColumnDefinition Width="0.2*"/>
+                </Grid.ColumnDefinitions>
+                <ComboBox SelectedIndex="1" 
+                          Margin="8 0 0 0"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          BorderThickness="0"
+                          Design:ColorZoneAssist.Mode="Standard"
+                          Design:TextFieldAssist.UnderlineBrush="{DynamicResource MaterialDesignPaper}"
+                          BorderBrush="{DynamicResource MaterialDesignPaper}"  
+                          FontFamily="{Binding FontFamily,ElementName=window}"
+                          Background="Transparent" 
+                          SelectionChanged="ThemeSelect">
+                    <L:LoteComboBoxItem Content="宝石绿" SeleteType="0"/>
+                    <L:LoteComboBoxItem Content="桃花粉" SeleteType="1"/>
+                    <L:LoteComboBoxItem Content="旬子蓝" SeleteType="2"/>
+                    <L:LoteComboBoxItem Content="山茶红" SeleteType="3"/>
+                    <L:LoteComboBoxItem Content="墨鱼黑" SeleteType="4"/>
+                </ComboBox>
+                <ComboBox SelectedIndex="0" 
+                          Margin="8 0 0 0"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          BorderThickness="0"
+                          Grid.Column="2"
+                          Design:ColorZoneAssist.Mode="Standard"
+                          Design:TextFieldAssist.UnderlineBrush="{DynamicResource MaterialDesignPaper}"
+                          BorderBrush="{DynamicResource MaterialDesignPaper}"  
+                          FontFamily="{Binding FontFamily,ElementName=window}"
+                          Background="Transparent" 
+                          SelectionChanged="BackgroudSelect">
+                    <L:LoteComboBoxItem Content="背景1" SeleteType="0"/>
+                    <L:LoteComboBoxItem Content="背景2" SeleteType="1"/>
+                    <L:LoteComboBoxItem Content="背景3" SeleteType="2"/>
+                    <L:LoteComboBoxItem Content="背景4" SeleteType="3"/>
+                </ComboBox>
+                <StackPanel Orientation="Horizontal" Grid.Column="3" HorizontalAlignment="Right">
+                    <Button  Style="{DynamicResource MaterialDesignFloatingActionMiniButton}"
+                         Design:ShadowAssist.ShadowDepth="Depth2" 
+                         FontSize="20" 
+                         Click="SysClick"
+                         CommandParameter="0"
+                         Background="{Binding Background, ElementName=Zone}" 
+                         BorderBrush="{x:Null}">
+                        <Design:PackIcon Kind="ArrowCollapse"  Width="30" Height="40"/>
+                    </Button>
+                    <Button  Style="{DynamicResource MaterialDesignFloatingActionMiniButton}"
+                         Design:ShadowAssist.ShadowDepth="Depth2" 
+                         FontSize="22" 
+                         Margin="10,0,0,0" 
+                         Click="SysClick"
+                         CommandParameter="2"
+                         Background="{Binding Background, ElementName=Zone}" 
+                         BorderBrush="{x:Null}" >
+                        <Design:PackIcon Kind="PowerStandby" Height="30" Width="30"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Design:ColorZone>
+        <ListBox ItemsSource="{Binding ImageURL}"
+                 Grid.Row="1"
+                 x:Name="MangaContent"
+                 ScrollViewer.ScrollChanged="MangaChanged"
+                 BorderThickness="0"
+                 Style="{StaticResource StackPanelVerticalListBox}"
+                 Background="Transparent"
+                 BorderBrush="Transparent">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="0,0,0,10">
+                        <Border BorderThickness="1" BorderBrush="DeepPink" Width="{Binding Width, ElementName=window}">
+                            <Image Source="{Binding .}" Stretch="Uniform"/>
+                        </Border>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</L:LoteWindow>
