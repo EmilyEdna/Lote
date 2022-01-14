@@ -31,6 +31,7 @@
 		<None Remove="Resource\Assets\btn4.jpg" />
 		<None Remove="Resource\Assets\btn5.jpg" />
 		<None Remove="Resource\Assets\btn6.jpg" />
+		<None Remove="Resource\Assets\btn7.jpg" />
 		<None Remove="Resource\Assets\HappyZcool.ttf" />
 		<None Remove="Resource\Assets\看板娘.png" />
 		<None Remove="Resource\Assets\站酷快乐体2016修订版.ttf" />
@@ -84,6 +85,7 @@
 		<Resource Include="Resource\Assets\btn4.jpg" />
 		<Resource Include="Resource\Assets\btn5.jpg" />
 		<Resource Include="Resource\Assets\btn6.jpg" />
+		<Resource Include="Resource\Assets\btn7.jpg" />
 		<Resource Include="Resource\Assets\看板娘.png" />
 		<Resource Include="Resource\Assets\站酷快乐体2016修订版.ttf" />
 	</ItemGroup>

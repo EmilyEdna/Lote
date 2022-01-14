@@ -1,4 +1,5 @@
-﻿using Lote.NotifyUtil;
+﻿using Lote.Core.Common;
+using Lote.NotifyUtil;
 using Lote.Views.AnimeView;
 using Lote.Views.LightNovelView;
 using Lote.Views.Music;
@@ -28,23 +29,36 @@ namespace Lote.ViewModels
 
         public void Redirect(string args)
         {
-            var type = args.AsInt();
-            if (type == 1)
-                NavigateTo(container.Get<NovelViewModel>());
-            if (type == 2)
-                NavigateTo(container.Get<LightNovelViewModel>());
-            if (type == 3)
-                NavigateTo(container.Get<AnimeViewModel>());
-            if (type == 5)
+            var type = (MenuFuncEunm)args.AsInt();
+
+            switch (type)
             {
-                var res = HandyControl.Controls.MessageBox.Show("未满18周岁请勿点击，部分内容可能引起不适", "警告", MessageBoxButton.YesNo, MessageBoxImage.Warning);
-                if (res == MessageBoxResult.Yes)
-                    NavigateTo(container.Get<WallpaperViewModel>());
+                case MenuFuncEunm.Novel:
+                    NavigateTo(container.Get<NovelViewModel>());
+                    break;
+                case MenuFuncEunm.LightNovel:
+                    NavigateTo(container.Get<LightNovelViewModel>());
+                    break;
+                case MenuFuncEunm.Anime:
+                    NavigateTo(container.Get<AnimeViewModel>());
+                    break;
+                case MenuFuncEunm.Manga:
+
+                    break;
+                case MenuFuncEunm.Wallpaper:
+                    var res = HandyControl.Controls.MessageBox.Show("未满18周岁请勿点击，部分内容可能引起不适", "警告", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                    if (res == MessageBoxResult.Yes)
+                        NavigateTo(container.Get<WallpaperViewModel>());
+                    break;
+                case MenuFuncEunm.Music:
+                    NavigateTo(container.Get<MusicViewModel>());
+                    break;
+                case MenuFuncEunm.Setting:
+                    NavigateTo(container.Get<OptionViewModel>());
+                    break;
+                default:
+                    break;
             }
-            if (type == 6)
-                NavigateTo(container.Get<MusicViewModel>());
-            if (type == 7)
-                NavigateTo(container.Get<OptionViewModel>());
         }
     }
 }
