@@ -13,7 +13,7 @@
              Background="Transparent"
              mc:Ignorable="d">
     <UserControl.Resources>
-        <Behavior:AnimeButtonContent x:Key="ContentConverter"/>
+        <Behavior:ButtonContent x:Key="ContentConverter"/>
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -130,7 +130,7 @@
                             <Border BorderThickness="1" BorderBrush="DeepPink">
                                 <Image Source="{C:Binding AnimeCover}"  Stretch="UniformToFill" Width="160"/>
                             </Border>
-                            <Button Content="{Binding AnimeName,Converter={StaticResource ContentConverter}}" 
+                            <Button Content="{Binding AnimeName,Converter={StaticResource ContentConverter},ConverterParameter=1}" 
                                     Style="{StaticResource ButtonDashedInfo.Small}"
                                     BorderThickness="0"
                                     Command="{S:Action Redirect}"

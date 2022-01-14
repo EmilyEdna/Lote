@@ -1,0 +1,102 @@
+﻿<UserControl x:Class="Lote.Views.MangaViews.MangaView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Lote.Views.MangaViews"
+             xmlns:Behavior ="clr-namespace:Lote.Common"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:C="clr-namespace:CalcBinding;assembly=CalcBinding"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
+             xmlns:S="https://github.com/canton7/Stylet"
+             mc:Ignorable="d" 
+             Width="960"
+             Height="728">
+    <UserControl.Resources>
+        <Behavior:ButtonContent x:Key="ContentConverter"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.06*"/>
+            <RowDefinition Height="0.05*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="0.5*"/>
+        </Grid.RowDefinitions>
+        <WrapPanel>
+            <hc:SearchBar TextWrapping="Wrap" 
+                          BorderThickness="1" 
+                          Style="{StaticResource Search}"
+                          Width="960"
+                          ShowClearButton="True"
+                          Command="{S:Action SearchManga}"
+                          CommandParameter="{Binding Text, RelativeSource={RelativeSource Self}}" />
+        </WrapPanel>
+        <hc:ButtonGroup Grid.Row="1" ItemsSource="{C:Binding MangaCategory}">
+            <hc:ButtonGroup.ItemTemplate>
+                <DataTemplate>
+                    <Button Content="{C:Binding CategoryType}" 
+                            Style="{StaticResource ButtonDashedDanger.Small}"
+                            Command="{S:Action Redirect}"
+                            CommandParameter="{C:Binding Address}"/>
+                </DataTemplate>
+            </hc:ButtonGroup.ItemTemplate>
+        </hc:ButtonGroup>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3.7*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <ListBox  x:Name="listView_left"
+                  Style="{StaticResource WrapPanelHorizontalListBox}"
+                  ItemsSource="{C:Binding MangaRecommend}" 
+                  BorderThickness="0"
+                  BorderBrush="Transparent" 
+                  Background="Transparent"
+                  d:ItemsSource="{d:SampleData ItemCount=5}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{S:Action GetManga}" CommandParameter="{Binding SelectedItem, ElementName=listView_left}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <WrapPanel Orientation="Horizontal" Margin="2,2,0,0">
+                            <StackPanel>
+                            <Border BorderThickness="1" BorderBrush="DeepSkyBlue" Width="180">
+                                <Image Source="{C:Binding Cover}"  Stretch="UniformToFill" Width="180" Height="180"/>
+                            </Border>
+                                <Button Content="{Binding MangaName,Converter={StaticResource ContentConverter},ConverterParameter=2}" 
+                                    Style="{StaticResource ButtonDashedInfo.Small}"
+                                    Foreground="Black"
+                                    BorderThickness="0"
+                                    Command="{S:Action Redirect}"
+                                    CommandParameter="{C:Binding Address}" 
+                                    Margin="3"/>
+                            </StackPanel>
+                        </WrapPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <ListBox  x:Name="listBox_right"  
+                      Style="{StaticResource StackPanelVerticalListBox}"
+                      ItemsSource="{C:Binding Chapters}" 
+                      BorderThickness="0"
+                      BorderBrush="Transparent" 
+                      Background="Transparent"
+                      d:ItemsSource="{d:SampleData ItemCount=5}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{S:Action GetContent}" CommandParameter="{Binding SelectedItem, ElementName=listBox_right}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <WrapPanel HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,2,0,0">
+                            <TextBlock Text="{C:Binding Title}" TextWrapping="WrapWithOverflow" FontSize="11"/>
+                        </WrapPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+    </Grid>
+</UserControl>

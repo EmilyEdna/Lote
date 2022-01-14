@@ -37,15 +37,26 @@ namespace Lote.Common
             throw new NotImplementedException();
         }
     }
-    public class AnimeButtonContent : IValueConverter
+    public class ButtonContent : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var Value = value.AsString().AsSpan();
-            if (Value.Length > 12)
-                return Value[..12].ToString() + "...";
-            else
-                return value;
+            var Flag = parameter.AsString().AsInt();
+            if (Flag == 1)
+            {
+                var Value = value.AsString().AsSpan();
+                if (Value.Length > 12)
+                    return Value[..12].ToString() + "...";
+                else
+                    return value;
+            }
+            else {
+                var Value = value.AsString().AsSpan();
+                if (Value.Length > 10)
+                    return Value[..10].ToString() + "...";
+                else
+                    return value;
+            }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

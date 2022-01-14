@@ -2,6 +2,7 @@
 using Lote.NotifyUtil;
 using Lote.Views.AnimeViews;
 using Lote.Views.LightNovelViews;
+using Lote.Views.MangaViews;
 using Lote.Views.MusicViews;
 using Lote.Views.NovelViews;
 using Lote.Views.OptionViews;
@@ -41,7 +42,7 @@ namespace Lote.ViewModels
                     NavigateTo(container.Get<AnimeViewModel>());
                     break;
                 case MenuFuncEunm.Manga:
-
+                    NavigateTo(container.Get<MangaViewModel>());
                     break;
                 case MenuFuncEunm.Wallpaper:
                     var res = HandyControl.Controls.MessageBox.Show("未满18周岁请勿点击，部分内容可能引起不适", "警告", MessageBoxButton.YesNo, MessageBoxImage.Warning);
