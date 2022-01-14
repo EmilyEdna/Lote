@@ -1,17 +1,14 @@
 ﻿using Lote.Common;
 using Lote.Core.Common;
 using Lote.Override;
-using Lote.ViewModels;
+using Lote.Views.MusicViews;
 using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using XExten.Advance.LinqFramework;
-using System.Linq;
 using System.Windows.Shapes;
-using Lote.Views.Music;
 
 namespace Lote.Views
 {

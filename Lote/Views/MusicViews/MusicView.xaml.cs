@@ -23,7 +23,7 @@ using System.Windows.Shapes;
 using XExten.Advance.LinqFramework;
 using XExten.Advance.StaticFramework;
 
-namespace Lote.Views.Music
+namespace Lote.Views.MusicViews
 {
     /// <summary>
     /// MusicView.xaml 的交互逻辑

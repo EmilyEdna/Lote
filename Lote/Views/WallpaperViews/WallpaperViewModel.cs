@@ -21,7 +21,7 @@ using XExten.Advance.HttpFramework.MultiCommon;
 using XExten.Advance.HttpFramework.MultiFactory;
 using XExten.Advance.LinqFramework;
 
-namespace Lote.Views.Wallpaper
+namespace Lote.Views.WallpaperViews
 {
     public class WallpaperViewModel : Screen
     {

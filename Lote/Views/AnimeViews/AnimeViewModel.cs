@@ -18,7 +18,7 @@ using System.Text;
 using System.Threading.Tasks;
 using XExten.Advance.LinqFramework;
 
-namespace Lote.Views.AnimeView
+namespace Lote.Views.AnimeViews
 {
     public class AnimeViewModel : Screen
     {

@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Lote.Views.Wallpaper
+namespace Lote.Views.WallpaperViews
 {
     /// <summary>
     /// WallpaperView.xaml 的交互逻辑

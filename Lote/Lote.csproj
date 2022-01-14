@@ -94,4 +94,7 @@
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
 	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Views\MangaViews\" />
+	</ItemGroup>
 </Project>

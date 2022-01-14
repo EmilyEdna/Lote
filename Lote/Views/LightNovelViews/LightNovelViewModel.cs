@@ -24,7 +24,7 @@ using System.Windows.Controls;
 using XExten.Advance.LinqFramework;
 using XExten.Advance.StaticFramework;
 
-namespace Lote.Views.LightNovelView
+namespace Lote.Views.LightNovelViews
 {
     public class LightNovelViewModel : Screen
     {

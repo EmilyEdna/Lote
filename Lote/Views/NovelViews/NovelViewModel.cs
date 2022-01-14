@@ -17,7 +17,7 @@ using System.Text;
 using System.Threading.Tasks;
 using XExten.Advance.LinqFramework;
 
-namespace Lote.Views.NovelView
+namespace Lote.Views.NovelViews
 {
     public class NovelViewModel : Screen
     {

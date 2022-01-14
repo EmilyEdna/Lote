@@ -12,7 +12,7 @@ using XExten.Advance.InternalFramework.Securities.Common;
 using XExten.Advance.LinqFramework;
 using XExten.Advance.StaticFramework;
 
-namespace Lote.Views.Option
+namespace Lote.Views.OptionViews
 {
     public class OptionViewModel : Screen
     {

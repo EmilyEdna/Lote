@@ -1,5 +1,4 @@
-﻿using Novel.SDK.ViewModel.Response;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,15 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-
-namespace Lote.Views.NovelView
+namespace Lote.Views.AnimeViews
 {
     /// <summary>
-    /// NovelView.xaml 的交互逻辑
+    /// AnimeView.xaml 的交互逻辑
     /// </summary>
-    public partial class NovelView : UserControl
+    public partial class AnimeView : UserControl
     {
-        public NovelView()
+        public AnimeView()
         {
             InitializeComponent();
         }

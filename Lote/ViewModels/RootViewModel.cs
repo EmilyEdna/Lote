@@ -1,16 +1,14 @@
 ﻿using Lote.Core.Common;
 using Lote.NotifyUtil;
-using Lote.Views.AnimeView;
-using Lote.Views.LightNovelView;
-using Lote.Views.Music;
-using Lote.Views.NovelView;
-using Lote.Views.Option;
-using Lote.Views.Wallpaper;
+using Lote.Views.AnimeViews;
+using Lote.Views.LightNovelViews;
+using Lote.Views.MusicViews;
+using Lote.Views.NovelViews;
+using Lote.Views.OptionViews;
+using Lote.Views.WallpaperViews;
 using Stylet;
 using StyletIoC;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
 using XExten.Advance.LinqFramework;
 
 namespace Lote.ViewModels

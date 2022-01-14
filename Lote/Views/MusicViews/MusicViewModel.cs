@@ -19,7 +19,7 @@ using XExten.Advance.HttpFramework.MultiFactory;
 using XExten.Advance.LinqFramework;
 using XExten.Advance.StaticFramework;
 
-namespace Lote.Views.Music
+namespace Lote.Views.MusicViews
 {
     public class MusicViewModel : Screen
     {

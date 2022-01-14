@@ -19,7 +19,7 @@ using Lote.Core.Service.DTO;
 using XExten.Advance.LinqFramework;
 
 
-namespace Lote.Views.NovelView
+namespace Lote.Views.NovelViews
 {
     public class NovelContentViewModel : Screen
     {

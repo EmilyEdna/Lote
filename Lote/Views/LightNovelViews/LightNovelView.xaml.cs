@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Lote.Views.NovelView
+namespace Lote.Views.LightNovelViews
 {
     /// <summary>
-    /// NovelContentView.xaml 的交互逻辑
+    /// LightNovelView.xaml 的交互逻辑
     /// </summary>
-    public partial class NovelContentView : UserControl
+    public partial class LightNovelView : UserControl
     {
-        public NovelContentView()
+        public LightNovelView()
         {
             InitializeComponent();
         }

@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Lote.Views.AnimeView
+namespace Lote.Views.NovelViews
 {
     /// <summary>
-    /// AnimeView.xaml 的交互逻辑
+    /// NovelContentView.xaml 的交互逻辑
     /// </summary>
-    public partial class AnimeView : UserControl
+    public partial class NovelContentView : UserControl
     {
-        public AnimeView()
+        public NovelContentView()
         {
             InitializeComponent();
         }

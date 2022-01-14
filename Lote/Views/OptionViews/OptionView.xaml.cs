@@ -15,7 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using XExten.Advance.LinqFramework;
 
-namespace Lote.Views.Option
+namespace Lote.Views.OptionViews
 {
     /// <summary>
     /// OptionView.xaml 的交互逻辑
