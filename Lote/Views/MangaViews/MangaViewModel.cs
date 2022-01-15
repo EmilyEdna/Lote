@@ -113,7 +113,6 @@ namespace Lote.Views.MangaViews
                         }
                     };
                 }).Runs();
-
                 Chapters = new ObservableCollection<MangaChapterResult>(MangaDetail.ChapterResults);
             });
         }
@@ -125,6 +124,7 @@ namespace Lote.Views.MangaViews
                 if (Chapters.FirstOrDefault(t => t.TagKey == input.TagKey) != null)
                 {
                     MangaReaderWindowsViewModel vm = container.Get<MangaReaderWindowsViewModel>();
+                    vm.Loading = true;
                     vm.Chapters = Chapters;
                     vm.Index= Chapters.IndexOf(input);
                     vm.InitCurrent();

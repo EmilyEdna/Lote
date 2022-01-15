@@ -200,7 +200,7 @@ namespace Lote.Views.MusicViews
                 HandyControl.Controls.MessageBox.Info("当前歌曲已下架，请切换到其他其他平台搜索");
 
             string CacheAddress = string.Empty;
-            var dir = SyncStatic.CreateDir(Path.Combine(Environment.CurrentDirectory, "Caches"));
+            var dir = SyncStatic.CreateDir(Path.Combine(Environment.CurrentDirectory, "LoteResource", "MusicCaches"));
             var SongArtist = string.Join(",", input.SongArtistName);
             var SongFile = $"{input.SongName}({input.SongAlbumName})-{SongArtist}_{Platform}.mp3";
             if (this.Platform == MusicPlatformEnum.BiliBiliMusic)

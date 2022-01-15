@@ -33,9 +33,9 @@
             <Grid Width="{C:Binding (Width-100),ElementName=window}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.2*"/>
-                    <ColumnDefinition Width="1.8*"/>
+                    <ColumnDefinition Width="1.6*"/>
                     <ColumnDefinition Width="0.2*"/>
-                    <ColumnDefinition Width="0.2*"/>
+                    <ColumnDefinition Width="0.3*"/>
                 </Grid.ColumnDefinitions>
                 <ComboBox SelectedIndex="1" 
                           Margin="8 0 0 0"
@@ -72,15 +72,28 @@
                     <L:LoteComboBoxItem Content="背景4" SeleteType="3"/>
                 </ComboBox>
                 <StackPanel Orientation="Horizontal" Grid.Column="3" HorizontalAlignment="Right">
+
                     <Button  Style="{DynamicResource MaterialDesignFloatingActionMiniButton}"
                          Design:ShadowAssist.ShadowDepth="Depth2" 
-                         FontSize="20" 
+                         FontSize="22" 
+                         Click="SysClick"
+                         CommandParameter="4"
+                         Background="{Binding Background, ElementName=Zone}" 
+                         BorderBrush="{x:Null}">
+                        <Design:PackIcon Kind="CloudDownloadOutline"  Width="30" Height="40"/>
+                    </Button>
+
+                    <Button  Style="{DynamicResource MaterialDesignFloatingActionMiniButton}"
+                         Design:ShadowAssist.ShadowDepth="Depth2" 
+                         FontSize="22" 
+                         Margin="10,0,0,0" 
                          Click="SysClick"
                          CommandParameter="0"
                          Background="{Binding Background, ElementName=Zone}" 
-                         BorderBrush="{x:Null}">
-                        <Design:PackIcon Kind="ArrowCollapse"  Width="30" Height="40"/>
+                         BorderBrush="{x:Null}" >
+                        <Design:PackIcon Kind="ArrowCollapse" Height="30" Width="30"/>
                     </Button>
+
                     <Button  Style="{DynamicResource MaterialDesignFloatingActionMiniButton}"
                          Design:ShadowAssist.ShadowDepth="Depth2" 
                          FontSize="22" 
@@ -94,23 +107,22 @@
                 </StackPanel>
             </Grid>
         </Design:ColorZone>
-        <ListBox ItemsSource="{Binding Bit}"
-                 Grid.Row="1"
-                 x:Name="MangaContent"
-                 ScrollViewer.ScrollChanged="MangaChanged"
-                 BorderThickness="0"
-                 Style="{StaticResource StackPanelVerticalListBox}"
-                 Background="Transparent"
-                 BorderBrush="Transparent">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Margin="0,0,0,10">
-                        <Border BorderThickness="1" BorderBrush="DeepPink" Width="{Binding Width, ElementName=window}">
-                            <Image Source="{Binding .}" Stretch="Uniform"/>
+        <hc:LoadingLine Visibility="{C:Binding Loading,FalseToVisibility=Hidden}" Style="{StaticResource LoadingLineLight}"/>
+        <L:LoteScrollViewer Grid.Row="2" Style="{StaticResource ScrollViewerNativeBaseStyle}">
+            <ItemsControl ItemsSource="{Binding Bit}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderThickness="1" BorderBrush="Black" Margin="0,0,0,20" Width="{Binding Width,ElementName=window}">
+                            <Image Source="{Binding .}" Stretch="Uniform" Width="{Binding Width,ElementName=window}"/>
                         </Border>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </L:LoteScrollViewer>
     </Grid>
 </L:LoteWindow>

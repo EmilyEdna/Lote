@@ -19,6 +19,7 @@ using XExten.Advance.StaticFramework;
 using System.IO;
 using System.Windows.Media.Imaging;
 using Lote.Common;
+using System.Collections;
 
 namespace Lote.CommonWindow.ViewMdeol
 {
@@ -48,11 +49,11 @@ namespace Lote.CommonWindow.ViewMdeol
             set { SetAndNotify(ref _Chapters, value); }
         }
 
-        private ObservableCollection<string> _ImageURL;
-        public ObservableCollection<string> ImageURL
+        private bool _Loading;
+        public bool Loading
         {
-            get { return _ImageURL; }
-            set { SetAndNotify(ref _ImageURL, value); }
+            get { return _Loading; }
+            set { SetAndNotify(ref _Loading, value); }
         }
 
         private ObservableCollection<BitmapSource> _Bit;
@@ -70,6 +71,8 @@ namespace Lote.CommonWindow.ViewMdeol
             get { return _Index; }
             set { SetAndNotify(ref _Index, value); }
         }
+
+        public ArrayList Names { get; set; }
         #endregion
 
         public async Task InitCurrent()
@@ -94,24 +97,26 @@ namespace Lote.CommonWindow.ViewMdeol
             });
 
             await CacheLocal(MangaContent.ContentResults.ImageURL, Chapters[Index].TagKey);
-
+            Loading = false;
             SystemHelper.SystemGC();
         }
 
         protected async Task CacheLocal(List<string> URL, string key)
         {
-            var dir = SyncStatic.CreateDir(Path.Combine(Environment.CurrentDirectory, "Manga", key));
+            var dir = SyncStatic.CreateDir(Path.Combine(Environment.CurrentDirectory, "LoteResource", "MangaCaches", key));
 
             var all = Directory.GetFiles(dir).OrderBy(t => t).ToList();
 
             if (all.Count() == URL.Count)
             {
                 Bit = new ObservableCollection<BitmapSource>();
+                Names = new ArrayList();
                 for (int index = 0; index < all.Count(); index++)
                 {
                     FileStream fileStream = new FileStream(all[index], FileMode.Open, FileAccess.Read);
                     byte[] array = new byte[fileStream.Length];
                     fileStream.Read(array, 0, array.Length);
+                    Names.Add(all[index]);
                     Bit.Add(ImageHelper.BitmapToBitmapImage(array));
                     fileStream.Close();
                 }
@@ -120,7 +125,7 @@ namespace Lote.CommonWindow.ViewMdeol
             {
                 SyncStatic.DeleteFolder(dir);
 
-                var dirs = SyncStatic.CreateDir(Path.Combine(Environment.CurrentDirectory, "Manga", key));
+                var dirs = SyncStatic.CreateDir(Path.Combine(Environment.CurrentDirectory, "LoteResource", "MangaCaches", key));
 
                 var Node = IHttpMultiClient.HttpMulti.AddNode(opt =>
                 {
@@ -137,12 +142,12 @@ namespace Lote.CommonWindow.ViewMdeol
                 var data = await Node.Build().RunBytesAsync();
 
                 Bit = new ObservableCollection<BitmapSource>();
-
+                Names = new ArrayList();
                 data.ForEach(item =>
                 {
                     var file = SyncStatic.CreateFile(Path.Combine(dirs, DateTime.Now.ToString("yyyyMMddHHmmssffff")));
                     SyncStatic.WriteFile(item, file);
-
+                    Names.Add(file);
                     Bit.Add(ImageHelper.BitmapToBitmapImage(item));
                 });
             }

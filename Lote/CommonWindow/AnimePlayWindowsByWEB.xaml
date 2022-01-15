@@ -76,7 +76,7 @@
 
                     <Button  Style="{DynamicResource MaterialDesignFloatingActionMiniButton}"
                          Design:ShadowAssist.ShadowDepth="Depth2" 
-                         FontSize="20" 
+                         FontSize="22" 
                          Click="SysClick"
                          CommandParameter="3"
                          Background="{Binding Background, ElementName=Zone}" 

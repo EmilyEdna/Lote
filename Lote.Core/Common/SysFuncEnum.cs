@@ -11,6 +11,7 @@ namespace Lote.Core.Common
         Min,
         Max,
         Close,
-        Play
+        Play,
+        Down
     }
 }

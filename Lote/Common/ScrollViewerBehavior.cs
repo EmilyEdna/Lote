@@ -15,14 +15,11 @@ namespace Lote.Common
         {
             return (ICommand)obj.GetValue(AtEndCommandProperty);
         }
-
         public static void SetAtEndCommand(DependencyObject obj, ICommand value)
         {
             obj.SetValue(AtEndCommandProperty, value);
         }
-
         public static readonly DependencyProperty AtEndCommandProperty = DependencyProperty.RegisterAttached("AtEndCommand", typeof(ICommand),typeof(ScrollViewerBehavior), new PropertyMetadata(OnAtEndCommandChanged));
-
         public static void OnAtEndCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             FrameworkElement element = (FrameworkElement)d;
@@ -32,7 +29,6 @@ namespace Lote.Common
                 element.Loaded += element_Loaded;
             }
         }
-
         private static void element_Loaded(object sender, RoutedEventArgs e)
         {
             FrameworkElement element = (FrameworkElement)sender;
@@ -61,6 +57,5 @@ namespace Lote.Common
                 }
             };
         }
-
     }
 }
