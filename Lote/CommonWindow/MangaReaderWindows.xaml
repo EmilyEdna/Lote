@@ -22,6 +22,7 @@
     <Grid HorizontalAlignment="Center" Width="{Binding Width, ElementName=window}">
         <Grid.RowDefinitions>
             <RowDefinition Height="72"/>
+            <RowDefinition Height="560"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Design:ColorZone x:Name="Zone" Background="#FFFF9999" 
@@ -108,7 +109,7 @@
             </Grid>
         </Design:ColorZone>
         <hc:LoadingLine Visibility="{C:Binding Loading,FalseToVisibility=Hidden}" Style="{StaticResource LoadingLineLight}"/>
-        <L:LoteScrollViewer Grid.Row="2" Style="{StaticResource ScrollViewerNativeBaseStyle}">
+        <L:LoteScrollViewer Grid.Row="1" Style="{StaticResource ScrollViewerNativeBaseStyle}">
             <ItemsControl ItemsSource="{Binding Bit}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -117,12 +118,39 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Border BorderThickness="1" BorderBrush="Black" Margin="0,0,0,20" Width="{Binding Width,ElementName=window}">
+                        <Border BorderThickness="0,0,0,1" BorderBrush="DeepPink" Width="{Binding Width,ElementName=window}">
                             <Image Source="{Binding .}" Stretch="Uniform" Width="{Binding Width,ElementName=window}"/>
                         </Border>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </L:LoteScrollViewer>
+        <WrapPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Button  Style="{DynamicResource MaterialDesignFloatingActionMiniButton}"
+                     Margin="2"
+                     Design:ShadowAssist.ShadowDepth="Depth2"
+                     FontSize="22" 
+                     Command="{Binding GoChapter}"
+                     CommandParameter="0"
+                     Background="{Binding Background, ElementName=Zone}" 
+                     BorderBrush="{x:Null}">
+                <Design:PackIcon Kind="ArrowLeftBoldOutline" Height="30" Width="30"/>
+            </Button>
+            <TextBlock Style="{StaticResource TextBlockDefaultPrimary}" Background="Transparent" Foreground="White">
+                 <Run Text="{Binding Index}"/>
+                 <Run Text="/"/>
+                 <Run Text="{Binding Total}"/>
+            </TextBlock>
+            <Button  Style="{DynamicResource MaterialDesignFloatingActionMiniButton}"
+                     Margin="2"
+                     Design:ShadowAssist.ShadowDepth="Depth2"
+                     FontSize="22" 
+                     Command="{Binding GoChapter}"
+                     CommandParameter="1"
+                     Background="{Binding Background, ElementName=Zone}" 
+                     BorderBrush="{x:Null}">
+                <Design:PackIcon Kind="ArrowRightBoldOutline" Height="30" Width="30"/>
+            </Button>
+        </WrapPanel>
     </Grid>
 </L:LoteWindow>

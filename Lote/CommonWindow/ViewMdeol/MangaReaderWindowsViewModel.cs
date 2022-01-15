@@ -20,6 +20,7 @@ using System.IO;
 using System.Windows.Media.Imaging;
 using Lote.Common;
 using System.Collections;
+using System.Windows.Input;
 
 namespace Lote.CommonWindow.ViewMdeol
 {
@@ -72,8 +73,44 @@ namespace Lote.CommonWindow.ViewMdeol
             set { SetAndNotify(ref _Index, value); }
         }
 
+
+        private int _Total;
+        /// <summary>
+        /// 总数
+        /// </summary>
+        public int Total
+        {
+            get { return _Total; }
+            set { SetAndNotify(ref _Total, value); }
+        }
+
         public ArrayList Names { get; set; }
         #endregion
+
+        #region Method
+
+        public ICommand GoChapter => new Commands<string>(args =>
+        {
+            //上一章
+            if (args.Equals("0"))
+            {
+                if (Index < 0)
+                    return;
+                Index -= 1;
+                Loading = true;
+                Bit = new ObservableCollection<BitmapSource>();
+                InitCurrent();
+            }
+            else
+            {
+                if (Index > Total)
+                    return;
+                Index += 1;
+                Loading = true;
+                Bit = new ObservableCollection<BitmapSource>();
+                InitCurrent();
+            }
+        }, null);
 
         public async Task InitCurrent()
         {
@@ -152,5 +189,6 @@ namespace Lote.CommonWindow.ViewMdeol
                 });
             }
         }
+        #endregion
     }
 }

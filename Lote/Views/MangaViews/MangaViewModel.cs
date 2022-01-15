@@ -126,6 +126,7 @@ namespace Lote.Views.MangaViews
                     MangaReaderWindowsViewModel vm = container.Get<MangaReaderWindowsViewModel>();
                     vm.Loading = true;
                     vm.Chapters = Chapters;
+                    vm.Total = Chapters.Count;
                     vm.Index= Chapters.IndexOf(input);
                     vm.InitCurrent();
 

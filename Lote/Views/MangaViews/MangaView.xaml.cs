@@ -36,11 +36,14 @@ namespace Lote.Views.MangaViews
                 var source = (e.OriginalSource as HandyControl.Controls.ScrollViewer);
                 source.ScrollToHome();
             }
-            if (e.VerticalOffset >= 106)
+            if (e.ExtentHeight < 1200)
             {
-                Dispatcher.Invoke(() => vm.LoadMore(true));
-                var source = (e.OriginalSource as HandyControl.Controls.ScrollViewer);
-                source.ScrollToHome();
+                if (e.VerticalOffset >= 106)
+                {
+                    Dispatcher.Invoke(() => vm.LoadMore(true));
+                    var source = (e.OriginalSource as HandyControl.Controls.ScrollViewer);
+                    source.ScrollToHome();
+                }
             }
         }
     }
