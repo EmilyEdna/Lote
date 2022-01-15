@@ -94,7 +94,7 @@
                 </StackPanel>
             </Grid>
         </Design:ColorZone>
-        <ListBox ItemsSource="{Binding ImageURL}"
+        <ListBox ItemsSource="{Binding Bit}"
                  Grid.Row="1"
                  x:Name="MangaContent"
                  ScrollViewer.ScrollChanged="MangaChanged"

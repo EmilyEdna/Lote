@@ -14,6 +14,11 @@ using System.Threading.Tasks;
 using Lote.Core.Service.DTO;
 using Lote.Core.Service;
 using XExten.Advance.LinqFramework;
+using XExten.Advance.HttpFramework.MultiFactory;
+using XExten.Advance.StaticFramework;
+using System.IO;
+using System.Windows.Media.Imaging;
+using Lote.Common;
 
 namespace Lote.CommonWindow.ViewMdeol
 {
@@ -50,6 +55,12 @@ namespace Lote.CommonWindow.ViewMdeol
             set { SetAndNotify(ref _ImageURL, value); }
         }
 
+        private ObservableCollection<BitmapSource> _Bit;
+        public ObservableCollection<BitmapSource> Bit
+        {
+            get { return _Bit; }
+            set { SetAndNotify(ref _Bit, value); }
+        }
         private int _Index;
         /// <summary>
         /// 索引
@@ -61,21 +72,80 @@ namespace Lote.CommonWindow.ViewMdeol
         }
         #endregion
 
-        public void InitCurrent()
+        public async Task InitCurrent()
         {
-            var MangaContent = MangaFactory.Manga(opt =>
+            SystemHelper.SystemGC();
+
+             var MangaContent = await Task.Factory.StartNew(() =>
             {
-                opt.RequestParam = new MangaRequestInput
+                return MangaFactory.Manga(opt =>
+                 {
+                     opt.RequestParam = new MangaRequestInput
+                     {
+                         MangaType = MangaEnum.Content,
+                         Proxy = this.Proxy,
+                         Content = new MangaContent
+                         {
+                             Address = Chapters[Index].Address
+                         }
+                     };
+                 }).Runs();
+
+            });
+
+            await CacheLocal(MangaContent.ContentResults.ImageURL, Chapters[Index].TagKey);
+
+            SystemHelper.SystemGC();
+        }
+
+        protected async Task CacheLocal(List<string> URL, string key)
+        {
+            var dir = SyncStatic.CreateDir(Path.Combine(Environment.CurrentDirectory, "Manga", key));
+
+            var all = Directory.GetFiles(dir).OrderBy(t => t).ToList();
+
+            if (all.Count() == URL.Count)
+            {
+                Bit = new ObservableCollection<BitmapSource>();
+                for (int index = 0; index < all.Count(); index++)
                 {
-                    MangaType = MangaEnum.Content,
-                    Proxy = this.Proxy,
-                    Content = new MangaContent
+                    FileStream fileStream = new FileStream(all[index], FileMode.Open, FileAccess.Read);
+                    byte[] array = new byte[fileStream.Length];
+                    fileStream.Read(array, 0, array.Length);
+                    Bit.Add(ImageHelper.BitmapToBitmapImage(array));
+                    fileStream.Close();
+                }
+            }
+            else
+            {
+                SyncStatic.DeleteFolder(dir);
+
+                var dirs = SyncStatic.CreateDir(Path.Combine(Environment.CurrentDirectory, "Manga", key));
+
+                var Node = IHttpMultiClient.HttpMulti.AddNode(opt =>
+                {
+                    opt.NodePath = URL.FirstOrDefault();
+                });
+
+                for (int index = 1; index < URL.Count; index++)
+                {
+                    Node = Node.AddNode(opt =>
                     {
-                        Address = Chapters[Index].Address
-                    }
-                };
-            }).Runs();
-            ImageURL = new ObservableCollection<string>(MangaContent.ContentResults.ImageURL);
+                        opt.NodePath = URL[index];
+                    });
+                }
+                var data = await Node.Build().RunBytesAsync();
+
+                Bit = new ObservableCollection<BitmapSource>();
+
+                data.ForEach(item =>
+                {
+                    var file = SyncStatic.CreateFile(Path.Combine(dirs, DateTime.Now.ToString("yyyyMMddHHmmssffff")));
+                    SyncStatic.WriteFile(item, file);
+
+                    Bit.Add(ImageHelper.BitmapToBitmapImage(item));
+                });
+            }
         }
     }
 }

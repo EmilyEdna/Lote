@@ -112,7 +112,7 @@ namespace Lote.CommonWindow
         private void MangaChanged(object sender, ScrollChangedEventArgs e)
         {
             var sc = (sender as ScrollViewer);
-            sc.ScrollToVerticalOffset(MangaContent.ActualHeight);
+            //sc.ScrollToVerticalOffset(MangaContent.ActualHeight);
         }
     }
 }
