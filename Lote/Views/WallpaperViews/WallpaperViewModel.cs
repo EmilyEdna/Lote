@@ -1,4 +1,6 @@
 ﻿using HandyControl.Data;
+using Lote.CommonWindow;
+using Lote.CommonWindow.ViewMdeol;
 using Lote.Core.Common;
 using Lote.Core.Service;
 using Lote.Core.Service.DTO;
@@ -12,6 +14,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using Wallpaper.SDK;
 using Wallpaper.SDK.ViewModel;
 using Wallpaper.SDK.ViewModel.Enums;
@@ -29,6 +32,7 @@ namespace Lote.Views.WallpaperViews
         private readonly IWallpaperService wallpaperService;
         private readonly OptionRootDTO root;
         private readonly WallpaperProxy Proxy;
+        private Dictionary<string, WallpaperPreviewWindows> data;
         public WallpaperViewModel(IContainer container)
         {
             this.PageIndex = 1;
@@ -43,6 +47,7 @@ namespace Lote.Views.WallpaperViews
                 UserName = root.ProxyAccount.IsNullOrEmpty() ? String.Empty : root.ProxyAccount
             };
             this.WatchFavorite = false;
+            data = new Dictionary<string, WallpaperPreviewWindows>();
         }
 
         #region Property
@@ -277,6 +282,31 @@ namespace Lote.Views.WallpaperViews
             Temp.FirstOrDefault(t => t.Id == Id).IsFavorite = false;
 
             this.Wallpaper = new ObservableCollection<WallpaperResult>(Temp);
+        }
+
+        public void Preview(long Id)
+        {
+            var vm = container.Get<WallpaperPreviewWindowsViewModel>();
+            var wallpaper = Wallpaper.FirstOrDefault(t => t.Id == Id);
+            vm.FileURL = wallpaper.OriginalPng.IsNullOrEmpty() ? wallpaper.FileSizeJepg : wallpaper.OriginalPng;
+            WallpaperPreviewWindows win = null;
+            if (data.Keys.Contains(nameof(WallpaperPreviewWindows)))
+            {
+                var old = data.Values.FirstOrDefault();
+                old.Close();
+                data.Clear();
+                win = new WallpaperPreviewWindows();
+                win.DataContext = vm;
+                win.Show();
+                data.Add(nameof(WallpaperPreviewWindows), win);
+            }
+            else
+            {
+                win = new WallpaperPreviewWindows();
+                win.DataContext = vm;
+                win.Show();
+                data.Add(nameof(WallpaperPreviewWindows), win);
+            }
         }
         #endregion
     }

@@ -92,6 +92,10 @@
                                             </ListBox>
                                         </WrapPanel>
                                         <WrapPanel Orientation="Horizontal" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                            <L:LoteButton Svg="{StaticResource PreviewEye}" 
+                                                          Style="{StaticResource LoteBtn}" 
+                                                          Command="{S:Action Preview}"  
+                                                          CommandParameter="{Binding Id}"/>
                                             <L:LoteButton Svg="{StaticResource Download}" 
                                                           Style="{StaticResource LoteBtn}" 
                                                           Command="{S:Action Download}"  

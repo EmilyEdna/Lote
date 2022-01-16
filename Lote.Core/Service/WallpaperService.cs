@@ -14,7 +14,6 @@ namespace Lote.Core.Service
         Task RemoveFavorite(long Id);
         Task AddFavorite(WallpaperDTo input);
         Task<PageWallpaperDTo> GetFavorite(string lable, int pageIndex);
-
         List<long> GetAllFavorite();
     }
     public class WallpaperService : Lite, IWallpaperService
@@ -39,6 +38,7 @@ namespace Lote.Core.Service
             var result = LiteBase().Queryable<Favorite>()
                 .WhereIF(!lable.IsNullOrEmpty(), t => t.Label.Contains(lable))
                 .ToPageList(pageIndex, 12, ref Total);
+            Total = (Total + 12 - 1) / 12;
             return Task.FromResult(new PageWallpaperDTo
             {
                 Total = Total,

@@ -13,7 +13,7 @@
              Background="Transparent"
              mc:Ignorable="d">
     <UserControl.Resources>
-        <Behavior:ButtonContent x:Key="ContentConverter"/>
+        <Behavior:ButtonContentConverter x:Key="ContentConverter"/>
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>

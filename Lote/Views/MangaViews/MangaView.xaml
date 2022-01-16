@@ -13,7 +13,7 @@
              Width="960"
              Height="728">
     <UserControl.Resources>
-        <Behavior:ButtonContent x:Key="ContentConverter"/>
+        <Behavior:ButtonContentConverter x:Key="ContentConverter"/>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
