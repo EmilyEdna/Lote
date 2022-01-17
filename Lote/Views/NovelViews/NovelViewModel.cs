@@ -99,8 +99,6 @@ namespace Lote.Views.NovelViews
 
             this.NovelCategory = new ObservableCollection<NovelCategoryResult>(NovelInit.IndexCategories);
             this.NovelRecommend = new ObservableCollection<NovelRecommendResult>(NovelInit.IndexRecommends);
-
-            base.OnViewLoaded();
         }
 
         public void SearchBook(string args)
