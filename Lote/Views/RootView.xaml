@@ -161,11 +161,11 @@
                               Command="{S:Action Redirect}"
                               CommandParameter="7"/>
                     </WrapPanel>
-                    <!--<Border Grid.Row="1" Height="300">
+                    <Border Grid.Row="1" Height="300">
                         <Border.Background>
-                            <ImageBrush ImageSource="/Resource/Assets/看板娘.png" Stretch="UniformToFill" Opacity="0.5"/>
+                            <ImageBrush ImageSource="/Resource/Assets/Woman.png" Stretch="UniformToFill" Opacity="0.5"/>
                         </Border.Background>
-                    </Border>-->
+                    </Border>
                 </Grid>
             </WrapPanel>
             <WrapPanel Grid.Column="1">

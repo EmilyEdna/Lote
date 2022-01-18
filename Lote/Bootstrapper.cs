@@ -12,9 +12,14 @@ using System.Windows.Threading;
 using System.Linq;
 using XExten.Advance.LinqFramework;
 using Lote.Core.Common;
+using System.Reflection;
+using XExten.Advance.HttpFramework.MultiFactory;
+using HandyControl.Data;
+using System.Diagnostics;
 
 namespace Lote
 {
+    [Obfuscation(Feature = "virtualization", Exclude = false)]
     public class Bootstrapper : Bootstrapper<RootViewModel>
     {
         /// <summary>
@@ -22,12 +27,35 @@ namespace Lote
         /// </summary>
         protected override void OnStart()
         {
+            //校验版本
+            var currentVersion = Assembly.GetExecutingAssembly().GetName().Version;
+            var serverVersion = IHttpMultiClient.HttpMulti.AddNode(opt =>
+             {
+                 opt.NodePath = "https://raw.fastgit.org/EmilyEdna/ResouceFile/main/LoteOption";
+             }).Build().RunStringFirst();
+            if (!currentVersion.Equals(serverVersion))
+            {
+                //升级
+                var result = HandyControl.Controls.MessageBox.Info("检测到新版本，即将升级", "提示");
+                if (result == MessageBoxResult.OK)
+                {
+                    Process process = new Process();
+                    process.StartInfo.FileName = Path.Combine(Environment.CurrentDirectory, "Lote.Upgrade.exe");
+                    process.StartInfo.CreateNoWindow = true;
+                    process.Start();//启动
+                    process.CloseMainWindow();//通过向进程的主窗口发送关闭消息来关闭拥有用户界面的进程
+                    process.Close();//释放与此组件关联的所有资源
+                    Environment.Exit(0);
+                    Application.Current.Shutdown();
+                }
+            }
+
+
             //日志
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Information()
                 .WriteTo.File("Logs/Lote.log", rollingInterval: RollingInterval.Day)
                 .CreateLogger();
-            //校验版本
         }
 
         protected override void ConfigureIoC(IStyletIoCBuilder builder)

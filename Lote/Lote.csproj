@@ -8,7 +8,7 @@
 		<RootNamespace>Lote</RootNamespace>
 		<Version>1.0.0.0</Version>
 		<Configurations>Debug;Release</Configurations>
-		<Copyright>Copyright © EmilyEdna 2021</Copyright>
+		<Copyright>Copyright © EmilyEdna 2022</Copyright>
 		<FileVersion>1.0.0.0</FileVersion>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
 		<ApplicationIcon>favicon.ico</ApplicationIcon>
@@ -33,7 +33,7 @@
 		<None Remove="Resource\Assets\btn6.jpg" />
 		<None Remove="Resource\Assets\btn7.jpg" />
 		<None Remove="Resource\Assets\HappyZcool.ttf" />
-		<None Remove="Resource\Assets\看板娘.png" />
+		<None Remove="Resource\Assets\Woman.png" />
 		<None Remove="Resource\Assets\站酷快乐体2016修订版.ttf" />
 		<None Remove="Resource\Assets\默认背景.jpg" />
 		<None Remove="Style\默认背景.jpg" />
@@ -86,7 +86,7 @@
 		<Resource Include="Resource\Assets\btn5.jpg" />
 		<Resource Include="Resource\Assets\btn6.jpg" />
 		<Resource Include="Resource\Assets\btn7.jpg" />
-		<Resource Include="Resource\Assets\看板娘.png" />
+		<Resource Include="Resource\Assets\Woman.png" />
 		<Resource Include="Resource\Assets\站酷快乐体2016修订版.ttf" />
 	</ItemGroup>
 	<ItemGroup>
