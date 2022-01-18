@@ -166,7 +166,6 @@ namespace Lote.Views.AnimeViews
                          }
                      };
                  }).Runs();
-
                 this.Detail = new ObservableCollection<AnimeDetailResult>(AnimeDetail.DetailResults);
             });
         }
