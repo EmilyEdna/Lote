@@ -7,6 +7,10 @@
   </PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Gapotchenko.Eazfuscator.NET" Version="2021.4.259">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 		<PackageReference Include="Microsoft.ClearScript.V8" Version="7.2.1" />
 		<PackageReference Include="Microsoft.ClearScript.V8.Native.win-x64" Version="7.2.1" />
 		<PackageReference Include="SqlSugarCore" Version="5.0.5.3" />

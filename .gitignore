@@ -361,9 +361,3 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-/Lib/Anime.SDK.dll
-/Lib/LightNovel.SDK.dll
-/Lib/Novel.SDK.dll
-/Lib/Manga.SDK.dll
-/Lib/Music.SDK.dll
-/Lib/Wallpaper.SDK.dll

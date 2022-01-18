@@ -37,7 +37,7 @@
 ![p11.png](Image/p11.png)![p12.png](Image/p12.png)
 
 ### 下载链接：
-[轻风神器_V1](https://www.baidu.com)
+[轻风神器](https://www.baidu.com)
 
 ### 软件截图：
 
