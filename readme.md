@@ -30,22 +30,26 @@
 
 ### 打赏作者：
 
-![pic_9.png](Image/pic_9.png)![pic_10.png](Image/pic_10.png)
+![p11.png](Image/p11.png)![p12.png](Image/p12.png)
 
 ### 软件截图：
 
-![pic_1.jpg](Image/pic_1.jpg)
+![p1.png](Image/p1.png)
 
-![pic_2.jpg](Image/pic_2.jpg)
+![p2.png](Image/p2.png)
 
-![pic_3.jpg](Image/pic_3.jpg)
+![p3.png](Image/p3.png)
 
-![pic_4.jpg](Image/pic_4.jpg)
+![p4.png](Image/p4.png)
 
-![pic_5.jpg](Image/pic_5.jpg)
+![p5.png](Image/p5.png)
 
-![pic_6.jpg](Image/pic_6.jpg)
+![p6.png](Image/p6.png)
 
-![pic_7.jpg](Image/pic_7.jpg)
+![p7.png](Image/p7.png)
 
-![pic_8.jpg](Image/pic_8.jpg)
+![p8.png](Image/p8.png)
+
+![p9.png](Image/p9.png)
+
+![p10.png](Image/p10.png)
