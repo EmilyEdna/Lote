@@ -32,12 +32,14 @@
 
 2.此软件仅供学习使用，不准不能用于商业。
 
+3.找到目录下的Lote.exe运行。
+
 ### 打赏作者：
 
 ![p11.png](Image/p11.png)![p12.png](Image/p12.png)
 
 ### 下载链接：
-
+[轻风神器](https://github.com/EmilyEdna/Lote/releases/download/ver_1.0.0/Lote.7z)
 
 ### 软件截图：
 
