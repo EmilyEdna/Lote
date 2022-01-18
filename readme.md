@@ -2,7 +2,11 @@
 
 ### 项目简介：
 
-一款基于C#.NET 6开发的WPF桌面软件，支持在线看小说，轻小说，上K站（需要梯子），看动漫，全网听歌等等，界面采用[MaterialDesignThemes](https://github.com/MaterialDesignInXAML/MaterialDesignInXamlToolkit) 和[HandyControl](https://github.com/ghost1372/HandyControls)进行页面绘制，内部播放采用的是windows版本VLCX64和DPlayer，不支持低分辨率屏幕，有好的建议和BUG请提交在[此处](https://github.com/EmilyEdna/Lote/issues)
+一款基于C#.NET 6开发的WPF桌面软件，支持在线看小说，轻小说，上K站（需要梯子），看动漫，看漫画，全网听歌等等。
+
+界面采用[MaterialDesignThemes](https://github.com/MaterialDesignInXAML/MaterialDesignInXamlToolkit) 和[HandyControl](https://github.com/ghost1372/HandyControls)进行页面绘制，内部播放采用的是windows版本VLCX64和DPlayer，不支持低分辨率屏幕.
+
+有好的建议和BUG请提交在[此处](https://github.com/EmilyEdna/Lote/issues)
 
 ### 功能介绍：
 
@@ -31,6 +35,9 @@
 ### 打赏作者：
 
 ![p11.png](Image/p11.png)![p12.png](Image/p12.png)
+
+### 下载链接：
+[轻风神器_V1](https://www.baidu.com)
 
 ### 软件截图：
 
