@@ -107,63 +107,31 @@
             <WrapPanel Orientation="Vertical" Height="728">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="300"/>
+                        <RowDefinition Height="298"/>
+                        <RowDefinition Height="430"/>
                     </Grid.RowDefinitions>
-                    <WrapPanel Orientation="Vertical" x:Name="Navs">
-                        <L:LoteButton Content="小说(Ctrl+N)" 
-                              Source="/Resource/Assets/btn1.jpg" 
-                              Width="240"
-                              Height="40"
-                              Style="{DynamicResource LeftBtn}"  
-                              Command="{S:Action Redirect}"
-                              CommandParameter="1"/>
-                        <L:LoteButton Content="轻小说(Ctrl+L)" 
-                              Source="/Resource/Assets/btn2.jpg" 
-                              Width="240"
-                              Height="40"
-                              Style="{DynamicResource LeftBtn}"  
-                              Command="{S:Action Redirect}"
-                              CommandParameter="2"/>
-                        <L:LoteButton Content="动漫(Ctrl+A)" 
-                              Source="/Resource/Assets/btn3.jpg" 
-                              Width="240"
-                              Height="40"
-                              Style="{DynamicResource LeftBtn}"  
-                              Command="{S:Action Redirect}"
-                              CommandParameter="3"/>
-                        <L:LoteButton Content="漫画(Ctrl+M)" 
-                              Source="/Resource/Assets/btn4.jpg" 
-                              Width="240"
-                              Height="40"
-                              Style="{DynamicResource LeftBtn}"  
-                              Command="{S:Action Redirect}"
-                              CommandParameter="4"/>
-                        <L:LoteButton Content="壁纸(Ctrl+W)" 
-                              Source="/Resource/Assets/btn5.jpg" 
-                              Width="240"
-                              Height="40"
-                              Style="{DynamicResource LeftBtn}"  
-                              Command="{S:Action Redirect}"
-                              CommandParameter="5"/>
-                        <L:LoteButton Content="音乐(Ctrl+Y)" 
-                              Source="/Resource/Assets/btn6.jpg" 
-                              Width="240"
-                              Height="40"
-                              Style="{DynamicResource LeftBtn}"  
-                              Command="{S:Action Redirect}"
-                              CommandParameter="6"/>
-                        <L:LoteButton Content="设置(Ctrl+S)" 
-                              Source="/Resource/Assets/btn7.jpg" 
-                              Width="240"
-                              Height="40"
-                              Style="{DynamicResource LeftBtn}"  
-                              Command="{S:Action Redirect}"
-                              CommandParameter="7"/>
-                    </WrapPanel>
-                    <Border Grid.Row="1" Height="300">
+                    <hc:ScrollViewer>
+                        <WrapPanel Orientation="Vertical" x:Name="Navs">
+                            <ItemsControl ItemsSource="{Binding Nav}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <L:LoteButton Content="{Binding FuncName}" 
+                                            Source="{Binding ImageRoute}" 
+                                            Width="240"
+                                            Height="40"
+                                            Style="{DynamicResource LeftBtn}"  
+                                            Command="{S:Action Redirect}"
+                                            CommandParameter="{Binding CommandParam}"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </WrapPanel>
+                    </hc:ScrollViewer>
+                    <Border Grid.Row="1"  Height="400">
                         <Border.Background>
-                            <ImageBrush ImageSource="/Resource/Assets/Woman.png" Stretch="UniformToFill" Opacity="0.5"/>
+                            <ImageBrush ImageSource="/Resource/Assets/Woman.png" 
+                               Stretch="UniformToFill" 
+                               Opacity="0.5" />
                         </Border.Background>
                     </Border>
                 </Grid>

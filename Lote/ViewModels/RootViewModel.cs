@@ -1,5 +1,6 @@
 ﻿using Lote.Core.Common;
 using Lote.NotifyUtil;
+using Lote.ViewModels.DTO;
 using Lote.Views.AnimeViews;
 using Lote.Views.LightNovelViews;
 using Lote.Views.MangaViews;
@@ -9,6 +10,7 @@ using Lote.Views.OptionViews;
 using Lote.Views.WallpaperViews;
 using Stylet;
 using StyletIoC;
+using System.Collections.ObjectModel;
 using System.Windows;
 using XExten.Advance.LinqFramework;
 
@@ -20,7 +22,16 @@ namespace Lote.ViewModels
         public RootViewModel(IContainer container)
         {
             this.container = container;
+            Nav = new RootViewDTO().Datas();
         }
+
+        private ObservableCollection<RootViewDTO> _Nav;
+        public ObservableCollection<RootViewDTO> Nav
+        {
+            get { return _Nav; }
+            set { SetAndNotify(ref _Nav, value); }
+        }
+
         public void NavigateTo(IScreen screen)
         {
             ActivateItem(screen);
