@@ -10,6 +10,7 @@
            xmlns:hc="https://handyorg.github.io/handycontrol"
            mc:Ignorable="d"
            xmlns:Design="http://materialdesigninxaml.net/winfx/xaml/themes"
+           xmlns:tb="http://www.hardcodet.net/taskbar"
            d:DataContext="{d:DesignInstance Type=viewModels:RootViewModel}"
            WindowStartupLocation="CenterScreen"
            Height="800" 
@@ -150,5 +151,24 @@
                 <ContentControl  S:View.Model="{Binding ActiveItem}" x:Name="Contents"/>
             </WrapPanel>
         </Grid>
+        <tb:TaskbarIcon IconSource="/Resource/Assets/Icon.ico"
+                        DoubleClickCommand="{S:Action ShowWindow}">
+            <tb:TaskbarIcon.ContextMenu>
+                <ContextMenu FontFamily="/Lote;component/Resource/Assets/#HappyZcool-2016" Style="{DynamicResource LoteContextMenu}">
+                    <MenuItem Header="打开漫画下载"/>
+                    <MenuItem Header="打开音乐下载"/>
+                    <MenuItem Header="打开小说下载"/>
+                    <Separator />
+                    <MenuItem Header="退出软件"/>
+                </ContextMenu>
+            </tb:TaskbarIcon.ContextMenu>
+            <tb:TaskbarIcon.TrayToolTip>
+                <Border Background="White" Padding="3" BorderThickness="0" CornerRadius="5">
+                    <TextBlock Text="{Binding Soft}"
+                               Foreground="#FFED556A"
+                               FontFamily="/Lote;component/Resource/Assets/#HappyZcool-2016"/>
+                </Border>
+            </tb:TaskbarIcon.TrayToolTip>
+        </tb:TaskbarIcon>
     </Grid>
 </L:LoteWindow>

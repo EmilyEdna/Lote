@@ -58,7 +58,10 @@ namespace Lote.Views
 
         private void Min()
         {
-            this.window.WindowState = WindowState.Minimized;
+            if (Application.Current.MainWindow != null)
+            {
+                Application.Current.MainWindow.Visibility= Visibility.Collapsed;
+            }
         }
 
         private void ThemeSelect(object sender, SelectionChangedEventArgs e)

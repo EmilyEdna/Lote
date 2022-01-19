@@ -1,6 +1,7 @@
 ﻿using Lote.Core.Common;
 using Lote.NotifyUtil;
 using Lote.ViewModels.DTO;
+using Lote.Views;
 using Lote.Views.AnimeViews;
 using Lote.Views.LightNovelViews;
 using Lote.Views.MangaViews;
@@ -12,6 +13,7 @@ using Lote.Views.WallpaperViews;
 using Stylet;
 using StyletIoC;
 using System.Collections.ObjectModel;
+using System.Reflection;
 using System.Windows;
 using XExten.Advance.LinqFramework;
 
@@ -23,7 +25,8 @@ namespace Lote.ViewModels
         public RootViewModel(IContainer container)
         {
             this.container = container;
-            Nav = new RootViewDTO().Datas();
+            this.Nav = new RootViewDTO().Datas();
+            this.Soft = $"轻风神器Ver_{Assembly.GetExecutingAssembly().GetName().Version}";
         }
 
         private ObservableCollection<RootViewDTO> _Nav;
@@ -31,6 +34,13 @@ namespace Lote.ViewModels
         {
             get { return _Nav; }
             set { SetAndNotify(ref _Nav, value); }
+        }
+
+        private string _Soft;
+        public string Soft
+        {
+            get { return _Soft; }
+            set { SetAndNotify(ref _Soft, value); }
         }
 
         public void NavigateTo(IScreen screen)
@@ -72,6 +82,14 @@ namespace Lote.ViewModels
                     break;
                 default:
                     break;
+            }
+        }
+
+        public void ShowWindow()
+        {
+            if (Application.Current.MainWindow != null)
+            {
+                Application.Current.MainWindow.Visibility=Visibility.Visible;
             }
         }
     }
