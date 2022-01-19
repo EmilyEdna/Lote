@@ -7,6 +7,7 @@ using Lote.Views.MangaViews;
 using Lote.Views.MusicViews;
 using Lote.Views.NovelViews;
 using Lote.Views.OptionViews;
+using Lote.Views.UserCenterViews;
 using Lote.Views.WallpaperViews;
 using Stylet;
 using StyletIoC;
@@ -65,6 +66,9 @@ namespace Lote.ViewModels
                     break;
                 case MenuFuncEunm.Setting:
                     NavigateTo(container.Get<OptionViewModel>());
+                    break;
+                case MenuFuncEunm.UserCenter:
+                    NavigateTo(container.Get<UserCenterViewModel>());
                     break;
                 default:
                     break;

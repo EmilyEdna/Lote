@@ -194,7 +194,13 @@
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <WrapPanel Orientation="Horizontal" Margin="2" Width="600">
-                                    <TextBlock Style="{StaticResource TextBlockDefaultPrimary}"><Run Text="{Binding SongName}" Foreground="#FFFF5555"/><Run Text=" "/><Run Text="{Binding SongAlbumName, StringFormat=(\{0\})}" Foreground="DimGray" FontSize="10"/><Run Text=" "/><Run Text="————" Foreground="DimGray"/></TextBlock>
+                                    <TextBlock Style="{StaticResource TextBlockDefaultPrimary}">
+                                        <Run Text="{Binding SongName}" Foreground="#FFFF5555"/>
+                                        <Run Text=" "/>
+                                        <Run Text="{Binding SongAlbumName, StringFormat=(\{0\})}" Foreground="DimGray" FontSize="10"/>
+                                        <Run Text=" "/>
+                                        <Run Text="————" Foreground="DimGray"/>
+                                    </TextBlock>
                                     <TextBlock Style="{StaticResource TextBlockDefaultPrimary}" 
                                                Text="{Binding SongArtistName, ConverterParameter=4, Converter={StaticResource ContentConverter}}" 
                                                Foreground="White"/>

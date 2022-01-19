@@ -10,7 +10,7 @@ namespace Lote.Override
     public class LoteScrollViewer : ScrollViewer
     {
 
-        public static readonly DependencyProperty VerticalOffsetsProperty = DependencyProperty.RegisterAttached("VerticalOffset", typeof(double), typeof(ScrollViewerBehavior), new UIPropertyMetadata(0.0, OnVerticalOffsetChanged));
+        public static readonly DependencyProperty VerticalOffsetsProperty = DependencyProperty.RegisterAttached("VerticalOffset", typeof(double), typeof(ScrollViewerDependencyProperty), new UIPropertyMetadata(0.0, OnVerticalOffsetChanged));
         public static void SetVerticalOffset(FrameworkElement target, double value) => target.SetValue(VerticalOffsetsProperty, value);
         public static double GetVerticalOffset(FrameworkElement target) => (double)target.GetValue(VerticalOffsetsProperty);
         private static void OnVerticalOffsetChanged(DependencyObject target, DependencyPropertyChangedEventArgs e) => (target as ScrollViewer)?.ScrollToVerticalOffset((double)e.NewValue);

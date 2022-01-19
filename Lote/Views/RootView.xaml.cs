@@ -1,6 +1,7 @@
 ﻿using Lote.Common;
 using Lote.Core.Common;
 using Lote.Override;
+using Lote.ViewModels;
 using Lote.Views.MusicViews;
 using System;
 using System.Windows;
@@ -124,6 +125,11 @@ namespace Lote.Views
             {
                 this.Source = new BitmapImage(new Uri("/Resource/Assets/Backgroud4.jpg", UriKind.Relative));
             }
+        }
+
+        private void UserCenterClick(object sender, MouseButtonEventArgs e)
+        {
+            (this.DataContext as RootViewModel).Redirect("8");
         }
     }
 }

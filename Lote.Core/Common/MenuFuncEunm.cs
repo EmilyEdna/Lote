@@ -36,6 +36,10 @@ namespace Lote.Core.Common
         /// <summary>
         /// 设置
         /// </summary>
-        Setting
+        Setting,
+        /// <summary>
+        /// 用户中心
+        /// </summary>
+        UserCenter
     }
 }

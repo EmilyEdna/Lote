@@ -9,7 +9,10 @@ using System.Windows.Input;
 
 namespace Lote.Common
 {
-    public class ScrollViewerBehavior
+    /// <summary>
+    /// 加载更多无限滚动
+    /// </summary>
+    public class ScrollViewerDependencyProperty
     {
         public static ICommand GetAtEndCommand(DependencyObject obj)
         {
@@ -19,7 +22,7 @@ namespace Lote.Common
         {
             obj.SetValue(AtEndCommandProperty, value);
         }
-        public static readonly DependencyProperty AtEndCommandProperty = DependencyProperty.RegisterAttached("AtEndCommand", typeof(ICommand),typeof(ScrollViewerBehavior), new PropertyMetadata(OnAtEndCommandChanged));
+        public static readonly DependencyProperty AtEndCommandProperty = DependencyProperty.RegisterAttached("AtEndCommand", typeof(ICommand),typeof(ScrollViewerDependencyProperty), new PropertyMetadata(OnAtEndCommandChanged));
         public static void OnAtEndCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             FrameworkElement element = (FrameworkElement)d;

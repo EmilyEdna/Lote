@@ -39,14 +39,22 @@ namespace Lote
                 var result = HandyControl.Controls.MessageBox.Info("检测到新版本，即将升级", "提示");
                 if (result == MessageBoxResult.OK)
                 {
-                    Process process = new Process();
-                    process.StartInfo.FileName = Path.Combine(Environment.CurrentDirectory, "Lote.Upgrade.exe");
-                    process.StartInfo.CreateNoWindow = true;
-                    process.Start();//启动
-                    process.CloseMainWindow();//通过向进程的主窗口发送关闭消息来关闭拥有用户界面的进程
-                    process.Close();//释放与此组件关联的所有资源
-                    Environment.Exit(0);
-                    Application.Current.Shutdown();
+                    try
+                    {
+                        Process process = new Process();
+                        process.StartInfo.FileName = Path.Combine(Environment.CurrentDirectory, "Lote.Upgrade.exe");
+                        process.StartInfo.CreateNoWindow = true;
+                        process.Start();//启动
+                        process.CloseMainWindow();//通过向进程的主窗口发送关闭消息来关闭拥有用户界面的进程
+                        process.Close();//释放与此组件关联的所有资源
+                        Environment.Exit(0);
+                        Application.Current.Shutdown();
+                    }
+                    catch (Exception)
+                    {
+                        Environment.Exit(0);
+                        Application.Current.Shutdown();
+                    }
                 }
             }
 
