@@ -76,7 +76,7 @@ namespace Lote.CommonWindow
             {
                 FileInfo infomation = new FileInfo(root[0].ToString());
                 var ChapterInfo = vm.Chapters.FirstOrDefault(t => t.TagKey == infomation.Directory.Name);
-                var dir = SyncStatic.CreateDir(Path.Combine(Environment.CurrentDirectory, "LoteDown", "Manga", ChapterInfo.Name, ChapterInfo.Title));
+                var dir = SyncStatic.CreateDir(Path.Combine(Environment.CurrentDirectory, "LoteDown", "Manga", Helper.FileNameFilter(ChapterInfo.Name), ChapterInfo.Title));
                 foreach (var item in root)
                 {
                     FileInfo info = new FileInfo(item.ToString());
