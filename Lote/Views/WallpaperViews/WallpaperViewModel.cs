@@ -23,6 +23,7 @@ using Wallpaper.SDK.ViewModel.Response;
 using XExten.Advance.HttpFramework.MultiCommon;
 using XExten.Advance.HttpFramework.MultiFactory;
 using XExten.Advance.LinqFramework;
+using XExten.Advance.StaticFramework;
 
 namespace Lote.Views.WallpaperViews
 {
@@ -256,7 +257,9 @@ namespace Lote.Views.WallpaperViews
 
                 var FileName = (!result.OriginalPng.IsNullOrEmpty() ? result.OriginalPng : result.OriginalJepg).Split("/").LastOrDefault();
 
-                var dir = FileUtily.Instance.DownFile(bytes, "Wallpaper", FileName);
+                var dir = SyncStatic.CreateDir(Path.Combine(Environment.CurrentDirectory, "LoteDown", "Wallpaper", $"{result.Author}"));
+                var fn = SyncStatic.CreateFile(Path.Combine(dir, FileName));
+                SyncStatic.WriteFile(bytes, fn);
                 Process.Start("explorer.exe", dir);
             });
         }

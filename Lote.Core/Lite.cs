@@ -18,11 +18,14 @@ namespace Lote.Core
             {
                 DbType = DbType.Sqlite,
                 InitKeyType = InitKeyType.Attribute,
-                ConnectionString = $"DataSource={FileUtily.Instance.CreateFile("LoteDb", "Lote.db")}",
+                ConnectionString = $"DataSource={DbRoute}",
                 IsAutoCloseConnection = true,
             });
             return db;
         }
+
+        private string DbRoute => SyncStatic.CreateFile(Path.Combine(SyncStatic.CreateDir(Path.Combine(Environment.CurrentDirectory, "LoteDb")), "Lote.db"));
+
         public void InitDataBase()
         {
             Type[] Table = {

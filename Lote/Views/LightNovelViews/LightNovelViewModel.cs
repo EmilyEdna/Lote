@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -416,8 +417,9 @@ namespace Lote.Views.LightNovelViews
                             }
                         };
                     }).Runs();
-
-                    var dir = FileUtily.Instance.DownFile(LightNovelDown.DownResult.Down, "LightNovel", $"{BookName}.txt");
+                    var dir = SyncStatic.CreateDir(Path.Combine(Environment.CurrentDirectory, "LoteDown", "LightNovel", "BookName"));
+                    var fn = SyncStatic.CreateFile(Path.Combine(dir, $"{BookName}.txt"));
+                    SyncStatic.WriteFile(LightNovelDown.DownResult.Down, fn);
                     MessageBox.Info("下载完成", "提示");
                     Process.Start("explorer.exe", dir);
                     return false;

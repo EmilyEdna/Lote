@@ -4,12 +4,15 @@ using Lote.Override;
 using Lote.ViewModels;
 using Lote.Views.MusicViews;
 using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using XExten.Advance.LinqFramework;
+using XExten.Advance.StaticFramework;
 
 namespace Lote.Views
 {
@@ -60,7 +63,7 @@ namespace Lote.Views
         {
             if (Application.Current.MainWindow != null)
             {
-                Application.Current.MainWindow.Visibility= Visibility.Collapsed;
+                Application.Current.MainWindow.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -133,6 +136,31 @@ namespace Lote.Views
         private void UserCenterClick(object sender, MouseButtonEventArgs e)
         {
             (this.DataContext as RootViewModel).Redirect("8");
+        }
+
+        private void ProcessClick(object sender, RoutedEventArgs e)
+        {
+            var Icon = (TaskIcoFuncEnum)(sender as MenuItem).CommandParameter.AsString().AsInt();
+            string dir = string.Empty;
+            switch (Icon)
+            {
+                case TaskIcoFuncEnum.Manga:
+                    dir = SyncStatic.CreateDir(System.IO.Path.Combine(Environment.CurrentDirectory, "LoteDown", "Manga"));
+                    break;
+                case TaskIcoFuncEnum.Music:
+                    dir = SyncStatic.CreateDir(System.IO.Path.Combine(Environment.CurrentDirectory, "LoteDown", "Music"));
+                    break;
+                case TaskIcoFuncEnum.Wallpaper:
+                    dir = SyncStatic.CreateDir(System.IO.Path.Combine(Environment.CurrentDirectory, "LoteDown", "Wallpaper"));
+                    break;
+                case TaskIcoFuncEnum.Novel:
+                    dir = SyncStatic.CreateDir(System.IO.Path.Combine(Environment.CurrentDirectory, "LoteDown", "LightNovel"));
+                    break;
+                default:
+                    break;
+            }
+            if(!dir.IsNullOrEmpty())
+                Process.Start("explorer.exe", dir);
         }
     }
 }

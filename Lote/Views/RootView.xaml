@@ -155,11 +155,14 @@
                         DoubleClickCommand="{S:Action ShowWindow}">
             <tb:TaskbarIcon.ContextMenu>
                 <ContextMenu FontFamily="/Lote;component/Resource/Assets/#HappyZcool-2016" Style="{DynamicResource LoteContextMenu}">
-                    <MenuItem Header="打开漫画下载"/>
-                    <MenuItem Header="打开音乐下载"/>
-                    <MenuItem Header="打开小说下载"/>
+                    <MenuItem Header="个人中心" Command="{S:Action Redirect}" CommandParameter="8"/>
                     <Separator />
-                    <MenuItem Header="退出软件"/>
+                    <MenuItem Header="打开漫画" Click="ProcessClick" CommandParameter="0"/>
+                    <MenuItem Header="打开音乐" Click="ProcessClick" CommandParameter="1"/>
+                    <MenuItem Header="打开壁纸" Click="ProcessClick" CommandParameter="2"/>
+                    <MenuItem Header="打开小说" Click="ProcessClick" CommandParameter="3"/>
+                    <Separator />
+                    <MenuItem Header="退出软件" Click="SysClick" CommandParameter="2"/>
                 </ContextMenu>
             </tb:TaskbarIcon.ContextMenu>
             <tb:TaskbarIcon.TrayToolTip>

@@ -16,6 +16,7 @@ using System.Reflection;
 using XExten.Advance.HttpFramework.MultiFactory;
 using HandyControl.Data;
 using System.Diagnostics;
+using XExten.Advance.StaticFramework;
 
 namespace Lote
 {
@@ -117,7 +118,7 @@ namespace Lote
         /// <param name="e"></param>
         protected override void OnExit(ExitEventArgs e)
         {
-            FileUtily.Instance.DeleteFolder(Path.Combine(Environment.CurrentDirectory, "Lote.exe.WebView2"));
+            SyncStatic.DeleteFolder(Path.Combine(Environment.CurrentDirectory, "Lote.exe.WebView2"));
             base.OnExit(e);
         }
 

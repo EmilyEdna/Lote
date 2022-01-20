@@ -78,6 +78,8 @@ namespace Lote.ViewModels
                     NavigateTo(container.Get<OptionViewModel>());
                     break;
                 case MenuFuncEunm.UserCenter:
+                    if (Application.Current.MainWindow.Visibility == Visibility.Collapsed)
+                        Application.Current.MainWindow.Visibility = Visibility.Visible;
                     NavigateTo(container.Get<UserCenterViewModel>());
                     break;
                 default:
@@ -89,7 +91,7 @@ namespace Lote.ViewModels
         {
             if (Application.Current.MainWindow != null)
             {
-                Application.Current.MainWindow.Visibility=Visibility.Visible;
+                Application.Current.MainWindow.Visibility = Visibility.Visible;
             }
         }
     }
