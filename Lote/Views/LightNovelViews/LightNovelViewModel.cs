@@ -104,7 +104,7 @@ namespace Lote.Views.LightNovelViews
             if (root.UseAuthorWKInfo)
                 return new Dictionary<string, string> { { root.WkAccount.IsNullOrEmpty() ? "-" : root.WkAccount, root.WkPwd.IsNullOrEmpty() ? "-" : root.WkPwd } };
             else
-                return new Dictionary<string, string> { { "kilydoll365", "sion8550" } };
+                return new Dictionary<string, string> { { Helper.AuthorWKAccount, Helper.AuthorWKPwd } };
         }
         protected override void OnViewLoaded()
         {
@@ -202,8 +202,11 @@ namespace Lote.Views.LightNovelViews
                          }, new LightNovelProxy());
                      });
 
-                    LightNovelSingleCategory = new ObservableCollection<LightNovelSingleCategoryResults>(LightNovelSearch.SearchResults.Result.ToMapest<List<LightNovelSingleCategoryResults>>());
-                    Total = LightNovelSearch.SearchResults.TotalPage;
+                    if (LightNovelSearch.SearchResults.Result != null)
+                    {
+                        LightNovelSingleCategory = new ObservableCollection<LightNovelSingleCategoryResults>(LightNovelSearch.SearchResults.Result.ToMapest<List<LightNovelSingleCategoryResults>>());
+                        Total = LightNovelSearch.SearchResults.TotalPage;
+                    }
                 });
                 IsSearch = true;
             }, ex =>
@@ -352,45 +355,67 @@ namespace Lote.Views.LightNovelViews
 
         public void GetContent(LightNovelViewResult entity)
         {
-            SyncStatic.TryCatch(() =>
+            if (entity.IsDown)
             {
-                //内容
-                var LightNovelContent = LightNovelFactory.LightNovel(opt =>
+                var LightNovelDown = LightNovelFactory.LightNovel(opt =>
                 {
                     opt.RequestParam = new LightNovelRequestInput
                     {
-                        CacheSpan = CacheTime(),
-                        LightNovelType = LightNovelEnum.Content,
+                        LightNovelType = LightNovelEnum.Down,
                         Proxy = this.Proxy,
-                        Content = new LightNovelContent
+                        Down = new LightNovelDown
                         {
-                            ChapterURL = entity.ChapterURL,
+                            UId = entity.ChapterURL.AsInt(),
+                            BookName = BookName
                         }
                     };
                 }).Runs();
-
-                if (DownNovel(entity.ChapterURL, LightNovelContent.ContentResult.Content) == false)
-                    return;
-
-                var vm = container.Get<LightNovelContentWindowsViewModel>();
-                vm.LightNovelContent = LightNovelContent.ContentResult;
-                vm.Show = LightNovelContent.ContentResult.Image == null;
-                LightNovelContentWindows win = null;
-                if (data.ContainsKey(nameof(LightNovelContentWindows)))
+                var dir = SyncStatic.CreateDir(Path.Combine(Environment.CurrentDirectory, "LoteDown", "LightNovel", $"{Helper.FileNameFilter(BookName)}"));
+                var fn = SyncStatic.CreateFile(Path.Combine(dir, $"{Helper.FileNameFilter(BookName)}.txt"));
+                SyncStatic.WriteFile(LightNovelDown.DownResult.Down, fn);
+                Process.Start("explorer.exe", dir);
+            }
+            else
+            {
+                SyncStatic.TryCatch(() =>
                 {
-                    win = data[nameof(LightNovelContentWindows)];
-                    win.DataContext = vm;
-                }
-                else
-                {
-                    win = new LightNovelContentWindows();
-                    data[nameof(NovelContentWindows)] = win;
-                    win.DataContext = vm;
-                    win.Show();
-                }
+                //内容
+                var LightNovelContent = LightNovelFactory.LightNovel(opt =>
+                    {
+                        opt.RequestParam = new LightNovelRequestInput
+                        {
+                            CacheSpan = CacheTime(),
+                            LightNovelType = LightNovelEnum.Content,
+                            Proxy = this.Proxy,
+                            Content = new LightNovelContent
+                            {
+                                ChapterURL = entity.ChapterURL,
+                            }
+                        };
+                    }).Runs();
 
-            }, ex => MessageBox.Error("服务异常，请稍后重试", "错误"));
+                    if (DownNovel(entity.ChapterURL, LightNovelContent.ContentResult.Content) == false)
+                        return;
 
+                    var vm = container.Get<LightNovelContentWindowsViewModel>();
+                    vm.LightNovelContent = LightNovelContent.ContentResult;
+                    vm.Show = LightNovelContent.ContentResult.Image == null;
+                    LightNovelContentWindows win = null;
+                    if (data.ContainsKey(nameof(LightNovelContentWindows)))
+                    {
+                        win = data[nameof(LightNovelContentWindows)];
+                        win.DataContext = vm;
+                    }
+                    else
+                    {
+                        win = new LightNovelContentWindows();
+                        data[nameof(NovelContentWindows)] = win;
+                        win.DataContext = vm;
+                        win.Show();
+                    }
+
+                }, ex => MessageBox.Error("服务异常，请稍后重试", "错误"));
+            }
         }
 
         private bool DownNovel(string Url, string Check)
@@ -417,8 +442,8 @@ namespace Lote.Views.LightNovelViews
                             }
                         };
                     }).Runs();
-                    var dir = SyncStatic.CreateDir(Path.Combine(Environment.CurrentDirectory, "LoteDown", "LightNovel", "BookName"));
-                    var fn = SyncStatic.CreateFile(Path.Combine(dir, $"{BookName}.txt"));
+                    var dir = SyncStatic.CreateDir(Path.Combine(Environment.CurrentDirectory, "LoteDown", "LightNovel", $"{Helper.FileNameFilter(BookName)}"));
+                    var fn = SyncStatic.CreateFile(Path.Combine(dir, $"{Helper.FileNameFilter(BookName)}.txt"));
                     SyncStatic.WriteFile(LightNovelDown.DownResult.Down, fn);
                     MessageBox.Info("下载完成", "提示");
                     Process.Start("explorer.exe", dir);

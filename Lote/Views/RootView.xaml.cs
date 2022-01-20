@@ -25,7 +25,6 @@ namespace Lote.Views
         public Color color;
         private void SysClick(object sender, RoutedEventArgs e)
         {
-
             var btn = (sender as Button);
             var SysFunc = Enum.Parse<SysFuncEnum>(btn.CommandParameter.ToString());
             switch (SysFunc)
@@ -157,6 +156,17 @@ namespace Lote.Views
                     dir = SyncStatic.CreateDir(System.IO.Path.Combine(Environment.CurrentDirectory, "LoteDown", "LightNovel"));
                     break;
                 default:
+                    if (Contents != null)
+                    {
+                        if (Contents.Content is MusicView)
+                        {
+                            var view = (Contents.Content as MusicView);
+                            view.timer.Close();
+                            view.lyrictimer.Close();
+                        }
+                    }
+                    this.Close();
+                    Application.Current.Shutdown();
                     break;
             }
             if(!dir.IsNullOrEmpty())
