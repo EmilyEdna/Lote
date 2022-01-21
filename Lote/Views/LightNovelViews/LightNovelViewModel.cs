@@ -30,13 +30,13 @@ namespace Lote.Views.LightNovelViews
     public class LightNovelViewModel : Screen
     {
         private readonly IContainer container;
-        private readonly OptionRootDTO root;
+        private readonly LoteSettingDTO root;
         private readonly LightNovelProxy Proxy;
         private readonly IDictionary<string, LightNovelContentWindows> data;
         public LightNovelViewModel(IContainer container)
         {
             this.container = container;
-            this.root = container.Get<IOptionService>().Get() ?? new OptionRootDTO();
+            this.root = container.Get<IOptionService>().Get() ?? new LoteSettingDTO();
             this.Proxy = new LightNovelProxy
             {
                 IP = root.ProxyIP.IsNullOrEmpty() ? String.Empty : root.ProxyIP,

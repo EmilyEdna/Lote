@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lote.Core.Service.DTO
 {
-    public class OptionRootDTO
+    public class LoteSettingDTO
     {
         #region Proxy
         public Guid? Id { get; set; }

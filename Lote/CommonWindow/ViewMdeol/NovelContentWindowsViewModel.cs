@@ -1,5 +1,4 @@
-﻿using HandyControl.Tools.Extension;
-using Lote.Common;
+﻿using Lote.Common;
 using Lote.Core.Service;
 using Lote.Core.Service.DTO;
 using Novel.SDK;
@@ -10,25 +9,22 @@ using Novel.SDK.ViewModel.Response;
 using Stylet;
 using StyletIoC;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Windows.Media;
+using XExten.Advance.LinqFramework;
 
 namespace Lote.CommonWindow.ViewMdeol
 {
     public class NovelContentWindowsViewModel : Screen
     {
         private readonly IContainer container;
-        private readonly OptionRootDTO root;
+        private readonly LoteSettingDTO root;
         private readonly NovelProxy Proxy;
         public NovelContentWindowsViewModel(IContainer container)
         {
             this.container = container;
             this.FontSize = 22;
-            this.root = container.Get<IOptionService>().Get() ?? new OptionRootDTO();
+            this.root = container.Get<IOptionService>().Get() ?? new LoteSettingDTO();
             this.Proxy = new NovelProxy
             {
                 IP = root.ProxyIP.IsNullOrEmpty() ? String.Empty : root.ProxyIP,
@@ -49,6 +45,12 @@ namespace Lote.CommonWindow.ViewMdeol
         {
             get { return _FontSize; }
             set { SetAndNotify(ref _FontSize, value); }
+        }
+        private string _BookName;
+        public string BookName
+        {
+            get { return _BookName; }
+            set { SetAndNotify(ref _BookName, value); }
         }
         #endregion
 
@@ -84,6 +86,10 @@ namespace Lote.CommonWindow.ViewMdeol
                     };
                 }).Runs();
                 this.NovelContent = NovelContent.Contents;
+
+                LoteNovelHistoryDTO DTO = NovelContent.Contents.ToMapest<LoteNovelHistoryDTO>();
+                DTO.BookName = this.BookName;
+                container.Get<IHistoryService>().AddNovelHistory(DTO);
             });
         }, null);
         #endregion

@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Lote.Core.Model
 {
-    [SugarTable("PlayLyrics")]
-    public class PlayLyrics: BasicEntity
+    [SugarTable("LotePlayLyrics")]
+    public class LotePlayLyrics: BasicEntity
     {
         [SugarColumn(ColumnDataType = "varchar(150)", IsNullable = true)]
         public string SongId { get; set; }

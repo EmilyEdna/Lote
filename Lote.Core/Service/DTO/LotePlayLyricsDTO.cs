@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lote.Core.Service.DTO
 {
-    public class PlayLyricsDTO
+    public class LotePlayLyricsDTO
     {
         public string Time { get; set; }
         public string Lyric { get; set; }

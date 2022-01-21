@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Lote.Core.Model
 {
-    [SugarTable("GlobalSetting")]
-    public class GlobalSetting : BasicEntity
+    [SugarTable("LoteSetting")]
+    public class LoteSetting : BasicEntity
     {
         [SugarColumn(ColumnDataType ="varchar(80)", IsNullable = true)]
         public string ProxyIP { get; set; }

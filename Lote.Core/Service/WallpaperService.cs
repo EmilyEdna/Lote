@@ -12,16 +12,16 @@ namespace Lote.Core.Service
     public interface IWallpaperService
     {
         Task RemoveFavorite(long Id);
-        Task AddFavorite(WallpaperDTo input);
+        Task AddFavorite(LoteWallpaperDTo input);
         Task<PageWallpaperDTo> GetFavorite(string lable, int pageIndex);
         List<long> GetAllFavorite();
     }
     public class WallpaperService : Lite, IWallpaperService
     {
-        public Task AddFavorite(WallpaperDTo input)
+        public Task AddFavorite(LoteWallpaperDTo input)
         {
-            var entity = input.ToMapest<Favorite>();
-            var incloud = LiteBase().Queryable<Favorite>().Where(t => t.Id == input.Id).First();
+            var entity = input.ToMapest<LoteFavorite>();
+            var incloud = LiteBase().Queryable<LoteFavorite>().Where(t => t.Id == input.Id).First();
             if (incloud != null)
                 return Task.CompletedTask;
             return LiteBase().Insertable(entity).ExecuteCommandAsync();
@@ -29,26 +29,26 @@ namespace Lote.Core.Service
 
         public List<long> GetAllFavorite()
         {
-            return LiteBase().Queryable<Favorite>().Select(t => t.Id).ToList();
+            return LiteBase().Queryable<LoteFavorite>().Select(t => t.Id).ToList();
         }
 
         public Task<PageWallpaperDTo> GetFavorite(string lable, int pageIndex)
         {
             var Total = 0;
-            var result = LiteBase().Queryable<Favorite>()
+            var result = LiteBase().Queryable<LoteFavorite>()
                 .WhereIF(!lable.IsNullOrEmpty(), t => t.Label.Contains(lable))
                 .ToPageList(pageIndex, 12, ref Total);
             Total = (Total + 12 - 1) / 12;
             return Task.FromResult(new PageWallpaperDTo
             {
                 Total = Total,
-                Result = result.ToMapest<List<WallpaperDTo>>()
+                Result = result.ToMapest<List<LoteWallpaperDTo>>()
             });
         }
 
         public Task RemoveFavorite(long Id)
         {
-            return LiteBase().Deleteable<Favorite>(t => t.Id == Id).ExecuteCommandAsync();
+            return LiteBase().Deleteable<LoteFavorite>(t => t.Id == Id).ExecuteCommandAsync();
         }
     }
 }

@@ -17,6 +17,7 @@ using XExten.Advance.HttpFramework.MultiFactory;
 using HandyControl.Data;
 using System.Diagnostics;
 using XExten.Advance.StaticFramework;
+using XExten.Advance.EventFramework;
 
 namespace Lote
 {
@@ -71,6 +72,8 @@ namespace Lote
             builder.Bind<IOptionService>().To<OptionService>();
             builder.Bind<IWallpaperService>().To<WallpaperService>();
             builder.Bind<IMusicPlayService>().To<MusicPlayService>();
+            builder.Bind<IHistoryService>().To<HistoryService>();
+
 
             builder.Bind<NavigationController>().And<INavigationController>().To<NavigationController>().InSingletonScope();
         }
@@ -89,6 +92,7 @@ namespace Lote
         /// </summary>
         protected override void Launch()
         {
+            EventBus.Lancher(Assembly.Load("Lote"));
             base.Launch();
         }
 

@@ -23,13 +23,13 @@ namespace Lote.Views.MangaViews
     public class MangaViewModel : Screen
     {
         private readonly IContainer container;
-        private readonly OptionRootDTO root;
+        private readonly LoteSettingDTO root;
         private readonly MangaProxy Proxy;
         private readonly IDictionary<string, MangaReaderWindows> data;
         public MangaViewModel(IContainer container)
         {
             this.container = container;
-            this.root = container.Get<IOptionService>().Get() ?? new OptionRootDTO();
+            this.root = container.Get<IOptionService>().Get() ?? new LoteSettingDTO();
             this.Proxy = new MangaProxy
             {
                 IP = root.ProxyIP.IsNullOrEmpty() ? String.Empty : root.ProxyIP,

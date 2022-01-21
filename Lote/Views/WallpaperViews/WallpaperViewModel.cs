@@ -31,14 +31,14 @@ namespace Lote.Views.WallpaperViews
     {
         private readonly IContainer container;
         private readonly IWallpaperService wallpaperService;
-        private readonly OptionRootDTO root;
+        private readonly LoteSettingDTO root;
         private readonly WallpaperProxy Proxy;
         private Dictionary<string, WallpaperPreviewWindows> data;
         public WallpaperViewModel(IContainer container)
         {
             this.PageIndex = 1;
             this.container = container;
-            this.root = container.Get<IOptionService>().Get() ?? new OptionRootDTO();
+            this.root = container.Get<IOptionService>().Get() ?? new LoteSettingDTO();
             this.wallpaperService = container.Get<IWallpaperService>();
             this.Proxy = new WallpaperProxy
             {
@@ -266,7 +266,7 @@ namespace Lote.Views.WallpaperViews
 
         public void NoFavorite(long Id)
         {
-            var dto = this.Wallpaper.FirstOrDefault(t => t.Id == Id).ToMapest<WallpaperDTo>();
+            var dto = this.Wallpaper.FirstOrDefault(t => t.Id == Id).ToMapest<LoteWallpaperDTo>();
             wallpaperService.AddFavorite(dto);
 
             var Temp = this.Wallpaper.ToList();

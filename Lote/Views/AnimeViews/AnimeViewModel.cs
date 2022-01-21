@@ -23,14 +23,14 @@ namespace Lote.Views.AnimeViews
     public class AnimeViewModel : Screen
     {
         private readonly IContainer container;
-        private readonly OptionRootDTO root;
+        private readonly LoteSettingDTO root;
         private readonly AnimeProxy Proxy;
         private readonly IDictionary<string, AnimePlayWindowsByVLC> VLC;
         private readonly IDictionary<string, AnimePlayWindowsByWEB> DPlayer;
         public AnimeViewModel(IContainer container)
         {
             this.container = container;
-            this.root = container.Get<IOptionService>().Get() ?? new OptionRootDTO();
+            this.root = container.Get<IOptionService>().Get() ?? new LoteSettingDTO();
             this.Proxy = new AnimeProxy
             {
                 IP = root.ProxyIP.IsNullOrEmpty() ? String.Empty : root.ProxyIP,

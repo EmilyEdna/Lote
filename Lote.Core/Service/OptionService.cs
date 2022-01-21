@@ -11,14 +11,14 @@ namespace Lote.Core.Service
 {
     public interface IOptionService
     {
-        OptionRootDTO AddOrUpdate(OptionRootDTO input);
-        OptionRootDTO Get();
+        LoteSettingDTO AddOrUpdate(LoteSettingDTO input);
+        LoteSettingDTO Get();
     }
     public class OptionService : Lite, IOptionService
     {
-        public OptionRootDTO AddOrUpdate(OptionRootDTO input)
+        public LoteSettingDTO AddOrUpdate(LoteSettingDTO input)
         {
-            var Global = input.ToMapest<GlobalSetting>();
+            var Global = input.ToMapest<LoteSetting>();
             if (input.Id.HasValue)
             {
                 LiteBase().Updateable(Global).ExecuteCommandHasChange();
@@ -31,9 +31,9 @@ namespace Lote.Core.Service
             return input;
         }
 
-        public OptionRootDTO Get()
+        public LoteSettingDTO Get()
         {
-            return LiteBase().Queryable<GlobalSetting>().First().ToMapest<OptionRootDTO>();
+            return LiteBase().Queryable<LoteSetting>().First().ToMapest<LoteSettingDTO>();
         }
     }
 }

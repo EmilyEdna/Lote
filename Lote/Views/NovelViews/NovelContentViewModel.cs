@@ -17,21 +17,19 @@ using Lote.CommonWindow;
 using Lote.Core.Service;
 using Lote.Core.Service.DTO;
 using XExten.Advance.LinqFramework;
-
+using XExten.Advance.EventFramework.PublishEvent;
 
 namespace Lote.Views.NovelViews
 {
     public class NovelContentViewModel : Screen
     {
         private readonly IContainer container;
-        private readonly IDictionary<string, NovelContentWindows> data;
-        private readonly OptionRootDTO root;
+        private readonly LoteSettingDTO root;
         private readonly NovelProxy Proxy;
         public NovelContentViewModel(IContainer container)
         {
             this.container = container;
-            this.data = new Dictionary<string, NovelContentWindows>();
-            this.root = container.Get<IOptionService>().Get() ?? new OptionRootDTO();
+            this.root = container.Get<IOptionService>().Get() ?? new LoteSettingDTO();
             this.Proxy = new NovelProxy
             {
                 IP = root.ProxyIP.IsNullOrEmpty() ? String.Empty : root.ProxyIP,
@@ -112,19 +110,34 @@ namespace Lote.Views.NovelViews
             }).Runs();
             var vm = container.Get<NovelContentWindowsViewModel>();
             vm.NovelContent = NovelContent.Contents;
+            vm.BookName = this.NovelDetail.BookName;
+
             NovelContentWindows win = null;
-            if (data.ContainsKey(nameof(NovelContentWindows)))
+            if (BootResource.NovelContentWindow.ContainsKey(nameof(NovelContentWindows)))
             {
-                win = data[nameof(NovelContentWindows)];
+                win = BootResource.NovelContentWindow[nameof(NovelContentWindows)];
+                win.Close();
+                BootResource.NovelContentWindow.Clear();
+                win = new NovelContentWindows();
                 win.DataContext = vm;
+                BootResource.NovelContentWindow[nameof(NovelContentWindows)] = win;
+                win.Show();
             }
             else
             {
                 win = new NovelContentWindows();
-                data[nameof(NovelContentWindows)] = win;
                 win.DataContext = vm;
+                BootResource.NovelContentWindow[nameof(NovelContentWindows)] = win;
                 win.Show();
             }
+
+            LoteNovelHistoryDTO DTO = NovelContent.Contents.ToMapest<LoteNovelHistoryDTO>();
+            DTO.BookName = this.NovelDetail.BookName;
+            IEventPublish.Instance.DelayPublishAsync(item =>
+            {
+                item.Payload = DTO;
+                item.EventId = "AddNovelHistory";
+            }, 3000);
         }
         #endregion
     }

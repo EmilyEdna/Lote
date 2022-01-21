@@ -29,10 +29,11 @@ namespace Lote.Core
         public void InitDataBase()
         {
             Type[] Table = {
-                typeof(Favorite),
-                typeof(GlobalSetting),
-                typeof(PlayList),
-                typeof(PlayLyrics)
+                typeof(LoteFavorite),
+                typeof(LoteSetting),
+                typeof(LotePlayList),
+                typeof(LotePlayLyrics),
+                typeof(LoteNovelHistory)
             };
             LiteBase().CodeFirst.InitTables(Table);
         }

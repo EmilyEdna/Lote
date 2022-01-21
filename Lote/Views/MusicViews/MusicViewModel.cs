@@ -24,13 +24,13 @@ namespace Lote.Views.MusicViews
     public class MusicViewModel : Screen
     {
         private readonly IContainer container;
-        private readonly OptionRootDTO root;
+        private readonly LoteSettingDTO root;
         private readonly MusicProxy Proxy;
         private readonly IMusicPlayService MusciService;
         public MusicViewModel(IContainer container)
         {
             this.container = container;
-            this.root = container.Get<IOptionService>().Get() ?? new OptionRootDTO();
+            this.root = container.Get<IOptionService>().Get() ?? new LoteSettingDTO();
             this.MusciService = container.Get<IMusicPlayService>();
             this.Proxy = new MusicProxy
             {
@@ -70,8 +70,8 @@ namespace Lote.Views.MusicViews
             set { SetAndNotify(ref _SheetDetail, value); }
         }
 
-        public ObservableCollection<PlayListDTO> _PlayLists;
-        public ObservableCollection<PlayListDTO> PlayLists
+        public ObservableCollection<LotePlayListDTO> _PlayLists;
+        public ObservableCollection<LotePlayListDTO> PlayLists
         {
             get { return _PlayLists; }
             set { SetAndNotify(ref _PlayLists, value); }
@@ -215,7 +215,7 @@ namespace Lote.Views.MusicViews
                 CacheAddress = SyncStatic.WriteFile(filebytes, file);
             }
 
-            this.MusciService.AddPlayList(new PlayListDTO
+            this.MusciService.AddPlayList(new LotePlayListDTO
             {
                 Address = SongURL.SongPlayAddressResult.SongURL,
                 SongAlbum = input.SongAlbumName,
@@ -232,7 +232,7 @@ namespace Lote.Views.MusicViews
             this.MusciService.RemovePlayList(args);
             Init();
         }
-        public MusicLyricResult LoadLyric(PlayListDTO args)
+        public MusicLyricResult LoadLyric(LotePlayListDTO args)
         {
             var data = this.MusciService.GetLyrics(args.SongId, args.Platform);
             if (data != null)
@@ -566,7 +566,7 @@ namespace Lote.Views.MusicViews
         {
             var Result = this.MusciService.GetPlayList();
             this.Count = Result.Count;
-            this.PlayLists = new ObservableCollection<PlayListDTO>(Result);
+            this.PlayLists = new ObservableCollection<LotePlayListDTO>(Result);
         }
 
         protected override void OnViewLoaded()

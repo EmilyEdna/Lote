@@ -7,7 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lote", "Lote\Lote.csproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lote.Core", "Lote.Core\Lote.Core.csproj", "{7748ECFD-5664-4C8D-B89F-004E2338447C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lote.Upgrade", "Lote.Upgrade\Lote.Upgrade.csproj", "{09670B13-5301-41ED-9557-BBF3AE9CCD23}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lote.Upgrade", "Lote.Upgrade\Lote.Upgrade.csproj", "{09670B13-5301-41ED-9557-BBF3AE9CCD23}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6985C57A-1A4D-4738-8BB1-32336AA9716E}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

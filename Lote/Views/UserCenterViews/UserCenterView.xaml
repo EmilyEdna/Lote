@@ -12,6 +12,53 @@
              Height="728"
              Background="Transparent">
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <WrapPanel Grid.Row="0" Orientation="Vertical">
+            <Label Content="小说阅读记录" Style="{StaticResource MaterialDesignLabel}"/>
+            <ListBox ItemsSource="{Binding NovelHistories}"
+                     Style="{StaticResource WrapPanelVerticalListBox}"
+                     Background="Transparent" 
+                     BorderThickness="0">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <WrapPanel Orientation="Horizontal">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="320"/>
+                                    <ColumnDefinition Width="320"/>
+                                    <ColumnDefinition Width="320"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding BookName}" 
+                                           Style="{StaticResource TextBlockDefaultThiLight}" 
+                                           Foreground="Black" 
+                                           HorizontalAlignment="Left"/>
+                                <TextBlock Text="{Binding ChapterName}" 
+                                           Grid.Column="1" 
+                                           Style="{StaticResource TextBlockDefaultThiLight}" 
+                                           Foreground="Black" 
+                                           HorizontalAlignment="Left"/>
+                                <Button Content="继续阅读" 
+                                        Style="{StaticResource ButtonDashedDanger.Small}" 
+                                        BorderThickness="0" 
+                                        Grid.Column="2" 
+                                        Command="{S:Action Reader}"
+                                        CommandParameter="{Binding .}"
+                                        HorizontalAlignment="Left"/>
+                            </Grid>
+                        </WrapPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </WrapPanel>
+        <WrapPanel Grid.Row="1">
+
+        </WrapPanel>
+        <WrapPanel Grid.Row="2">
+
+        </WrapPanel>
     </Grid>
 </UserControl>

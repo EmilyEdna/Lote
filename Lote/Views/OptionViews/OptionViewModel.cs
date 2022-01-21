@@ -25,8 +25,8 @@ namespace Lote.Views.OptionViews
         }
 
         #region Property
-        private OptionRootDTO _Root;
-        public OptionRootDTO Root
+        private LoteSettingDTO _Root;
+        public LoteSettingDTO Root
         {
             get { return _Root; }
             set { SetAndNotify(ref _Root, value); }
@@ -36,7 +36,7 @@ namespace Lote.Views.OptionViews
         #region Method
         protected override void OnViewLoaded()
         {
-            Root = container.Get<IOptionService>().Get() ?? new OptionRootDTO();
+            Root = container.Get<IOptionService>().Get() ?? new LoteSettingDTO();
 
             base.OnViewLoaded();
         }

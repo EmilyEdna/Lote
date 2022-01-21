@@ -34,12 +34,12 @@ namespace Lote.Views.MusicViews
         public System.Timers.Timer timer;
         public System.Timers.Timer lyrictimer;
         private int PlayState = -1;
-        private IDictionary<string, PlayListDTO> CurrentPlay = null;
+        private IDictionary<string, LotePlayListDTO> CurrentPlay = null;
         private IDictionary<string, MusicLyricWindows> windows = null;
         public MusicView()
         {
             InitializeComponent();
-            CurrentPlay = new Dictionary<string, PlayListDTO>();
+            CurrentPlay = new Dictionary<string, LotePlayListDTO>();
             windows = new Dictionary<string, MusicLyricWindows>();
             timer = new System.Timers.Timer
             {
@@ -286,10 +286,10 @@ namespace Lote.Views.MusicViews
         /// 播放
         /// </summary>
         /// <param name="input"></param>
-        private void Playing(PlayListDTO input)
+        private void Playing(LotePlayListDTO input)
         {
             CurrentPlay.Clear();
-            CurrentPlay.Add(nameof(PlayListDTO), input);
+            CurrentPlay.Add(nameof(LotePlayListDTO), input);
             SongNameLbl.Content = input.SongName;
             MediaPlay.Close();
             MediaPlay.Source = new Uri(input.CacheAddress, UriKind.Absolute);

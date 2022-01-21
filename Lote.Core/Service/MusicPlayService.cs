@@ -12,39 +12,39 @@ namespace Lote.Core.Service
 {
     public interface IMusicPlayService
     {
-        List<PlayListDTO> GetPlayList();
-        void AddPlayList(PlayListDTO input);
+        List<LotePlayListDTO> GetPlayList();
+        void AddPlayList(LotePlayListDTO input);
         void RemovePlayList(Guid Id);
-        List<PlayLyricsDTO> GetLyrics(string SongId, int Platform);
+        List<LotePlayLyricsDTO> GetLyrics(string SongId, int Platform);
         void AddLyric(string SongId, int Platform, string Lyric);
         string GetPlayRoute(Guid Id);
     }
     public class MusicPlayService : Lite, IMusicPlayService
     {
-        public List<PlayListDTO> GetPlayList()
+        public List<LotePlayListDTO> GetPlayList()
         {
-            return LiteBase().Queryable<PlayList>().OrderBy(t => t.Span, OrderByType.Desc).ToList().ToMapper<PlayList, PlayListDTO>();
+            return LiteBase().Queryable<LotePlayList>().OrderBy(t => t.Span, OrderByType.Desc).ToList().ToMapper<LotePlayList, LotePlayListDTO>();
         }
 
-        public void AddPlayList(PlayListDTO input)
+        public void AddPlayList(LotePlayListDTO input)
         {
-            var play = input.ToMapest<PlayList>();
+            var play = input.ToMapest<LotePlayList>();
             LiteBase().Insertable(play).CallEntityMethod(t => t.Create()).ExecuteCommand();
         }
 
         public void RemovePlayList(Guid Id)
         {
-            LiteBase().Deleteable<PlayList>(t => t.Id == Id).ExecuteCommand();
+            LiteBase().Deleteable<LotePlayList>(t => t.Id == Id).ExecuteCommand();
         }
 
         public string GetPlayRoute(Guid Id)
         {
-            return LiteBase().Queryable<PlayList>().Where(t => t.Id == Id).First().CacheAddress;
+            return LiteBase().Queryable<LotePlayList>().Where(t => t.Id == Id).First().CacheAddress;
         }
 
-        public List<PlayLyricsDTO> GetLyrics(string SongId, int Platform)
+        public List<LotePlayLyricsDTO> GetLyrics(string SongId, int Platform)
         {
-            var result = LiteBase().Queryable<PlayLyrics>()
+            var result = LiteBase().Queryable<LotePlayLyrics>()
                  .Where(t => t.SongId == SongId)
                  .Where(t => t.Platform == Platform)
                  .First();
@@ -52,11 +52,11 @@ namespace Lote.Core.Service
                 return null;
             else
             {
-                List<PlayLyricsDTO> dto = new List<PlayLyricsDTO>();
+                List<LotePlayLyricsDTO> dto = new List<LotePlayLyricsDTO>();
                 result.Lyric.Split("_").ForArrayEach<string>(item =>
                 {
                     var data = item.Split("|");
-                    dto.Add(new PlayLyricsDTO
+                    dto.Add(new LotePlayLyricsDTO
                     {
                         Lyric = data.LastOrDefault(),
                         Time = data.FirstOrDefault()
@@ -68,7 +68,7 @@ namespace Lote.Core.Service
 
         public void AddLyric(string SongId, int Platform, string Lyric)
         {
-            var model = new PlayLyrics
+            var model = new LotePlayLyrics
             {
                 Lyric = Lyric,
                 Platform = Platform,
