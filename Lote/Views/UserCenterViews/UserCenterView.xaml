@@ -55,7 +55,41 @@
             </ListBox>
         </WrapPanel>
         <WrapPanel Grid.Row="1">
-
+            <Label Content="漫画阅读记录" Style="{StaticResource MaterialDesignLabel}"/>
+            <ListBox ItemsSource="{Binding MangaHistories}"
+                     Style="{StaticResource WrapPanelVerticalListBox}"
+                     Background="Transparent" 
+                     BorderThickness="0">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <WrapPanel Orientation="Horizontal">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="320"/>
+                                    <ColumnDefinition Width="320"/>
+                                    <ColumnDefinition Width="320"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding Name}" 
+                                           Style="{StaticResource TextBlockDefaultThiLight}" 
+                                           Foreground="Black" 
+                                           HorizontalAlignment="Left"/>
+                                <TextBlock Text="{Binding Title}" 
+                                           Grid.Column="1" 
+                                           Style="{StaticResource TextBlockDefaultThiLight}" 
+                                           Foreground="Black" 
+                                           HorizontalAlignment="Left"/>
+                                <Button Content="继续阅读" 
+                                        Style="{StaticResource ButtonDashedDanger.Small}" 
+                                        BorderThickness="0" 
+                                        Grid.Column="2" 
+                                        Command="{S:Action Watch}"
+                                        CommandParameter="{Binding .}"
+                                        HorizontalAlignment="Left"/>
+                            </Grid>
+                        </WrapPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </WrapPanel>
         <WrapPanel Grid.Row="2">
 

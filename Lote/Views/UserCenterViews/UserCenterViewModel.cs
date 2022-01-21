@@ -45,13 +45,15 @@ namespace Lote.Views.UserCenterViews
         {
             NovelHistories = new ObservableCollection<LoteNovelHistoryDTO>(container.Get<IHistoryService>().GetNovelHistory(NovelPageIndex));
         }
-        public void InitManga() {
+        public void InitManga()
+        {
             MangaHistories = new ObservableCollection<LoteMangaHistoryDTO>(container.Get<IHistoryService>().GetMangaHistory(MangaPageIndex));
         }
 
         protected override void OnViewLoaded()
         {
             InitNovel();
+            InitManga();
         }
         public void Watch(LoteMangaHistoryDTO args)
         {
