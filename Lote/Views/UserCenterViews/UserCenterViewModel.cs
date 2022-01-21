@@ -2,6 +2,7 @@
 using Lote.CommonWindow.ViewMdeol;
 using Lote.Core.Service;
 using Lote.Core.Service.DTO;
+using Manga.SDK.ViewModel.Response;
 using Novel.SDK.ViewModel.Response;
 using Stylet;
 using StyletIoC;
@@ -30,16 +31,41 @@ namespace Lote.Views.UserCenterViews
             set { SetAndNotify(ref _NovelHistories, value); }
         }
 
-        public int NovelPageIndex { get; set; }
+        private ObservableCollection<LoteMangaHistoryDTO> _MangaHistories;
+        public ObservableCollection<LoteMangaHistoryDTO> MangaHistories
+        {
+            get { return _MangaHistories; }
+            set { SetAndNotify(ref _MangaHistories, value); }
+        }
 
-        public void Init()
+        public int NovelPageIndex { get; set; }
+        public int MangaPageIndex { get; set; }
+
+        public void InitNovel()
         {
             NovelHistories = new ObservableCollection<LoteNovelHistoryDTO>(container.Get<IHistoryService>().GetNovelHistory(NovelPageIndex));
+        }
+        public void InitManga() {
+            MangaHistories = new ObservableCollection<LoteMangaHistoryDTO>(container.Get<IHistoryService>().GetMangaHistory(MangaPageIndex));
         }
 
         protected override void OnViewLoaded()
         {
-            Init();
+            InitNovel();
+        }
+        public void Watch(LoteMangaHistoryDTO args)
+        {
+            var vm = container.Get<MangaReaderWindowsViewModel>();
+            vm.Loading = true;
+            vm.Chapters = args.Chapters.ToModel<ObservableCollection<MangaChapterResult>>();
+            vm.Total = vm.Chapters.Count;
+            vm.Index = args.Index;
+            vm.InitCurrent();
+            //Open
+            BootResource.Manga(window =>
+            {
+                window.DataContext = vm;
+            });
         }
 
         public void Reader(LoteNovelHistoryDTO args)
@@ -47,25 +73,11 @@ namespace Lote.Views.UserCenterViews
             var vm = container.Get<NovelContentWindowsViewModel>();
             vm.NovelContent = args.ToMapest<NovelContentResult>();
             vm.BookName = args.BookName;
-
-            NovelContentWindows win = null;
-            if (BootResource.NovelContentWindow.ContainsKey(nameof(NovelContentWindows)))
+            //Open
+            BootResource.Novel(window =>
             {
-                win = BootResource.NovelContentWindow[nameof(NovelContentWindows)];
-                win.Close();
-                BootResource.NovelContentWindow.Clear();
-                win = new NovelContentWindows();
-                win.DataContext = vm;
-                BootResource.NovelContentWindow[nameof(NovelContentWindows)] = win;
-                win.Show();
-            }
-            else
-            {
-                win = new NovelContentWindows();
-                win.DataContext = vm;
-                BootResource.NovelContentWindow[nameof(NovelContentWindows)] = win;
-                win.Show();
-            }
+                window.DataContext = vm;
+            });
         }
     }
 }

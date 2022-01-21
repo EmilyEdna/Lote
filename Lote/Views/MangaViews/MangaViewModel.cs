@@ -16,6 +16,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XExten.Advance.EventFramework.PublishEvent;
 using XExten.Advance.LinqFramework;
 
 namespace Lote.Views.MangaViews
@@ -127,27 +128,23 @@ namespace Lote.Views.MangaViews
                     vm.Loading = true;
                     vm.Chapters = Chapters;
                     vm.Total = Chapters.Count;
-                    vm.Index= Chapters.IndexOf(input);
+                    vm.Index = Chapters.IndexOf(input);
                     vm.InitCurrent();
 
-                    MangaReaderWindows win = null;
-                    if (data.ContainsKey(nameof(MangaReaderWindows)))
+                    BootResource.Manga(window =>
                     {
-                        win = data[nameof(MangaReaderWindows)];
-                        win.Close();
-                        data.Clear();
-                        win = new MangaReaderWindows();
-                        data[nameof(MangaReaderWindows)] = win;
-                        win.DataContext = vm;
-                        win.Show();
-                    }
-                    else
+                        window.DataContext = vm;
+                    });
+
+                    LoteMangaHistoryDTO DTO = input.ToMapest<LoteMangaHistoryDTO>();
+                    DTO.Chapters = Chapters.ToJson();
+                    DTO.Index= Chapters.IndexOf(input);
+
+                    IEventPublish.Instance.DelayPublishAsync(item =>
                     {
-                        win = new MangaReaderWindows();
-                        data[nameof(MangaReaderWindows)] = win;
-                        win.DataContext = vm;
-                        win.Show();
-                    }
+                        item.Payload = DTO;
+                        item.EventId = "AddMangaHistory";
+                    }, 3000);
                 }
 
             }

@@ -111,25 +111,11 @@ namespace Lote.Views.NovelViews
             var vm = container.Get<NovelContentWindowsViewModel>();
             vm.NovelContent = NovelContent.Contents;
             vm.BookName = this.NovelDetail.BookName;
-
-            NovelContentWindows win = null;
-            if (BootResource.NovelContentWindow.ContainsKey(nameof(NovelContentWindows)))
+            //Open
+            BootResource.Novel(window =>
             {
-                win = BootResource.NovelContentWindow[nameof(NovelContentWindows)];
-                win.Close();
-                BootResource.NovelContentWindow.Clear();
-                win = new NovelContentWindows();
-                win.DataContext = vm;
-                BootResource.NovelContentWindow[nameof(NovelContentWindows)] = win;
-                win.Show();
-            }
-            else
-            {
-                win = new NovelContentWindows();
-                win.DataContext = vm;
-                BootResource.NovelContentWindow[nameof(NovelContentWindows)] = win;
-                win.Show();
-            }
+                window.DataContext = vm;
+            });
 
             LoteNovelHistoryDTO DTO = NovelContent.Contents.ToMapest<LoteNovelHistoryDTO>();
             DTO.BookName = this.NovelDetail.BookName;

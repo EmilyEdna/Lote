@@ -33,7 +33,6 @@ namespace Lote.Views.WallpaperViews
         private readonly IWallpaperService wallpaperService;
         private readonly LoteSettingDTO root;
         private readonly WallpaperProxy Proxy;
-        private Dictionary<string, WallpaperPreviewWindows> data;
         public WallpaperViewModel(IContainer container)
         {
             this.PageIndex = 1;
@@ -48,7 +47,6 @@ namespace Lote.Views.WallpaperViews
                 UserName = root.ProxyAccount.IsNullOrEmpty() ? String.Empty : root.ProxyAccount
             };
             this.WatchFavorite = false;
-            data = new Dictionary<string, WallpaperPreviewWindows>();
         }
 
         #region Property
@@ -292,24 +290,11 @@ namespace Lote.Views.WallpaperViews
             var vm = container.Get<WallpaperPreviewWindowsViewModel>();
             var wallpaper = Wallpaper.FirstOrDefault(t => t.Id == Id);
             vm.FileURL = wallpaper.OriginalPng.IsNullOrEmpty() ? wallpaper.FileSizeJepg : wallpaper.OriginalPng;
-            WallpaperPreviewWindows win = null;
-            if (data.Keys.Contains(nameof(WallpaperPreviewWindows)))
+
+            BootResource.Wallpaper(window =>
             {
-                var old = data.Values.FirstOrDefault();
-                old.Close();
-                data.Clear();
-                win = new WallpaperPreviewWindows();
-                win.DataContext = vm;
-                win.Show();
-                data.Add(nameof(WallpaperPreviewWindows), win);
-            }
-            else
-            {
-                win = new WallpaperPreviewWindows();
-                win.DataContext = vm;
-                win.Show();
-                data.Add(nameof(WallpaperPreviewWindows), win);
-            }
+                window.DataContext = vm;
+            });
         }
         #endregion
     }

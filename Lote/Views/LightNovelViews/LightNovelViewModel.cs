@@ -32,7 +32,7 @@ namespace Lote.Views.LightNovelViews
         private readonly IContainer container;
         private readonly LoteSettingDTO root;
         private readonly LightNovelProxy Proxy;
-        private readonly IDictionary<string, LightNovelContentWindows> data;
+
         public LightNovelViewModel(IContainer container)
         {
             this.container = container;
@@ -44,7 +44,6 @@ namespace Lote.Views.LightNovelViews
                 Port = Convert.ToInt32(root.ProxyPort.IsNullOrEmpty() ? "-1" : root.ProxyPort),
                 UserName = root.ProxyAccount.IsNullOrEmpty() ? String.Empty : root.ProxyAccount
             };
-            this.data = new Dictionary<string, LightNovelContentWindows>();
         }
 
         #region Property
@@ -379,20 +378,20 @@ namespace Lote.Views.LightNovelViews
             {
                 SyncStatic.TryCatch(() =>
                 {
-                //内容
-                var LightNovelContent = LightNovelFactory.LightNovel(opt =>
-                    {
-                        opt.RequestParam = new LightNovelRequestInput
+                    //内容
+                    var LightNovelContent = LightNovelFactory.LightNovel(opt =>
                         {
-                            CacheSpan = CacheTime(),
-                            LightNovelType = LightNovelEnum.Content,
-                            Proxy = this.Proxy,
-                            Content = new LightNovelContent
+                            opt.RequestParam = new LightNovelRequestInput
                             {
-                                ChapterURL = entity.ChapterURL,
-                            }
-                        };
-                    }).Runs();
+                                CacheSpan = CacheTime(),
+                                LightNovelType = LightNovelEnum.Content,
+                                Proxy = this.Proxy,
+                                Content = new LightNovelContent
+                                {
+                                    ChapterURL = entity.ChapterURL,
+                                }
+                            };
+                        }).Runs();
 
                     if (DownNovel(entity.ChapterURL, LightNovelContent.ContentResult.Content) == false)
                         return;
@@ -400,19 +399,11 @@ namespace Lote.Views.LightNovelViews
                     var vm = container.Get<LightNovelContentWindowsViewModel>();
                     vm.LightNovelContent = LightNovelContent.ContentResult;
                     vm.Show = LightNovelContent.ContentResult.Image == null;
-                    LightNovelContentWindows win = null;
-                    if (data.ContainsKey(nameof(LightNovelContentWindows)))
+                    //Open
+                    BootResource.LightNovel(window =>
                     {
-                        win = data[nameof(LightNovelContentWindows)];
-                        win.DataContext = vm;
-                    }
-                    else
-                    {
-                        win = new LightNovelContentWindows();
-                        data[nameof(NovelContentWindows)] = win;
-                        win.DataContext = vm;
-                        win.Show();
-                    }
+                        window.DataContext = vm;
+                    });
 
                 }, ex => MessageBox.Error("服务异常，请稍后重试", "错误"));
             }
