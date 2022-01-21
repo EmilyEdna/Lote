@@ -20,7 +20,6 @@ using XExten.Advance.StaticFramework;
 
 namespace Lote
 {
-    [Obfuscation(Feature = "virtualization", Exclude = false)]
     public class Bootstrapper : Bootstrapper<RootViewModel>
     {
         /// <summary>

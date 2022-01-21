@@ -45,10 +45,6 @@
 		<Resource Include="Resource\Assets\Icon.ico" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Gapotchenko.Eazfuscator.NET" Version="2021.4.259">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
 		<PackageReference Include="CalcBinding" Version="2.5.2" />
 		<PackageReference Include="HandyControls" Version="3.3.10" />
 		<PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
