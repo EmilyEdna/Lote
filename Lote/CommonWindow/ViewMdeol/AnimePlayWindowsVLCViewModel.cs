@@ -1,4 +1,5 @@
-﻿using LibVLCSharp.Shared;
+﻿using Anime.SDK.ViewModel.Response;
+using LibVLCSharp.Shared;
 using LibVLCSharp.WPF;
 using Lote.Common;
 using Stylet;
@@ -22,11 +23,11 @@ namespace Lote.CommonWindow.ViewMdeol
         }
 
         #region Property
-        private string _WatchRoute;
-        public string WatchRoute
+        private AnimePlayResult _WatchResult;
+        public AnimePlayResult WatchResult
         {
-            get { return _WatchRoute; }
-            set { SetAndNotify(ref _WatchRoute, value); }
+            get { return _WatchResult; }
+            set { SetAndNotify(ref _WatchResult, value); }
         }
         #endregion
     }

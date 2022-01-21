@@ -31,5 +31,11 @@ namespace Lote.CommonEvent
             Service.AddMangaHistory(source.Payload.ToMapest<LoteMangaHistoryDTO>());
             return Task.CompletedTask;
         }
+        [EventSubscribe("AddAnimeHistory")]
+        public Task AddAnimeHistory(IEventSource source)
+        {
+            Service.AddAnimeHistory(source.Payload.ToMapest<LoteAnimeHistoryDTO>());
+            return Task.CompletedTask;
+        }
     }
 }

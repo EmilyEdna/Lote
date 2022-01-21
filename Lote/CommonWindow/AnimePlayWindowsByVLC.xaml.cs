@@ -57,7 +57,7 @@ namespace Lote.CommonWindow
         {
             if (!this.Videos.MediaPlayer.IsPlaying)
             {
-                using (Medias = new Media(LibVlcs, new Uri(ViewModel.WatchRoute)))
+                using (Medias = new Media(LibVlcs, new Uri(ViewModel.WatchResult.PlayURL)))
                     this.Videos.MediaPlayer.Play(Medias);
 
                 this.Videos.MediaPlayer.Playing += MediaPlayer_Playing;

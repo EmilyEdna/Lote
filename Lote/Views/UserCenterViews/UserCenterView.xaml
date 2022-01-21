@@ -54,7 +54,7 @@
                 </ListBox.ItemTemplate>
             </ListBox>
         </WrapPanel>
-        <WrapPanel Grid.Row="1">
+        <WrapPanel Grid.Row="1" Orientation="Vertical">
             <Label Content="漫画阅读记录" Style="{StaticResource MaterialDesignLabel}"/>
             <ListBox ItemsSource="{Binding MangaHistories}"
                      Style="{StaticResource WrapPanelVerticalListBox}"

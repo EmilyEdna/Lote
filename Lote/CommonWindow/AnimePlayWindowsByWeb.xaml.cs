@@ -66,7 +66,7 @@ namespace Lote.CommonWindow
                     Close();
                     break;
                 case SysFuncEnum.Play:
-                    webView.CoreWebView2.ExecuteScriptAsync($"Play('{ViewModel.WatchRoute}')");
+                    webView.CoreWebView2.ExecuteScriptAsync($"Play('{ViewModel.WatchResult.PlayURL}')");
                     break;
                 default:
                     break;

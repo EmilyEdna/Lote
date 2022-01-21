@@ -1,4 +1,5 @@
-﻿using Stylet;
+﻿using Anime.SDK.ViewModel.Response;
+using Stylet;
 using StyletIoC;
 using System;
 using System.Collections.Generic;
@@ -18,11 +19,11 @@ namespace Lote.CommonWindow.ViewMdeol
         }
 
         #region Property
-        private string _WatchRoute;
-        public string WatchRoute
+        private AnimePlayResult _WatchResult;
+        public AnimePlayResult WatchResult
         {
-            get { return _WatchRoute; }
-            set { SetAndNotify(ref _WatchRoute, value); }
+            get { return _WatchResult; }
+            set { SetAndNotify(ref _WatchResult, value); }
         }
         #endregion
     }

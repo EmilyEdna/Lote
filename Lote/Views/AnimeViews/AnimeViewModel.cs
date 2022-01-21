@@ -16,6 +16,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XExten.Advance.EventFramework.PublishEvent;
 using XExten.Advance.LinqFramework;
 
 namespace Lote.Views.AnimeViews
@@ -243,22 +244,38 @@ namespace Lote.Views.AnimeViews
             if (root.PlayBox == 0)
             {
                 var vm = container.Get<AnimePlayWindowsVLCViewModel>();
-                vm.WatchRoute = AnimeWath.PlayURL;
+                vm.WatchResult = AnimeWath.PlayResult;
+                LoteAnimeHistoryDTO DTO = AnimeWath.PlayResult.ToMapest<LoteAnimeHistoryDTO>();
+                DTO.PlayMode = false;
                 //Open
                 BootResource.AnimeVLC(window =>
                 {
                     window.DataContext = vm;
                 });
+
+                IEventPublish.Instance.DelayPublishAsync(item =>
+                {
+                    item.Payload = DTO;
+                    item.EventId = "AddAnimeHistory";
+                }, 3000);
             }
             if (root.PlayBox == 1)
             {
                 var vm = container.Get<AnimePlayWindowsWebViewModel>();
-                vm.WatchRoute = AnimeWath.PlayURL;
+                vm.WatchResult = AnimeWath.PlayResult;
+                LoteAnimeHistoryDTO DTO = AnimeWath.PlayResult.ToMapest<LoteAnimeHistoryDTO>();
+                DTO.PlayMode = true;
                 //Open
                 BootResource.AnimeWEB(window =>
                 {
                     window.DataContext = vm;
                 });
+
+                IEventPublish.Instance.DelayPublishAsync(item =>
+                {
+                    item.Payload = DTO;
+                    item.EventId = "AddAnimeHistory";
+                }, 3000);
             }
         }
         #endregion
