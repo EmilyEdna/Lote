@@ -12,6 +12,7 @@ namespace Lote.Core.Common
         Max,
         Close,
         Play,
-        Down
+        Down,
+        Config
     }
 }

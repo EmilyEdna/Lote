@@ -18,8 +18,8 @@
                  Background="Transparent" 
                  BorderThickness="1"
                  BorderBrush="Transparent">
-            <Grid>
-                <Rectangle Height="560" Width="940"  RadiusY="10" RadiusX="10"  VerticalAlignment="Top" Margin="0,5,0,0">
+            <Canvas>
+                <Rectangle Height="560" Width="940"  RadiusY="10" RadiusX="10"  VerticalAlignment="Top" Margin="0,5,0,0" Canvas.Left="10">
                     <Rectangle.Fill>
                         <SolidColorBrush Color="#FFC4F8FF" Opacity="0.5"/>
                     </Rectangle.Fill>
@@ -28,10 +28,12 @@
                     </Rectangle.Effect>
                 </Rectangle>
                 <WrapPanel HorizontalAlignment="Center" 
+                           Canvas.Left="10"
                            VerticalAlignment="Top" 
                            Height="560"  
                            Width="940">
                     <ListView ItemsSource="{Binding NovelHistories}" 
+                              ScrollViewer.CanContentScroll="True"
                               ScrollViewer.VerticalScrollBarVisibility="Hidden"
                               ScrollViewer.HorizontalScrollBarVisibility="Hidden" >
                         <ListView.View>
@@ -55,14 +57,14 @@
                         </ListView.View>
                     </ListView>
                 </WrapPanel>
-            </Grid>
+            </Canvas>
         </TabItem>
         <TabItem Header="漫画阅读记录" 
                  Background="Transparent" 
                  BorderThickness="1"
                  BorderBrush="Transparent">
-            <Grid>
-                <Rectangle Height="560" Width="940"  RadiusY="10" RadiusX="10"  VerticalAlignment="Top" Margin="0,5,0,0">
+            <Canvas>
+                <Rectangle Height="560" Width="940"  RadiusY="10" RadiusX="10"  VerticalAlignment="Top" Margin="0,5,0,0" Canvas.Left="10">
                     <Rectangle.Fill>
                         <SolidColorBrush Color="#FFFFE0FB" Opacity="0.5"/>
                     </Rectangle.Fill>
@@ -71,6 +73,7 @@
                     </Rectangle.Effect>
                 </Rectangle>
                 <WrapPanel HorizontalAlignment="Center" 
+                           Canvas.Left="10"
                            VerticalAlignment="Top" 
                            Height="560"  
                            Width="940">
@@ -98,14 +101,14 @@
                         </ListView.View>
                     </ListView>
                 </WrapPanel>
-            </Grid>
+            </Canvas>
         </TabItem>
         <TabItem Header="动漫观看记录" 
                  Background="Transparent" 
                  BorderThickness="1"
                  BorderBrush="Transparent">
-            <Grid>
-                <Rectangle Height="560" Width="940"  RadiusY="10" RadiusX="10"  VerticalAlignment="Top" Margin="0,5,0,0">
+            <Canvas>
+                <Rectangle Height="560" Width="940"  RadiusY="10" RadiusX="10"  VerticalAlignment="Top" Margin="0,5,0,0" Canvas.Left="10">
                     <Rectangle.Fill>
                         <SolidColorBrush Color="#FFFFF9CC" Opacity="0.5"/>
                     </Rectangle.Fill>
@@ -114,6 +117,7 @@
                     </Rectangle.Effect>
                 </Rectangle>
                 <WrapPanel HorizontalAlignment="Center" 
+                           Canvas.Left="10"
                            VerticalAlignment="Top" 
                            Height="560"  
                            Width="940">
@@ -142,7 +146,7 @@
                         </ListView.View>
                     </ListView>
                 </WrapPanel>
-            </Grid>
+            </Canvas>
         </TabItem>
     </TabControl>
 </UserControl>

@@ -1,4 +1,5 @@
 ﻿using Lote.Common;
+using Lote.CommonWindow;
 using Lote.Core.Common;
 using Lote.Override;
 using Lote.ViewModels;
@@ -47,6 +48,10 @@ namespace Lote.Views
                     }
                     this.Close();
                     Application.Current.Shutdown();
+                    break;
+                case SysFuncEnum.Config:
+                    SettingWindows win = new SettingWindows();
+                    win.Show();
                     break;
                 default:
                     break;
