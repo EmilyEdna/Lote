@@ -15,15 +15,15 @@ namespace Lote.Core.Service
     public interface IHistoryService
     {
         Task AddNovelHistory(LoteNovelHistoryDTO input);
-        List<LoteNovelHistoryDTO> GetNovelHistory(int pageIndex);
+        List<LoteNovelHistoryDTO> GetNovelHistory();
         Task ClearNovelHistory();
 
         Task AddMangaHistory(LoteMangaHistoryDTO input);
-        List<LoteMangaHistoryDTO> GetMangaHistory(int pageIndex);
+        List<LoteMangaHistoryDTO> GetMangaHistory();
         Task ClearMangaHistory();
 
         Task AddAnimeHistory(LoteAnimeHistoryDTO input);
-        List<LoteAnimeHistoryDTO> GetAnimeHistory(int pageIndex);
+        List<LoteAnimeHistoryDTO> GetAnimeHistory();
         Task ClearAnimeHistory();
     }
     public class HistoryService : Lite, IHistoryService
@@ -37,11 +37,11 @@ namespace Lote.Core.Service
                 await LiteBase().Insertable(entity).CallEntityMethod(t => t.Create()).ExecuteCommandAsync();
         }
 
-        public List<LoteNovelHistoryDTO> GetNovelHistory(int pageIndex)
+        public List<LoteNovelHistoryDTO> GetNovelHistory()
         {
             long today = DateTime.Now.ToFmtDate(-1, "yyyy-MM-dd").AsDateTime().Ticks;
             return LiteBase().Queryable<LoteNovelHistory>().Where(t => t.Span >= today)
-                  .OrderBy(t => t.Span, OrderByType.Desc).ToPageList(pageIndex, 10)
+                  .OrderBy(t => t.Span, OrderByType.Desc).ToPageList(1, 100)
                   .ToMapest<List<LoteNovelHistoryDTO>>();
         }
 
@@ -62,11 +62,11 @@ namespace Lote.Core.Service
                 await LiteBase().Insertable(entity).CallEntityMethod(t => t.Create()).ExecuteCommandAsync();
         }
 
-        public List<LoteMangaHistoryDTO> GetMangaHistory(int pageIndex)
+        public List<LoteMangaHistoryDTO> GetMangaHistory()
         {
             long today = DateTime.Now.ToFmtDate(-1, "yyyy-MM-dd").AsDateTime().Ticks;
             return LiteBase().Queryable<LoteMangaHistory>().Where(t => t.Span >= today)
-                  .OrderBy(t => t.Span, OrderByType.Desc).ToPageList(pageIndex, 10)
+                  .OrderBy(t => t.Span, OrderByType.Desc).ToPageList(1, 100)
                   .Select(t => new LoteMangaHistoryDTO
                   {
                       Address = t.Address,
@@ -95,11 +95,11 @@ namespace Lote.Core.Service
                 await LiteBase().Insertable(entity).CallEntityMethod(t => t.Create()).ExecuteCommandAsync();
         }
 
-        public List<LoteAnimeHistoryDTO> GetAnimeHistory(int pageIndex)
+        public List<LoteAnimeHistoryDTO> GetAnimeHistory()
         {
             long today = DateTime.Now.ToFmtDate(-1, "yyyy-MM-dd").AsDateTime().Ticks;
             return LiteBase().Queryable<LoteAnimeHistory>().Where(t => t.Span >= today)
-                  .OrderBy(t => t.Span, OrderByType.Desc).ToPageList(pageIndex, 10)
+                  .OrderBy(t => t.Span, OrderByType.Desc).ToPageList(1, 100)
                   .ToMapest<List<LoteAnimeHistoryDTO>>();
 
         }

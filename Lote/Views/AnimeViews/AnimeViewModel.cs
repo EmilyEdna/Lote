@@ -252,12 +252,7 @@ namespace Lote.Views.AnimeViews
                 {
                     window.DataContext = vm;
                 });
-
-                IEventPublish.Instance.DelayPublishAsync(item =>
-                {
-                    item.Payload = DTO;
-                    item.EventId = "AddAnimeHistory";
-                }, 3000);
+                container.Get<IHistoryService>().AddAnimeHistory(DTO);
             }
             if (root.PlayBox == 1)
             {
@@ -270,12 +265,7 @@ namespace Lote.Views.AnimeViews
                 {
                     window.DataContext = vm;
                 });
-
-                IEventPublish.Instance.DelayPublishAsync(item =>
-                {
-                    item.Payload = DTO;
-                    item.EventId = "AddAnimeHistory";
-                }, 3000);
+                container.Get<IHistoryService>().AddAnimeHistory(DTO);
             }
         }
         #endregion

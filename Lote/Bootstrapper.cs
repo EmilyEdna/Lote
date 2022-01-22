@@ -9,15 +9,10 @@ using System;
 using System.Windows;
 using System.IO;
 using System.Windows.Threading;
-using System.Linq;
-using XExten.Advance.LinqFramework;
-using Lote.Core.Common;
 using System.Reflection;
 using XExten.Advance.HttpFramework.MultiFactory;
-using HandyControl.Data;
 using System.Diagnostics;
 using XExten.Advance.StaticFramework;
-using XExten.Advance.EventFramework;
 
 namespace Lote
 {
@@ -92,7 +87,6 @@ namespace Lote
         /// </summary>
         protected override void Launch()
         {
-            EventBus.Lancher(Assembly.Load("Lote"));
             base.Launch();
         }
 

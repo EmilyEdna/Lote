@@ -119,11 +119,7 @@ namespace Lote.Views.NovelViews
 
             LoteNovelHistoryDTO DTO = NovelContent.Contents.ToMapest<LoteNovelHistoryDTO>();
             DTO.BookName = this.NovelDetail.BookName;
-            IEventPublish.Instance.DelayPublishAsync(item =>
-            {
-                item.Payload = DTO;
-                item.EventId = "AddNovelHistory";
-            }, 3000);
+            container.Get<IHistoryService>().AddNovelHistory(DTO);
         }
         #endregion
     }

@@ -22,7 +22,6 @@ namespace Lote.Views.UserCenterViews
         public UserCenterViewModel(IContainer container)
         {
             this.container = container;
-            NovelPageIndex = 1;
         }
         private ObservableCollection<LoteNovelHistoryDTO> _NovelHistories;
         public ObservableCollection<LoteNovelHistoryDTO> NovelHistories
@@ -38,22 +37,10 @@ namespace Lote.Views.UserCenterViews
             set { SetAndNotify(ref _MangaHistories, value); }
         }
 
-        public int NovelPageIndex { get; set; }
-        public int MangaPageIndex { get; set; }
-
-        public void InitNovel()
-        {
-            NovelHistories = new ObservableCollection<LoteNovelHistoryDTO>(container.Get<IHistoryService>().GetNovelHistory(NovelPageIndex));
-        }
-        public void InitManga()
-        {
-            MangaHistories = new ObservableCollection<LoteMangaHistoryDTO>(container.Get<IHistoryService>().GetMangaHistory(MangaPageIndex));
-        }
-
         protected override void OnViewLoaded()
         {
-            InitNovel();
-            InitManga();
+            NovelHistories = new ObservableCollection<LoteNovelHistoryDTO>(container.Get<IHistoryService>().GetNovelHistory());
+            MangaHistories = new ObservableCollection<LoteMangaHistoryDTO>(container.Get<IHistoryService>().GetMangaHistory());
         }
         public void Watch(LoteMangaHistoryDTO args)
         {

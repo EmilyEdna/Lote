@@ -57,6 +57,7 @@ namespace Lote
                 NovelContentWindow.Clear();
                 windows = new NovelContentWindows();
                 action(windows);
+                NovelContentWindow.TryAdd(nameof(NovelContentWindows), windows);
                 windows.Show();
             }
             else
@@ -82,6 +83,7 @@ namespace Lote
                 WallpaperPreviewWindow.Clear();
                 windows = new WallpaperPreviewWindows();
                 action(windows);
+                WallpaperPreviewWindow.TryAdd(nameof(WallpaperPreviewWindows), windows);
                 windows.Show();
             }
             else
@@ -107,6 +109,7 @@ namespace Lote
                 AnimePlayWindowDPlayer.Clear();
                 windows = new AnimePlayWindowsByWEB();
                 action(windows);
+                AnimePlayWindowDPlayer.TryAdd(nameof(AnimePlayWindowsByWEB), windows);
                 windows.Show();
             }
             else
@@ -132,6 +135,7 @@ namespace Lote
                 AnimePlayWindowVLC.Clear();
                 windows = new AnimePlayWindowsByVLC();
                 action(windows);
+                AnimePlayWindowVLC.TryAdd(nameof(AnimePlayWindowsByVLC), windows);
                 windows.Show();
             }
             else
@@ -157,6 +161,7 @@ namespace Lote
                 MangaReaderWindow.Clear();
                 windows = new MangaReaderWindows();
                 action(windows);
+                MangaReaderWindow.TryAdd(nameof(MangaReaderWindows), windows);
                 windows.Show();
             }
             else

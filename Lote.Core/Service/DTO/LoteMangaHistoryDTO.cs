@@ -11,6 +11,7 @@ namespace Lote.Core.Service.DTO
     {
         public Guid Id { get; set; }
         public long Span { get; set; }
+        public DateTime Time => new DateTime(Span);
         public string Name { get; set; }
         public string Address { get; set; }
         public string Title { get; set; }

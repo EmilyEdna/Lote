@@ -139,12 +139,7 @@ namespace Lote.Views.MangaViews
                     LoteMangaHistoryDTO DTO = input.ToMapest<LoteMangaHistoryDTO>();
                     DTO.Chapters = Chapters.ToJson();
                     DTO.Index= Chapters.IndexOf(input);
-
-                    IEventPublish.Instance.DelayPublishAsync(item =>
-                    {
-                        item.Payload = DTO;
-                        item.EventId = "AddMangaHistory";
-                    }, 3000);
+                    container.Get<IHistoryService>().AddMangaHistory(DTO);
                 }
 
             }
