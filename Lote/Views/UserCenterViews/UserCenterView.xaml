@@ -38,7 +38,7 @@
                             <GridView>
                                 <GridViewColumn Header="书名" DisplayMemberBinding="{Binding BookName}" Width="235"/>
                                 <GridViewColumn Header="章节" DisplayMemberBinding="{Binding ChapterName}" Width="235"/>
-                                <GridViewColumn Header="时间" DisplayMemberBinding="{Binding Time,StringFormat={}{0:yyyy年MM月dd日 HH:mm:ss}}" Width="235"/>
+                                <GridViewColumn Header="浏览时间" DisplayMemberBinding="{Binding Time,StringFormat={}{0:yyyy年MM月dd日 HH:mm:ss}}" Width="235"/>
                                 <GridViewColumn Header="操作"  Width="235">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
@@ -81,14 +81,14 @@
                             <GridView>
                                 <GridViewColumn Header="名称" DisplayMemberBinding="{Binding Name}" Width="235"/>
                                 <GridViewColumn Header="章节" DisplayMemberBinding="{Binding Title}" Width="235"/>
-                                <GridViewColumn Header="时间" DisplayMemberBinding="{Binding Time,StringFormat={}{0:yyyy年MM月dd日 HH:mm:ss}}" Width="235"/>
+                                <GridViewColumn Header="浏览时间" DisplayMemberBinding="{Binding Time,StringFormat={}{0:yyyy年MM月dd日 HH:mm:ss}}" Width="235"/>
                                 <GridViewColumn Header="操作"  Width="235">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Button Content="继续阅读" 
+                                            <Button Content="继续观阅" 
                                                 Style="{StaticResource ButtonDashedDanger.Small}" 
                                                 BorderThickness="0" 
-                                                Command="{S:Action Reader}"
+                                                Command="{S:Action Watch}"
                                                 CommandParameter="{Binding .}"
                                                 HorizontalAlignment="Center"/>
                                         </DataTemplate>
@@ -104,15 +104,45 @@
                  Background="Transparent" 
                  BorderThickness="1"
                  BorderBrush="Transparent">
-            <Rectangle Height="560" Width="940"  RadiusY="10" RadiusX="10"  VerticalAlignment="Top" Margin="0,5,0,0">
-                <Rectangle.Fill>
-                    <SolidColorBrush Color="#FFFFF9CC" Opacity="0.5"/>
-                </Rectangle.Fill>
-                <Rectangle.Effect>
-                    <DropShadowEffect BlurRadius="15" Opacity="0.3" Direction="300" Color="#FFED556A"/>
-                </Rectangle.Effect>
-            </Rectangle>
-
+            <Grid>
+                <Rectangle Height="560" Width="940"  RadiusY="10" RadiusX="10"  VerticalAlignment="Top" Margin="0,5,0,0">
+                    <Rectangle.Fill>
+                        <SolidColorBrush Color="#FFFFF9CC" Opacity="0.5"/>
+                    </Rectangle.Fill>
+                    <Rectangle.Effect>
+                        <DropShadowEffect BlurRadius="15" Opacity="0.3" Direction="300" Color="#FFED556A"/>
+                    </Rectangle.Effect>
+                </Rectangle>
+                <WrapPanel HorizontalAlignment="Center" 
+                           VerticalAlignment="Top" 
+                           Height="560"  
+                           Width="940">
+                    <ListView ItemsSource="{Binding AnimeHistories}" 
+                              ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                              ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="名称" DisplayMemberBinding="{Binding AnimeName}" Width="188"/>
+                                <GridViewColumn Header="集数" DisplayMemberBinding="{Binding CollectName}" Width="188"/>
+                                <GridViewColumn Header="播放器" DisplayMemberBinding="{Binding PlayModelDes}" Width="188"/>
+                                <GridViewColumn Header="浏览时间" DisplayMemberBinding="{Binding Time,StringFormat={}{0:yyyy年MM月dd日 HH:mm:ss}}" Width="188"/>
+                                <GridViewColumn Header="操作"  Width="188">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Content="继续播放" 
+                                                Style="{StaticResource ButtonDashedDanger.Small}" 
+                                                BorderThickness="0" 
+                                                Command="{S:Action Play}"
+                                                CommandParameter="{Binding .}"
+                                                HorizontalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </WrapPanel>
+            </Grid>
         </TabItem>
     </TabControl>
 </UserControl>

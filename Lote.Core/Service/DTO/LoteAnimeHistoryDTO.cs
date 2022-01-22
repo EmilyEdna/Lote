@@ -11,10 +11,11 @@ namespace Lote.Core.Service.DTO
     {
         public Guid Id { get; set; }
         public long Span { get; set; }
+        public DateTime Time => new DateTime(Span);
         public string PlayURL { get; set; }
         public string AnimeName { get; set; }
         public string CollectName { get; set; }
         public bool PlayMode { get; set; }
-        public string PlayModelDes => PlayMode ? "VLC" : "DPlayer";
+        public string PlayModelDes => PlayMode ? "DPlayer" : "VLC";
     }
 }

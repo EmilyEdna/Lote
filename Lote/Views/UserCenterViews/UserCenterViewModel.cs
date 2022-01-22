@@ -1,4 +1,5 @@
-﻿using Lote.CommonWindow;
+﻿using Anime.SDK.ViewModel.Response;
+using Lote.CommonWindow;
 using Lote.CommonWindow.ViewMdeol;
 using Lote.Core.Service;
 using Lote.Core.Service.DTO;
@@ -37,11 +38,44 @@ namespace Lote.Views.UserCenterViews
             set { SetAndNotify(ref _MangaHistories, value); }
         }
 
+        private ObservableCollection<LoteAnimeHistoryDTO> _AnimeHistories;
+        public ObservableCollection<LoteAnimeHistoryDTO> AnimeHistories
+        {
+            get { return _AnimeHistories; }
+            set { SetAndNotify(ref _AnimeHistories, value); }
+        }
+
         protected override void OnViewLoaded()
         {
             NovelHistories = new ObservableCollection<LoteNovelHistoryDTO>(container.Get<IHistoryService>().GetNovelHistory());
             MangaHistories = new ObservableCollection<LoteMangaHistoryDTO>(container.Get<IHistoryService>().GetMangaHistory());
+            AnimeHistories = new ObservableCollection<LoteAnimeHistoryDTO>(container.Get<IHistoryService>().GetAnimeHistory());
         }
+
+        public void Play(LoteAnimeHistoryDTO args)
+        {
+            if (args.PlayMode)
+            {
+                var vm = container.Get<AnimePlayWindowsWebViewModel>();
+                vm.WatchResult = args.ToMapest<AnimePlayResult>();
+                //Open
+                BootResource.AnimeWEB(window =>
+                {
+                    window.DataContext = vm;
+                });
+            }
+            else
+            {
+                var vm = container.Get<AnimePlayWindowsVLCViewModel>();
+                vm.WatchResult = args.ToMapest<AnimePlayResult>();
+                //Open
+                BootResource.AnimeVLC(window =>
+                {
+                    window.DataContext = vm;
+                });
+            }
+        }
+
         public void Watch(LoteMangaHistoryDTO args)
         {
             var vm = container.Get<MangaReaderWindowsViewModel>();

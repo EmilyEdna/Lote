@@ -27,7 +27,7 @@ namespace Lote
             var currentVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             var serverVersion = IHttpMultiClient.HttpMulti.AddNode(opt =>
              {
-                 opt.NodePath = "https://raw.fastgit.org/EmilyEdna/ResouceFile/main/LoteOption";
+                 opt.NodePath = "https://gitee.com/Mefelia/KilyCore.WebSite/raw/master/LoteOption";
              }).Build().RunStringFirst();
             if (!currentVersion.Equals(serverVersion))
             {

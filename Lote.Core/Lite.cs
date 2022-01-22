@@ -34,7 +34,8 @@ namespace Lote.Core
                 typeof(LotePlayList),
                 typeof(LotePlayLyrics),
                 typeof(LoteNovelHistory),
-                typeof(LoteMangaHistory)
+                typeof(LoteMangaHistory),
+                typeof(LoteAnimeHistory)
             };
             LiteBase().CodeFirst.InitTables(Table);
         }
