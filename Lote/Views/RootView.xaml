@@ -23,7 +23,6 @@
         <KeyBinding Key="M" Command="{S:Action Redirect}" CommandParameter="4" Modifiers="Ctrl"/>
         <KeyBinding Key="W" Command="{S:Action Redirect}" CommandParameter="5" Modifiers="Ctrl"/>
         <KeyBinding Key="Y" Command="{S:Action Redirect}" CommandParameter="6" Modifiers="Ctrl"/>
-        <KeyBinding Key="S" Command="{S:Action Redirect}" CommandParameter="7" Modifiers="Ctrl"/>
     </L:LoteWindow.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
@@ -41,7 +40,7 @@
                     <ColumnDefinition Width="0.2*"/>
                     <ColumnDefinition Width="1.6*"/>
                     <ColumnDefinition Width="0.2*"/>
-                    <ColumnDefinition Width="0.4*"/>
+                    <ColumnDefinition Width="0.3*"/>
                 </Grid.ColumnDefinitions>
                 <ComboBox SelectedIndex="1" 
                           Margin="8 0 0 0"
@@ -165,7 +164,7 @@
                         DoubleClickCommand="{S:Action ShowWindow}">
             <tb:TaskbarIcon.ContextMenu>
                 <ContextMenu FontFamily="/Lote;component/Resource/Assets/#HappyZcool-2016" Style="{DynamicResource LoteContextMenu}">
-                    <MenuItem Header="个人中心" Command="{S:Action Redirect}" CommandParameter="8"/>
+                    <MenuItem Header="个人中心" Command="{S:Action Redirect}" CommandParameter="7"/>
                     <Separator />
                     <MenuItem Header="打开漫画" Click="ProcessClick" CommandParameter="0"/>
                     <MenuItem Header="打开音乐" Click="ProcessClick" CommandParameter="1"/>

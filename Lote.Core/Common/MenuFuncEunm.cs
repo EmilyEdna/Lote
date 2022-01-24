@@ -34,10 +34,6 @@ namespace Lote.Core.Common
         /// </summary>
         Music,
         /// <summary>
-        /// 设置
-        /// </summary>
-        Setting,
-        /// <summary>
         /// 用户中心
         /// </summary>
         UserCenter

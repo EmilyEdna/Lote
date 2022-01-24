@@ -3,10 +3,15 @@
               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
               xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
               xmlns:L="clr-namespace:Lote.Override"
+              xmlns:C="clr-namespace:CalcBinding;assembly=CalcBinding"
               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
               xmlns:local="clr-namespace:Lote.CommonWindow"
-              xmlns:hc="https://handyorg.github.io/handycontrol" 
+              xmlns:Design="http://materialdesigninxaml.net/winfx/xaml/themes"
               x:Class="Lote.CommonWindow.SettingWindows"
+              xmlns:DP="clr-namespace:Lote.Common"
+              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+              xmlns:viewModels="clr-namespace:Lote.CommonWindow.ViewMdeol"
+              d:DataContext="{d:DesignInstance Type=viewModels:SettingWindowsViewModel}"
               mc:Ignorable="d"
               Height="600"
               Width="400" 
@@ -17,7 +22,7 @@
               BorderThickness="0"
               SnapsToDevicePixels="True" 
               ShowTitle="False" 
-               Background="Transparent"
+              Background="Transparent"
               RenderTransformOrigin="0.5,0.5">
     <L:LoteWindow.Resources>
         <Storyboard x:Key="OpenWindow">
@@ -30,9 +35,44 @@
                 <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
+        <Storyboard x:Key="GiftOpen">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="GiftContent" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0.2"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="GiftContent" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0.2"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="GiftContent" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="2.5"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="GiftContent" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="5"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="GiftClose">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="GiftContent" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="GiftContent" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="GiftContent" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="2.5"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="GiftContent" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="5"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
     </L:LoteWindow.Resources>
-
-    <Canvas  Background="Transparent" Mouse.PreviewMouseMove="MoveWIndow">
+    <Canvas  Background="Transparent">
         <Rectangle Height="600"   
                    Width="400" 
                    RadiusX="15" 
@@ -40,6 +80,197 @@
                    Fill="White" 
                    VerticalAlignment="Top" 
                    Stroke="#FFEF4289"/>
-
+        <Grid 
+            HorizontalAlignment="Left" 
+            Height="40" 
+            VerticalAlignment="Top" 
+            Width="390" 
+            PreviewMouseMove="MoveWindow"
+            Canvas.Top="10">
+            <Design:PackIcon
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Top" 
+                Height="40" Width="40" 
+                Kind="CogOutline" 
+                Margin="10,0,0,0" />
+            <Label Content="程序设置" 
+                   HorizontalAlignment="Left" 
+                   Height="40" 
+                   Margin="50,0,0,0" 
+                   VerticalAlignment="Top" 
+                   Width="302" 
+                   FontSize="20" 
+                   Foreground="Black" 
+                   FontFamily="{StaticResource FontStyle}" 
+                   HorizontalContentAlignment="Center"
+                   VerticalContentAlignment="Center"/>
+            <ListBox HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="40" Margin="352,0,0,0">
+                <ListBoxItem Height="40" 
+                             MouseUp="GiftOpenClick"
+                             ToolTip="捐赠" 
+                             HorizontalContentAlignment="Center" 
+                             Padding="1,8,-1,8">
+                    <Design:PackIcon Kind="GiftOutline"  
+                                     HorizontalAlignment="Center" 
+                                     VerticalAlignment="Center" 
+                                     HorizontalContentAlignment="Center" 
+                                     VerticalContentAlignment="Center" 
+                                     Width="30" Height="30"/>
+                </ListBoxItem>
+            </ListBox>
+        </Grid>
+        <ListBox  ScrollViewer.CanContentScroll="True"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top" 
+                 Canvas.Left="20" 
+                 Canvas.Top="55" 
+                 VerticalContentAlignment="Top"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                 ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                 Style="{DynamicResource SimpleListBox}" 
+                 ItemsPanel="{DynamicResource ItemsPanelTemplate3}">
+            <Canvas Height="30" Width="340">
+                <Label Content="播放器设置："
+                       FontFamily="{StaticResource FontStyle}"
+                       VerticalContentAlignment="Center"
+                       FontSize="14"
+                       Height="29.333"
+                       Width="100"/>
+            </Canvas>
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Height="30"  Width="340">
+                <RadioButton Content="DPlayer" 
+                             HorizontalAlignment="Left"
+                             x:Name="DPlayer"
+                             GroupName="PlayBox"
+                             Checked="PlayBoxChecked"
+                             BorderBrush="Transparent"
+                             Height="20" 
+                             CommandParameter="1"
+                             IsChecked="{C:Binding 'Root.PlayBox == 1'}"
+                             Width="110"/>
+                <RadioButton Content="VLC" 
+                             x:Name="VLC"
+                             CommandParameter="0"
+                             Checked="PlayBoxChecked"
+                             IsChecked="{C:Binding 'Root.PlayBox == 0'}"
+                             GroupName="PlayBox"
+                             BorderBrush="Transparent"
+                             Height="20" 
+                             Width="50"/>
+            </Grid>
+            <Canvas HorizontalAlignment="Center" VerticalAlignment="Center" Width="340" Height="30">
+                <Label Content="代理设置：" 
+                       FontFamily="{StaticResource FontStyle}"
+                       VerticalContentAlignment="Center" 
+                       FontSize="14" 
+                       Height="29.333"
+                       Width="100"/>
+            </Canvas>
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Height="60"  Width="340">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBox Style="{DynamicResource PlaceHolder}" 
+                         Text="{Binding  Root.ProxyIP,Mode=TwoWay}"
+                         DP:TextBoxDependencyProperty.Placeholder="{StaticResource IPStr}"/>
+                <TextBox Style="{DynamicResource PlaceHolder}" Grid.Column="1"
+                         Text="{Binding Root.ProxyPort ,Mode=TwoWay}"
+                         DP:TextBoxDependencyProperty.Placeholder="{StaticResource PortStr}"/>
+                <TextBox Style="{DynamicResource PlaceHolder}"  Grid.Row="1"
+                         Text="{Binding Root.ProxyAccount ,Mode=TwoWay}"
+                         DP:TextBoxDependencyProperty.Placeholder="{StaticResource AccountStr}"/>
+                <TextBox Style="{DynamicResource PlaceHolder}" Grid.Column="1" Grid.Row="1"
+                         Text="{Binding Root.ProxyPwd ,Mode=TwoWay}"
+                         DP:TextBoxDependencyProperty.Placeholder="{StaticResource PwdStr}"/>
+            </Grid>
+            <Canvas HorizontalAlignment="Center" VerticalAlignment="Center" Width="340" Height="30">
+                <Label Content="文库设置：" 
+                       FontFamily="{StaticResource FontStyle}"
+                       VerticalContentAlignment="Center" 
+                       FontSize="14" 
+                       Height="29.333"
+                       Width="100"/>
+            </Canvas>
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Height="40"  Width="340">
+                <CheckBox Content="使用默认账号" IsChecked="{Binding Root.UseAuthorWKInfo ,Mode=TwoWay}"/>
+            </Grid>
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Height="40"  Width="340">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBox Style="{DynamicResource PlaceHolder}"  Grid.Row="1"
+                         Text="{Binding Root.WkAccount ,Mode=TwoWay}"
+                         DP:TextBoxDependencyProperty.Placeholder="{StaticResource AccountStr}"/>
+                <TextBox Style="{DynamicResource PlaceHolder}" Grid.Column="1" Grid.Row="1"
+                         Text="{Binding Root.WkPwd,Mode=TwoWay}"
+                         DP:TextBoxDependencyProperty.Placeholder="{StaticResource PwdStr}"/>
+            </Grid>
+            <Canvas HorizontalAlignment="Center" VerticalAlignment="Center" Width="340" Height="30">
+                <Label Content="缓存设置：" 
+                       FontFamily="{StaticResource FontStyle}"
+                       VerticalContentAlignment="Center" 
+                       FontSize="14" 
+                       Height="29.333"
+                       Width="100"/>
+            </Canvas>
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Height="40"  Width="340">
+                <TextBox Style="{DynamicResource PlaceHolder}"  Grid.Row="1"
+                         Text="{Binding Root.CacheSpan,Mode=TwoWay}"
+                         DP:TextBoxDependencyProperty.Placeholder="{StaticResource CacheStr}"/>
+            </Grid>
+        </ListBox>
+        <TextBlock Canvas.Left="80" Canvas.Top="580">
+            <Run Text="Copyright ©EmilyEdna  2022 " 
+                 FontFamily="{StaticResource FontStyle}" 
+                 Foreground="{StaticResource TeaRed}"/>
+            <Run Text="Emilyednasion@gmail.com" 
+                 FontFamily="{StaticResource FontStyle}"  
+                 Foreground="{StaticResource LightSkyBlue}"/>
+        </TextBlock>
+        <Button Content="保存" Canvas.Left="250" Canvas.Top="545" 
+                Click="SaveClick"
+                Background="{StaticResource SukuraPink}"
+                BorderThickness="0"
+                FontFamily="{StaticResource FontStyle}"/>
+        <Button Content="取消" Canvas.Left="320" Canvas.Top="545" 
+                Click="CancelClick"
+                Background="{StaticResource SukuraPink}"
+                BorderThickness="0"
+                FontFamily="{StaticResource FontStyle}"/>
+        <Grid x:Name="GiftContent" Height="400" Width="310" Canvas.Left="45" Canvas.Top="65" RenderTransformOrigin="0.5,0.5" Visibility="Collapsed">
+            <Grid.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Grid.RenderTransform>
+            <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="400" Stroke="{Binding Background, ElementName=默认}" VerticalAlignment="Top" Width="310" RadiusX="10" RadiusY="10"/>
+            <Label  Content="如果您喜欢这款软件，并且手头比较富裕的情&#xA;    况下，就请给我一个大大的鼓励吧！&#xA;              φ(゜▽゜*)♪" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Width="290" Height="60" FontSize="14"/>
+            <Image RenderOptions.BitmapScalingMode="HighQuality" 
+                   HorizontalAlignment="Left" 
+                   Height="300"
+                   Margin="10,70,0,0" 
+                   VerticalAlignment="Top"
+                   Width="290" 
+                   Source="/Resource/Assets/PayCode.png">
+            </Image>
+            <Label Content="您的支持是我前进的动力！！！" HorizontalAlignment="Left" Height="25" Margin="10,375,0,0" VerticalAlignment="Top" Width="220" HorizontalContentAlignment="Center"/>
+            <Button Content="关闭" HorizontalAlignment="Left" 
+                    Height="25" 
+                    Margin="230,370,0,0" 
+                    VerticalAlignment="Top" 
+                    Width="70" 
+                    Click="GiftCloseClick"
+                    Background="{StaticResource SukuraPink}" 
+                    BorderBrush="Transparent" />
+        </Grid>
     </Canvas>
 </L:LoteWindow>

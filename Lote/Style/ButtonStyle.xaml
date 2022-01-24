@@ -3,6 +3,16 @@
                     xmlns:hc="https://handyorg.github.io/handycontrol"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
+    <Style x:Key="PlaceHolder" TargetType="TextBox" BasedOn="{StaticResource TextBoxBaseStyle}">
+        <Setter Property="FontFamily" Value="{DynamicResource FontStyle}"/>
+        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+        <Setter Property="BorderBrush" Value="{Binding Foreground,RelativeSource={RelativeSource Self}}"/>
+        <Setter Property="Foreground" Value="#FFED556A"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+    
+    
     <!--#region 导航按钮-->
     <Style x:Key="LeftBtn" TargetType="L:LoteButton" BasedOn="{StaticResource ButtonPrimary}">
         <Setter Property="FontFamily" Value="/Lote;component/Resource/Assets/#HappyZcool-2016" />
@@ -19,7 +29,7 @@
         </Setter>
     </Style>
     <!--#endregion-->
-
+    
     <!--#region 查询-->
     <VisualBrush x:Key="Helper" Stretch="None" AlignmentX="Left" Opacity="0.3">
         <VisualBrush.Visual>

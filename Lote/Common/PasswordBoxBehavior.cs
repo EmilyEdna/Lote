@@ -29,10 +29,10 @@ namespace Lote.Common
         private static void OnPasswordChanged(object sender, RoutedEventArgs e)
         {
             PasswordBox box = sender as PasswordBox;
-            string password = LotePassword.GetPassword(box);
+            string password = PasswordBoxDependencyProperty.GetPassword(box);
             if (box != null && box.Password != password)
             {
-                LotePassword.SetPassword(box, box.Password);
+                PasswordBoxDependencyProperty.SetPassword(box, box.Password);
             }
         }
     }

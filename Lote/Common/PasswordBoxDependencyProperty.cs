@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Lote.Override
+namespace Lote.Common
 {
-    public class LotePassword
+    public class PasswordBoxDependencyProperty
     {
         public static string GetPassword(DependencyObject obj)
         {
@@ -21,7 +21,7 @@ namespace Lote.Override
         }
 
         public static readonly DependencyProperty PasswordProperty =
-            DependencyProperty.RegisterAttached("Password", typeof(string), typeof(LotePassword), new PropertyMetadata("", OnPasswordPropertyChanged));
+            DependencyProperty.RegisterAttached("Password", typeof(string), typeof(PasswordBoxDependencyProperty), new PropertyMetadata("", OnPasswordPropertyChanged));
 
         private static void OnPasswordPropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
@@ -32,6 +32,5 @@ namespace Lote.Override
                 box.Password = password;
             }
         }
-
     }
 }

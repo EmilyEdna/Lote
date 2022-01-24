@@ -1,9 +1,11 @@
 ﻿using Lote.Common;
 using Lote.CommonWindow;
+using Lote.CommonWindow.ViewMdeol;
 using Lote.Core.Common;
 using Lote.Override;
 using Lote.ViewModels;
 using Lote.Views.MusicViews;
+using StyletIoC;
 using System;
 using System.Diagnostics;
 using System.Windows;
@@ -19,8 +21,10 @@ namespace Lote.Views
 {
     public partial class RootView : LoteWindow
     {
-        public RootView()
+        private readonly IContainer container;
+        public RootView(IContainer container)
         {
+            this.container = container;
             InitializeComponent();
         }
         public Color color;
@@ -50,7 +54,9 @@ namespace Lote.Views
                     Application.Current.Shutdown();
                     break;
                 case SysFuncEnum.Config:
+                   var vm =  container.Get<SettingWindowsViewModel>();
                     SettingWindows win = new SettingWindows();
+                    win.DataContext = vm;
                     win.Show();
                     break;
                 default:
@@ -139,7 +145,7 @@ namespace Lote.Views
 
         private void UserCenterClick(object sender, MouseButtonEventArgs e)
         {
-            (this.DataContext as RootViewModel).Redirect("8");
+            (this.DataContext as RootViewModel).Redirect("7");
         }
 
         private void ProcessClick(object sender, RoutedEventArgs e)

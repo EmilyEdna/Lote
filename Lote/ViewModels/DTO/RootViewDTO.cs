@@ -53,12 +53,6 @@ namespace Lote.ViewModels.DTO
                 ImageRoute = "/Resource/Assets/btn6.jpg",
                 CommandParam = "6"
             });
-            data.Add(new RootViewDTO
-            {
-                FuncName = "设置(Ctrl+S)",
-                ImageRoute = "/Resource/Assets/btn7.jpg",
-                CommandParam = "7"
-            });
             return data;
         }
     }

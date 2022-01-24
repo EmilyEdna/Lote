@@ -7,7 +7,6 @@ using Lote.Views.LightNovelViews;
 using Lote.Views.MangaViews;
 using Lote.Views.MusicViews;
 using Lote.Views.NovelViews;
-using Lote.Views.OptionViews;
 using Lote.Views.UserCenterViews;
 using Lote.Views.WallpaperViews;
 using Stylet;
@@ -73,9 +72,6 @@ namespace Lote.ViewModels
                     break;
                 case MenuFuncEunm.Music:
                     NavigateTo(container.Get<MusicViewModel>());
-                    break;
-                case MenuFuncEunm.Setting:
-                    NavigateTo(container.Get<OptionViewModel>());
                     break;
                 case MenuFuncEunm.UserCenter:
                     if (Application.Current.MainWindow.Visibility == Visibility.Collapsed)
