@@ -50,8 +50,8 @@ namespace Lote.Views.WallpaperViews
         }
 
         #region Property
-        private ObservableCollection<WallpaperResult> _Wallpaper;
-        public ObservableCollection<WallpaperResult> Wallpaper
+        private ObservableCollection<WallpaperResultDetail> _Wallpaper;
+        public ObservableCollection<WallpaperResultDetail> Wallpaper
         {
             get { return _Wallpaper; }
             set { SetAndNotify(ref _Wallpaper, value); }
@@ -112,21 +112,21 @@ namespace Lote.Views.WallpaperViews
                 };
             }).Runs();
             if (favoriteId.Count > 0)
-                WallpaperInit.Result.ForEach(t =>
+                WallpaperInit.GlobalResult.Result.ForEach(t =>
                 {
                     if (favoriteId.Contains(t.Id))
                         t.IsFavorite = true;
                 });
 
-            this.Total = (WallpaperInit.Total + Limit - 1) / Limit;
-            this.Wallpaper = new ObservableCollection<WallpaperResult>(WallpaperInit.Result);
+            this.Total = (WallpaperInit.GlobalResult.Total + Limit - 1) / Limit;
+            this.Wallpaper = new ObservableCollection<WallpaperResultDetail>(WallpaperInit.GlobalResult.Result);
         }
 
         public void InitFavorite(string args)
         {
             var data = wallpaperService.GetFavorite(args, PageIndex).Result;
             this.Total = data.Total;
-            this.Wallpaper = new ObservableCollection<WallpaperResult>(data.Result.ToMapest<List<WallpaperResult>>());
+            this.Wallpaper = new ObservableCollection<WallpaperResultDetail>(data.Result.ToMapest<List<WallpaperResultDetail>>());
         }
 
         public void Search(string args)
@@ -158,13 +158,13 @@ namespace Lote.Views.WallpaperViews
                     }).Runs();
 
                     if (favoriteId.Count > 0)
-                        WallpaperSearch.Result.ForEach(t =>
+                        WallpaperSearch.GlobalResult.Result.ForEach(t =>
                         {
                             if (favoriteId.Contains(t.Id))
                                 t.IsFavorite = true;
                         });
-                    this.Total = (WallpaperSearch.Total + Limit - 1) / Limit;
-                    this.Wallpaper = new ObservableCollection<WallpaperResult>(WallpaperSearch.Result);
+                    this.Total = (WallpaperSearch.GlobalResult.Total + Limit - 1) / Limit;
+                    this.Wallpaper = new ObservableCollection<WallpaperResultDetail>(WallpaperSearch.GlobalResult.Result);
                 });
             }
         }
@@ -199,13 +199,13 @@ namespace Lote.Views.WallpaperViews
                             };
                         }).Runs();
                         if (favoriteId.Count > 0)
-                            WallpaperInit.Result.ForEach(t =>
+                            WallpaperInit.GlobalResult.Result.ForEach(t =>
                             {
                                 if (favoriteId.Contains(t.Id))
                                     t.IsFavorite = true;
                             });
-                        this.Total = (WallpaperInit.Total + Limit - 1) / Limit;
-                        this.Wallpaper = new ObservableCollection<WallpaperResult>(WallpaperInit.Result);
+                        this.Total = (WallpaperInit.GlobalResult.Total + Limit - 1) / Limit;
+                        this.Wallpaper = new ObservableCollection<WallpaperResultDetail>(WallpaperInit.GlobalResult.Result);
                     });
                 }
                 else
@@ -228,13 +228,13 @@ namespace Lote.Views.WallpaperViews
                               };
                           }).Runs();
                         if (favoriteId.Count > 0)
-                            WallpaperSearch.Result.ForEach(t =>
+                            WallpaperSearch.GlobalResult.Result.ForEach(t =>
                             {
                                 if (favoriteId.Contains(t.Id))
                                     t.IsFavorite = true;
                             });
-                        this.Total = (WallpaperSearch.Total + Limit - 1) / Limit;
-                        this.Wallpaper = new ObservableCollection<WallpaperResult>(WallpaperSearch.Result);
+                        this.Total = (WallpaperSearch.GlobalResult.Total + Limit - 1) / Limit;
+                        this.Wallpaper = new ObservableCollection<WallpaperResultDetail>(WallpaperSearch.GlobalResult.Result);
                     });
                 }
             }
@@ -271,7 +271,7 @@ namespace Lote.Views.WallpaperViews
 
             Temp.FirstOrDefault(t => t.Id == Id).IsFavorite = true;
 
-            this.Wallpaper = new ObservableCollection<WallpaperResult>(Temp);
+            this.Wallpaper = new ObservableCollection<WallpaperResultDetail>(Temp);
 
         }
 
@@ -282,7 +282,7 @@ namespace Lote.Views.WallpaperViews
 
             Temp.FirstOrDefault(t => t.Id == Id).IsFavorite = false;
 
-            this.Wallpaper = new ObservableCollection<WallpaperResult>(Temp);
+            this.Wallpaper = new ObservableCollection<WallpaperResultDetail>(Temp);
         }
 
         public void Preview(long Id)

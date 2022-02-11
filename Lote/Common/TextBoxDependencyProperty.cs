@@ -121,7 +121,5 @@ namespace Lote.Common
         }
 
         #endregion Events Handling
-
-
     }
 }
